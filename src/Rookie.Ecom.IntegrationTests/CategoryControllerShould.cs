@@ -13,6 +13,8 @@ using Rookie.Ecom.Admin.Controllers;
 using System;
 using System.Threading.Tasks;
 using Xunit;
+using Rookie.Ecom.DataAccessor.Interfaces;
+using Rookie.Ecom.DataAccessor;
 
 namespace Rookie.Ecom.IntegrationTests
 {

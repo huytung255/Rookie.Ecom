@@ -1,12 +1,14 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Rookie.Ecom.DataAccessor.Entities
+namespace Rookie.Ecom.Contracts.Dtos
 {
-    public class BaseEntity
+    public class BaseDto
     {
-        [Key]
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
 
         public DateTime CreatedDate { get; set; }
 

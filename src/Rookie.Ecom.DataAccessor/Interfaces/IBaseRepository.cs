@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Rookie.Ecom.Business.Interfaces
+namespace Rookie.Ecom.DataAccessor.Interfaces
 {
     public interface IBaseRepository<T> where T : class
     {
@@ -21,5 +21,6 @@ namespace Rookie.Ecom.Business.Interfaces
         Task UpdateAsync(T entity);
 
         Task DeleteAsync(object id);
+        Task<bool> ExistAsync(Expression<Func<T, bool>> predicate);
     }
 }

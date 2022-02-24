@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using EnsureThat;
 using Microsoft.EntityFrameworkCore;
 using Rookie.Ecom.Business.Interfaces;
 using Rookie.Ecom.Contracts;
@@ -9,28 +8,27 @@ using Rookie.Ecom.DataAccessor.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Rookie.Ecom.Business.Services
 {
-    public class CategoryService : ICategoryService
+    public class ProductService : IProductService
     {
-        private readonly IBaseRepository<Category> _baseRepository;
+        private readonly IBaseRepository<Product> _baseRepository;
         private readonly IMapper _mapper;
 
-        public CategoryService(IBaseRepository<Category> baseRepository, IMapper mapper)
+        public ProductService(IBaseRepository<Product> baseRepository, IMapper mapper)
         {
             _baseRepository = baseRepository;
             _mapper = mapper;
         }
 
-        public async Task<CategoryDto> AddAsync(CategoryDto categoryDto)
+        public async Task<ProductDto> AddAsync(ProductDto productDto)
         {
-            if (categoryDto == null)
-                throw new ArgumentNullException();
-            var category = _mapper.Map<Category>(categoryDto);
-            var item = await _baseRepository.AddAsync(category);
-            return _mapper.Map<CategoryDto>(item);
+            var product = _mapper.Map<Product>(productDto);
+            var item = await _baseRepository.AddAsync(product);
+            return _mapper.Map<ProductDto>(item);
         }
 
         public async Task DeleteAsync(Guid id)
@@ -38,19 +36,19 @@ namespace Rookie.Ecom.Business.Services
             await _baseRepository.DeleteAsync(id);
         }
 
-        public async Task UpdateAsync(CategoryDto categoryDto)
+        public async Task UpdateAsync(ProductDto productDto)
         {
-            var category = _mapper.Map<Category>(categoryDto);
-            await _baseRepository.UpdateAsync(category);
+            var product = _mapper.Map<Product>(productDto);
+            await _baseRepository.UpdateAsync(product);
         }
 
-        public async Task<IEnumerable<CategoryDto>> GetAllAsync()
+        public async Task<IEnumerable<ProductDto>> GetAllAsync()
         {
-            var categories = await _baseRepository.GetAllAsync();
-            return _mapper.Map<List<CategoryDto>>(categories);
+            var products = await _baseRepository.GetAllAsync();
+            return _mapper.Map<List<ProductDto>>(products);
         }
 
-        public async Task<CategoryDto> GetByIdAsync(Guid id)
+        public async Task<ProductDto> GetByIdAsync(Guid id)
         {
             // map roles and users: collection (roleid, userid)
             // upsert: delete, update, insert
@@ -59,17 +57,17 @@ namespace Rookie.Ecom.Business.Services
             // input-n vs db-yes => delete
             // input-y vs db-y => update
             // unique, distinct, no-duplicate
-            var category = await _baseRepository.GetByIdAsync(id);
-            return _mapper.Map<CategoryDto>(category);
+            var product = await _baseRepository.GetByIdAsync(id);
+            return _mapper.Map<ProductDto>(product);
         }
 
-        public async Task<CategoryDto> GetByNameAsync(string name)
+        public async Task<ProductDto> GetByNameAsync(string name)
         {
-            var category = await _baseRepository.GetByAsync(x => x.Name == name);
-            return _mapper.Map<CategoryDto>(category);
+            var product = await _baseRepository.GetByAsync(x => x.Name == name);
+            return _mapper.Map<ProductDto>(product);
         }
 
-        public async Task<PagedResponseModel<CategoryDto>> PagedQueryAsync(string name, int page, int limit)
+        public async Task<PagedResponseModel<ProductDto>> PagedQueryAsync(string name, int page, int limit)
         {
             var query = _baseRepository.Entities;
 
@@ -81,14 +79,13 @@ namespace Rookie.Ecom.Business.Services
                 .AsNoTracking()
                 .PaginateAsync(page, limit);
 
-            return new PagedResponseModel<CategoryDto>
+            return new PagedResponseModel<ProductDto>
             {
                 CurrentPage = assets.CurrentPage,
                 TotalPages = assets.TotalPages,
                 TotalItems = assets.TotalItems,
-                Items = _mapper.Map<IEnumerable<CategoryDto>>(assets.Items)
+                Items = _mapper.Map<IEnumerable<ProductDto>>(assets.Items)
             };
         }
-
     }
 }

@@ -1,13 +1,13 @@
 using Microsoft.EntityFrameworkCore;
-using Rookie.Ecom.Business.Interfaces;
 using Rookie.Ecom.DataAccessor.Data;
+using Rookie.Ecom.DataAccessor.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Rookie.Ecom.Business
+namespace Rookie.Ecom.DataAccessor
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
@@ -51,7 +51,7 @@ namespace Rookie.Ecom.Business
                     query = query.Include(includeProperty);
                 }
             }
-            return await query.FirstOrDefaultAsync(filter);
+            return await query.AsNoTracking().FirstOrDefaultAsync(filter);
         }
 
         public async Task<T> GetByIdAsync(object id)
@@ -64,6 +64,11 @@ namespace Rookie.Ecom.Business
         {
             _dbContext.Update(entity);
             await _dbContext.SaveChangesAsync();
+        }
+        public async Task<bool> ExistAsync(Expression<Func<T, bool>> predicate)
+        {
+            var exist = _dbContext.Set<T>().Where(predicate);
+            return await exist.AnyAsync();
         }
     }
 }
