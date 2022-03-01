@@ -21,6 +21,8 @@ namespace Rookie.Ecom.Business
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IProductImageService, ProductImageService>();
+            services.AddTransient<IFileStorageService, FileStorageService>();
+            services.AddTransient<IOrderService, OrderService>();
 
             services.AddRefitClient<IIdentityProviderService>()
                 .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://localhost:5001"));

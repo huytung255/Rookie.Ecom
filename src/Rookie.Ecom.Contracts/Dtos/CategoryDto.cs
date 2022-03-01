@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 
 namespace Rookie.Ecom.Contracts.Dtos
@@ -7,7 +8,7 @@ namespace Rookie.Ecom.Contracts.Dtos
     {
 
         public string Name { get; set; }
-        public string ImageUrl { get; set; }
+        public IFormFile ImageUrl { get; set; }
 
         public string Desc { get; set; }
         public List<ProductDto> Products { get; set; }

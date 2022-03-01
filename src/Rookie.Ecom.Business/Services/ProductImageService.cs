@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Rookie.Ecom.Business.Interfaces;
 using Rookie.Ecom.Contracts;
 using Rookie.Ecom.Contracts.Dtos;
@@ -6,7 +7,9 @@ using Rookie.Ecom.DataAccessor.Entities;
 using Rookie.Ecom.DataAccessor.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,30 +18,41 @@ namespace Rookie.Ecom.Business.Services
     public class ProductImageService : IProductImageService
     {
         private readonly IBaseRepository<ProductImage> _baseRepository;
+        private readonly IFileStorageService _storageService;
         private readonly IMapper _mapper;
+        private const string IMAGES_FOLDER_NAME = "images";
 
-        public ProductImageService(IBaseRepository<ProductImage> baseRepository, IMapper mapper)
+        public ProductImageService(IBaseRepository<ProductImage> baseRepository, IFileStorageService storageService, IMapper mapper)
         {
             _baseRepository = baseRepository;
+            _storageService = storageService;
             _mapper = mapper;
         }
 
         public async Task<ProductImageDto> AddAsync(ProductImageDto productImageDto)
         {
-            var product = _mapper.Map<ProductImage>(productImageDto);
-            var item = await _baseRepository.AddAsync(product);
+            var productImage = _mapper.Map<ProductImage>(productImageDto);
+            productImage.Id = new Guid();
+            productImage.CreatedDate = DateTime.Now;
+            productImage.UpdatedDate = DateTime.Now;
+            productImage.CreatorId = null;
+            productImage.Published = true;
+            productImage.ImageUrl = await SaveFile(productImageDto.ImageFile);
+            var item = await _baseRepository.AddAsync(productImage);
             return _mapper.Map<ProductImageDto>(item);
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id, string imagePath)
         {
+            await _storageService.DeleteFileAsync(imagePath);
             await _baseRepository.DeleteAsync(id);
         }
 
         public async Task UpdateAsync(ProductImageDto productImageDto)
         {
-            var product = _mapper.Map<ProductImage>(productImageDto);
-            await _baseRepository.UpdateAsync(product);
+            var productImage = _mapper.Map<ProductImage>(productImageDto);
+            productImage.UpdatedDate = DateTime.Now;
+            await _baseRepository.UpdateAsync(productImage);
         }
 
         public async Task<IEnumerable<ProductImageDto>> GetAllAsync()
@@ -49,17 +63,16 @@ namespace Rookie.Ecom.Business.Services
 
         public async Task<ProductImageDto> GetByIdAsync(Guid id)
         {
-            // map roles and users: collection (roleid, userid)
-            // upsert: delete, update, insert
-            // input vs db
-            // input-y vs db-no => insert
-            // input-n vs db-yes => delete
-            // input-y vs db-y => update
-            // unique, distinct, no-duplicate
-            var product = await _baseRepository.GetByIdAsync(id);
-            return _mapper.Map<ProductImageDto>(product);
+            var productImage = await _baseRepository.GetByIdAsync(id);
+            return _mapper.Map<ProductImageDto>(productImage);
         }
 
-
+        private async Task<string> SaveFile(IFormFile file)
+        {
+            var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
+            await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
+            return "/" + IMAGES_FOLDER_NAME + "/" + fileName;
+        }
     }
 }

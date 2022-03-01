@@ -1,29 +1,22 @@
-import React from "react";
-import Layout from "./components/Layout";
-import Home from "./components/Home";
-import Category from "./components/Category";
-import Counter from "./components/Counter";
-import FetchData from "./components/FetchData";
+import React from 'react';
+import { Route } from 'react-router';
+import Layout from './components/Layout';
+import Home from './components/Home';
+import Category from './components/Category';
+import Counter from './components/Counter';
+import FetchData from './components/FetchData';
 
-import CallbackPage from "./components/callback/CallbackPage";
-import ProfilePage from "./components/profile/ProfilePage";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import CallbackPage from './components/callback/CallbackPage';
+import ProfilePage from './components/profile/ProfilePage';
 
 export default () => (
-  <BrowserRouter>
     <Layout>
-      <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route path="/counter" element={<Counter />} />
-        {/* <Route path="/category/:page?" element={<Category />} /> */}
-        <Route path="/category/*" element={<Category />}>
-          {/* <Route path=":page" element={<Category />} /> */}
-        </Route>
-        <Route path="/fetch-data/:startDateIndex?" element={<FetchData />} />
+        <Route exact path="/" component={Home} />
+        <Route path="/counter" component={Counter} />
+        <Route path="/category/:page?" component={Category} />
+        <Route path="/fetch-data/:startDateIndex?" component={FetchData} />
 
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/callback" element={<CallbackPage />} />
-      </Routes>
+        <Route path="/profile" component={ProfilePage} />
+        <Route path="/callback" component={CallbackPage} />
     </Layout>
-  </BrowserRouter>
 );

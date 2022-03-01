@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Rookie.Ecom.Business.Interfaces
 {
-    internal interface IProductImageService
+    public interface IProductImageService
     {
         Task<IEnumerable<ProductImageDto>> GetAllAsync();
 
@@ -18,7 +18,7 @@ namespace Rookie.Ecom.Business.Interfaces
 
         Task<ProductImageDto> AddAsync(ProductImageDto productImageDto);
 
-        Task DeleteAsync(Guid id);
+        Task DeleteAsync(Guid id,string imagePath);
 
         Task UpdateAsync(ProductImageDto productImageDto);
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,6 +17,7 @@ namespace Rookie.Ecom.DataAccessor.Entities
         [Required]
         public string ImageUrl { get; set; }
         public string Caption { get; set; }
+        public bool IsDefault { get; set; }
         public Product Product { get; set; }
     }
 }

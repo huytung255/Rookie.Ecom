@@ -27,6 +27,11 @@ namespace Rookie.Ecom.Business.Services
         public async Task<ProductDto> AddAsync(ProductDto productDto)
         {
             var product = _mapper.Map<Product>(productDto);
+            product.Id = new Guid();
+            product.CreatedDate = DateTime.Now;
+            product.UpdatedDate = DateTime.Now;
+            product.CreatorId = null;
+            product.Published = true;
             var item = await _baseRepository.AddAsync(product);
             return _mapper.Map<ProductDto>(item);
         }
@@ -39,25 +44,19 @@ namespace Rookie.Ecom.Business.Services
         public async Task UpdateAsync(ProductDto productDto)
         {
             var product = _mapper.Map<Product>(productDto);
+            product.UpdatedDate = DateTime.Now;
             await _baseRepository.UpdateAsync(product);
         }
 
         public async Task<IEnumerable<ProductDto>> GetAllAsync()
         {
-            var products = await _baseRepository.GetAllAsync();
+            var products = await _baseRepository.GetAllAsync("ProductImages");
             return _mapper.Map<List<ProductDto>>(products);
         }
 
         public async Task<ProductDto> GetByIdAsync(Guid id)
         {
-            // map roles and users: collection (roleid, userid)
-            // upsert: delete, update, insert
-            // input vs db
-            // input-y vs db-no => insert
-            // input-n vs db-yes => delete
-            // input-y vs db-y => update
-            // unique, distinct, no-duplicate
-            var product = await _baseRepository.GetByIdAsync(id);
+            var product = await _baseRepository.GetByAsync(x => x.Id == id, "ProductImages");
             return _mapper.Map<ProductDto>(product);
         }
 
