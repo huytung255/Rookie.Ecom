@@ -1,4 +1,7 @@
-import "bootstrap/dist/css/bootstrap.css";
+import "../node_modules/bootstrap/dist/css/bootstrap.css";
+import "../src/assets/plugins/nucleo/css/nucleo.css";
+import "../node_modules/@fortawesome/fontawesome-free/css/all.min.css";
+import "../src/assets/css/argon-dashboard-react.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
@@ -10,9 +13,7 @@ import registerServiceWorker from "./registerServiceWorker";
 
 import { OidcProvider } from "redux-oidc";
 import userManager from "./utils/userManager";
-
-import ThemeContextWrapper from "./components/ThemeWrapper/ThemeWrapper";
-import BackgroundColorWrapper from "./components/BackgroundColorWrapper/BackgroundColorWrapper";
+import { BrowserRouter } from "react-router-dom";
 
 // Create browser history to use in the Redux store
 const baseUrl = document.getElementsByTagName("base")[0].getAttribute("href");
@@ -25,17 +26,16 @@ const store = configureStore(history, initialState);
 const rootElement = document.getElementById("root");
 
 ReactDOM.render(
-  <ThemeContextWrapper>
-    <BackgroundColorWrapper>
-      <Provider store={store}>
-        <OidcProvider store={store} userManager={userManager}>
-          <ConnectedRouter history={history}>
-            <App />
-          </ConnectedRouter>
-        </OidcProvider>
-      </Provider>
-    </BackgroundColorWrapper>
-  </ThemeContextWrapper>,
+  <Provider store={store}>
+    <OidcProvider store={store} userManager={userManager}>
+      {/* <ConnectedRouter history={history}>
+        <App />
+      </ConnectedRouter> */}
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </OidcProvider>
+  </Provider>,
   rootElement
 );
 

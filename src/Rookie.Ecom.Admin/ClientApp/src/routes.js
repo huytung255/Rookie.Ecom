@@ -1,12 +1,12 @@
 /*!
 
 =========================================================
-* Black Dashboard React v1.2.0
+* Argon Dashboard React - v1.2.1
 =========================================================
 
-* Product Page: https://www.creative-tim.com/product/black-dashboard-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/black-dashboard-react/blob/master/LICENSE.md)
+* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
+* Copyright 2021 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
 
 * Coded by Creative Tim
 
@@ -15,79 +15,47 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import Dashboard from "../src/views/Dashboard.js";
-import Icons from "../src/views/Icons.js";
-import Map from "../src/views/Map.js";
-import Notifications from "../src/views/Notifications.js";
-import Rtl from "../src/views/Rtl.js";
-import TableList from "../src/views/TableList.js";
-import Typography from "../src/views/Typography.js";
-import UserProfile from "../src/views/UserProfile.js";
+import Index from "./views/Index";
+import Profile from "./views/examples/Profile.js";
+import Maps from "./views/examples/Maps.js";
+import Tables from "./views/examples/Tables.js";
+import Icons from "./views/examples/Icons.js";
 
 var routes = [
   {
-    path: "/dashboard",
+    path: "/index",
     name: "Dashboard",
-    rtlName: "لوحة القيادة",
-    icon: "tim-icons icon-chart-pie-36",
-    component: Dashboard,
+    icon: "ni ni-tv-2 text-primary",
+    component: Index,
     layout: "/admin",
   },
   {
     path: "/icons",
     name: "Icons",
-    rtlName: "الرموز",
-    icon: "tim-icons icon-atom",
+    icon: "ni ni-planet text-blue",
     component: Icons,
     layout: "/admin",
   },
   {
-    path: "/map",
-    name: "Map",
-    rtlName: "خرائط",
-    icon: "tim-icons icon-pin",
-    component: Map,
-    layout: "/admin",
-  },
-  {
-    path: "/notifications",
-    name: "Notifications",
-    rtlName: "إخطارات",
-    icon: "tim-icons icon-bell-55",
-    component: Notifications,
+    path: "/maps",
+    name: "Maps",
+    icon: "ni ni-pin-3 text-orange",
+    component: Maps,
     layout: "/admin",
   },
   {
     path: "/user-profile",
     name: "User Profile",
-    rtlName: "ملف تعريفي للمستخدم",
-    icon: "tim-icons icon-single-02",
-    component: UserProfile,
+    icon: "ni ni-single-02 text-yellow",
+    component: Profile,
     layout: "/admin",
   },
   {
     path: "/tables",
-    name: "Table List",
-    rtlName: "قائمة الجدول",
-    icon: "tim-icons icon-puzzle-10",
-    component: TableList,
+    name: "Tables",
+    icon: "ni ni-bullet-list-67 text-red",
+    component: Tables,
     layout: "/admin",
-  },
-  {
-    path: "/typography",
-    name: "Typography",
-    rtlName: "طباعة",
-    icon: "tim-icons icon-align-center",
-    component: Typography,
-    layout: "/admin",
-  },
-  {
-    path: "/rtl-support",
-    name: "RTL Support",
-    rtlName: "ار تي ال",
-    icon: "tim-icons icon-world",
-    component: Rtl,
-    layout: "/rtl",
   },
 ];
 export default routes;
