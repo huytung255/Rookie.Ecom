@@ -8,8 +8,8 @@ namespace Rookie.Ecom.Contracts.Dtos
     {
 
         public string Name { get; set; }
-        public IFormFile ImageUrl { get; set; }
-
+        public IFormFile ImageFile { get; set; }
+        public string ImageUrl { get; set; }
         public string Desc { get; set; }
         public List<ProductDto> Products { get; set; }
         

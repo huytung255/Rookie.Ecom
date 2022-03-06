@@ -17,45 +17,45 @@
 */
 import Index from "./views/Index";
 import Profile from "./views/examples/Profile.js";
-import Maps from "./views/examples/Maps.js";
+import Category from "./views/Category";
 import Tables from "./views/examples/Tables.js";
 import Icons from "./views/examples/Icons.js";
 
 var routes = [
   {
-    path: "/index",
+    path: "/dashboard",
     name: "Dashboard",
     icon: "ni ni-tv-2 text-primary",
     component: Index,
-    layout: "/admin",
+    layout: "",
+  },
+  {
+    path: "/category",
+    name: "Category",
+    icon: "ni ni-archive-2 text-primary",
+    component: Category,
+    layout: "",
   },
   {
     path: "/icons",
     name: "Icons",
     icon: "ni ni-planet text-blue",
     component: Icons,
-    layout: "/admin",
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: "ni ni-pin-3 text-orange",
-    component: Maps,
-    layout: "/admin",
+    layout: "",
   },
   {
     path: "/user-profile",
     name: "User Profile",
     icon: "ni ni-single-02 text-yellow",
     component: Profile,
-    layout: "/admin",
+    layout: "",
   },
   {
     path: "/tables",
     name: "Tables",
     icon: "ni ni-bullet-list-67 text-red",
     component: Tables,
-    layout: "/admin",
+    layout: "",
   },
 ];
 export default routes;

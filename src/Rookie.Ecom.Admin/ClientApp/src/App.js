@@ -11,14 +11,4 @@ import ProfilePage from "./components/profile/ProfilePage";
 import Admin from "./layouts/Admin";
 import Index from "./views/Index";
 
-export default () => (
-  <Admin>
-    {/* <Route exact path="/" component={Index} />
-    <Route path="/counter" component={Counter} />
-    <Route path="/category/:page?" component={Category} />
-    <Route path="/fetch-data/:startDateIndex?" component={FetchData} />
-
-    <Route path="/profile" component={ProfilePage} />
-    <Route path="/callback" component={CallbackPage} /> */}
-  </Admin>
-);
+export default () => <Admin />;

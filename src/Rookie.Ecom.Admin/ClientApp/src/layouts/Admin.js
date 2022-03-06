@@ -38,6 +38,13 @@ const Admin = (props) => {
 
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
+      return (
+        <Route
+          path={prop.layout + prop.path}
+          component={prop.component}
+          key={key}
+        />
+      );
       if (prop.layout === "/admin") {
         return (
           <Route
@@ -82,7 +89,7 @@ const Admin = (props) => {
         />
         <Switch>
           {getRoutes(routes)}
-          <Redirect from="*" to="/admin/index" />
+          <Redirect from="*" to="/dashboard" />
         </Switch>
         <Container fluid>
           <AdminFooter />
