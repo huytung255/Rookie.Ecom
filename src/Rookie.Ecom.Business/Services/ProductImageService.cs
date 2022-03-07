@@ -20,7 +20,7 @@ namespace Rookie.Ecom.Business.Services
         private readonly IBaseRepository<ProductImage> _baseRepository;
         private readonly IFileStorageService _storageService;
         private readonly IMapper _mapper;
-        private const string IMAGES_FOLDER_NAME = "images";
+
 
         public ProductImageService(IBaseRepository<ProductImage> baseRepository, IFileStorageService storageService, IMapper mapper)
         {
@@ -37,7 +37,7 @@ namespace Rookie.Ecom.Business.Services
             productImage.UpdatedDate = DateTime.Now;
             productImage.CreatorId = null;
             productImage.Published = true;
-            productImage.ImageUrl = await SaveFile(productImageDto.ImageFile);
+            productImage.ImageUrl = await _storageService.SaveFile(productImageDto.ImageFile);
             var item = await _baseRepository.AddAsync(productImage);
             return _mapper.Map<ProductImageDto>(item);
         }
@@ -67,12 +67,6 @@ namespace Rookie.Ecom.Business.Services
             return _mapper.Map<ProductImageDto>(productImage);
         }
 
-        private async Task<string> SaveFile(IFormFile file)
-        {
-            var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
-            await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
-            return "/" + IMAGES_FOLDER_NAME + "/" + fileName;
-        }
+
     }
 }

@@ -1,6 +1,8 @@
+import axiosClient from "../axios/axiosClient";
 const requestCategoryType = "REQUEST_CATEGORIES";
 const receiveCategoryType = "RECEIVE_CATEGORIES";
-const initialState = { categories: [], isLoading: false };
+const receiveCategoryDetailType = "RECEIVE_CATEGORY_DETAIL";
+const initialState = { categories: [], isLoading: false, categoryDetail: {} };
 
 export const actionCreators = {
   requestCategories: (page) => async (dispatch, getState) => {
@@ -12,11 +14,28 @@ export const actionCreators = {
     dispatch({ type: requestCategoryType, page });
 
     const url = `api/Category/find?page=${page + 1}`;
-    const response = await fetch(url);
-    const data = await response.json();
+    const res = await axiosClient.get(url);
+    const { data } = res;
     const categories = data.items;
     const { totalPages } = data;
     dispatch({ type: receiveCategoryType, page, categories, totalPages });
+  },
+  requestCategoryDetail: (id) => async (dispatch, getState) => {
+    if (!id) return;
+    const url = `api/Category/${id}`;
+    const res = await axiosClient.get(url);
+    const { data } = res;
+    dispatch({ type: receiveCategoryDetailType, data });
+  },
+  updateCategoryDetail: (id, name, desc) => async (dispatch, getState) => {
+    if (!id) return;
+    const url = `api/Category`;
+    const res = await axiosClient.put(url, {
+      id,
+      name,
+      desc,
+    });
+    actionCreators.requestCategoryDetail(id);
   },
 };
 
@@ -38,6 +57,13 @@ export const reducer = (state, action) => {
       categories: action.categories,
       isLoading: false,
       totalPages: action.totalPages,
+    };
+  }
+
+  if (action.type === receiveCategoryDetailType) {
+    return {
+      ...state,
+      categoryDetail: action.data,
     };
   }
 

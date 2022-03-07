@@ -39,10 +39,11 @@ import {
   Button,
 } from "reactstrap";
 // core components
-import Header from "../components/Headers/Header.js";
+import { NavLink } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { actionCreators } from "../store/Category";
+import EmptyHeader from "../components/Headers/EmptyHeader.js";
 const Category = ({
   requestCategories,
   categories,
@@ -61,7 +62,7 @@ const Category = ({
   }, []);
   return (
     <React.Fragment>
-      <Header />
+      <EmptyHeader />
       {/* Page content */}
       <Container className="mt--9" fluid>
         {/* Dark table */}
@@ -93,7 +94,7 @@ const Category = ({
                         <td className="text-center">
                           <Media className="align-items-center">
                             <div className="avatar rounded-circle">
-                              <img alt={cat.name} src={cat.imgUrl} />
+                              <img alt={cat.name} src={cat.imageUrl} />
                             </div>
                           </Media>
                         </td>
@@ -102,8 +103,9 @@ const Category = ({
                           <Button
                             className="btn-icon-only text-success"
                             role="button"
+                            tag={NavLink}
+                            to={`/category/${cat.id}`}
                             color=""
-                            size=""
                           >
                             <i className="fas fa-pen"></i>
                           </Button>
@@ -123,6 +125,13 @@ const Category = ({
                   })}
                 </tbody>
               </Table>
+              {isLoading && (
+                <CardFooter className="text-center">
+                  <div className="spinner-border text-primary" role="status">
+                    <span className="sr-only">Loading...</span>
+                  </div>
+                </CardFooter>
+              )}
               <CardFooter className="py-4">
                 <nav aria-label="...">
                   <Pagination
@@ -164,13 +173,6 @@ const Category = ({
                   </Pagination>
                 </nav>
               </CardFooter>
-              {isLoading && (
-                <CardFooter className="text-center">
-                  <div className="spinner-border text-primary" role="status">
-                    <span className="sr-only">Loading...</span>
-                  </div>
-                </CardFooter>
-              )}
             </Card>
           </div>
         </Row>

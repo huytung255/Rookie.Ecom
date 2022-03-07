@@ -58,5 +58,12 @@ namespace Rookie.Ecom.Admin.Controllers
         public async Task<PagedResponseModel<CategoryDto>>
             FindAsync(string name, int page = 1, int limit = 10)
             => await _categoryService.PagedQueryAsync(name, page, limit);
+
+        [HttpPut("image")]
+        public async Task<ActionResult<ProductImageDto>> UpdateCategoryImageAsync([FromForm] CategoryDto categoryDto)
+        {
+            await _categoryService.UpdateImageAsync(categoryDto);
+            return NoContent();
+        }
     }
 }

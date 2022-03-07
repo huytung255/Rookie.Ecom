@@ -16,11 +16,13 @@ namespace Rookie.Ecom.Business.Services
     public class CategoryService : ICategoryService
     {
         private readonly IBaseRepository<Category> _baseRepository;
+        private readonly IFileStorageService _storageService;
         private readonly IMapper _mapper;
 
-        public CategoryService(IBaseRepository<Category> baseRepository, IMapper mapper)
+        public CategoryService(IBaseRepository<Category> baseRepository, IFileStorageService storageService, IMapper mapper)
         {
             _baseRepository = baseRepository;
+            _storageService = storageService;
             _mapper = mapper;
         }
 
@@ -96,5 +98,12 @@ namespace Rookie.Ecom.Business.Services
             };
         }
 
+        public async Task UpdateImageAsync(CategoryDto categoryDto)
+        {
+            var category = _mapper.Map<Category>(categoryDto);
+            category.UpdatedDate = DateTime.Now;
+            category.ImageUrl = await _storageService.SaveFile(categoryDto.ImageFile);
+            await _baseRepository.UpdateAsync(category);
+        }
     }
 }
