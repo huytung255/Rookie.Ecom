@@ -57,7 +57,7 @@ namespace Rookie.Ecom.Business.Services
 
         public async Task<IEnumerable<ProductDto>> GetAllAsync()
         {
-            var products = await _baseRepository.GetAllAsync("ProductImages");
+            var products = await _baseRepository.GetAllAsync("ProductImages,Category");
             return _mapper.Map<List<ProductDto>>(products);
         }
 
@@ -77,7 +77,7 @@ namespace Rookie.Ecom.Business.Services
         {
             var query = _baseRepository.Entities;
 
-            query = query.Where(x => string.IsNullOrEmpty(name) || x.Name.Contains(name));
+            query = query.Where(x => string.IsNullOrEmpty(name) || x.Name.Contains(name)).Include("ProductImages").Include("Category");
 
             query = query.OrderBy(x => x.Name);
 

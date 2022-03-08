@@ -28,6 +28,7 @@ import { actionCreators } from "../store/Product";
 import EmptyHeader from "../components/Headers/EmptyHeader.js";
 import NewCategoryModal from "../components/Modals/NewCategoryModal";
 import DeleteCategoryModal from "../components/Modals/DeleteCategoryModal";
+import NewProductModal from "../components/Modals/NewProductModal";
 const Product = ({
   requestProducts,
   products,
@@ -59,7 +60,7 @@ const Product = ({
                     <h3 className="mb-0">Product</h3>
                   </div>
                   <div className="col text-right">
-                    {/* <NewCategoryModal addCategory={addCategory} /> */}
+                    <NewProductModal />
                   </div>
                 </Row>
               </CardHeader>
@@ -90,14 +91,19 @@ const Product = ({
                               <img
                                 className="img-fluid"
                                 alt={p.name}
-                                src={p.imageUrl}
+                                src={
+                                  p.productImages.length !== 0 &&
+                                  p.productImages[0].imageUrl
+                                }
                               />
                             </div>
                           </Media>
                         </td>
                         <td className="w-100">{p.name}</td>
                         <td className="w-100">{p.price}</td>
-                        <td className="w-100">{p.category}</td>
+                        <td className="w-100">
+                          {p.category && p.category.name}
+                        </td>
                         <td className="text-center">
                           <Button
                             className="btn-icon-only text-success"

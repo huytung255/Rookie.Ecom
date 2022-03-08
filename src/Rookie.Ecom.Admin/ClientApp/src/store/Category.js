@@ -2,7 +2,13 @@ import axiosClient from "../axios/axiosClient";
 const requestCategoryType = "REQUEST_CATEGORIES";
 const receiveCategoryType = "RECEIVE_CATEGORIES";
 const receiveCategoryDetailType = "RECEIVE_CATEGORY_DETAIL";
-const initialState = { categories: [], isLoading: false, categoryDetail: {} };
+const receiveAllCategoryType = "RECEIVE_ALL_CATEGORIES";
+const initialState = {
+  categories: [],
+  allCategories: [],
+  isLoading: false,
+  categoryDetail: {},
+};
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -17,6 +23,14 @@ export const actionCreators = {
     dispatch(
       actionCreators.requestCategories(getState().categories.currentPage)
     );
+  },
+  requestAllCategories: () => async (dispatch, getState) => {
+    const url = `api/Category`;
+    const res = await axiosClient.get(url);
+    const { data } = res;
+    let dataToSave = {};
+    data.forEach((d) => (dataToSave[d.id] = d.name));
+    dispatch({ type: receiveAllCategoryType, data: dataToSave });
   },
   requestCategories: (page) => async (dispatch, getState) => {
     // if (page === getState().categories.currentPage) {
@@ -42,18 +56,16 @@ export const actionCreators = {
   },
   updateCategoryDetail: (id, name, desc) => async (dispatch, getState) => {
     if (!id) return;
-    const temp = getState().categories.categoryDetail;
     const url = `api/Category`;
     const res = await axiosClient.put(url, {
       id,
       name,
       desc,
     });
-    // actionCreators.requestCategoryDetail(id);
+    dispatch(actionCreators.requestCategoryDetail(id));
   },
   updateCategoryImage: (id, image) => async (dispatch, getState) => {
     if (!id) return;
-    const temp = getState().categories.categoryDetail;
     const url = `api/Category/image`;
     var formData = new FormData();
     formData.set("Id", id);
@@ -96,6 +108,13 @@ export const reducer = (state, action) => {
     return {
       ...state,
       categoryDetail: action.data,
+    };
+  }
+
+  if (action.type === receiveAllCategoryType) {
+    return {
+      ...state,
+      allCategories: action.data,
     };
   }
 
