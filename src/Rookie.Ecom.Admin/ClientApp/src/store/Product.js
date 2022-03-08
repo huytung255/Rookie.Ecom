@@ -35,7 +35,7 @@ export const reducer = (state, action) => {
     return {
       ...state,
       currentPage: action.page,
-      products: action.categories,
+      products: action.products,
       isLoading: false,
       totalPages: action.totalPages,
     };

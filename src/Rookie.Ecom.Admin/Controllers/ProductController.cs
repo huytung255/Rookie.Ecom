@@ -1,6 +1,7 @@
 ﻿using EnsureThat;
 using Microsoft.AspNetCore.Mvc;
 using Rookie.Ecom.Business.Interfaces;
+using Rookie.Ecom.Contracts;
 using Rookie.Ecom.Contracts.Constants;
 using Rookie.Ecom.Contracts.Dtos;
 using System;
@@ -21,23 +22,27 @@ namespace Rookie.Ecom.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ProductDto>> CreateAsync([FromBody] ProductDto productDto)
+        public async Task<ActionResult<ProductDto>> CreateAsync([FromBody] CreateProductDto createProductDto)
         {
-            Ensure.Any.IsNotNull(productDto, nameof(productDto));
-            var asset = await _productService.AddAsync(productDto);
+            Ensure.Any.IsNotNull(createProductDto, nameof(createProductDto));
+            var asset = await _productService.AddAsync(createProductDto);
             return Created(Endpoints.Product, asset);
         }
 
         [HttpGet]
         public async Task<IEnumerable<ProductDto>> GetAsync()
     => await _productService.GetAllAsync();
+        [HttpGet("find")]
+        public async Task<PagedResponseModel<ProductDto>>
+    FindAsync(string name, int page = 1, int limit = 10)
+    => await _productService.PagedQueryAsync(name, page, limit);
 
         [HttpPut]
-        public async Task<ActionResult> UpdateAsync([FromBody] ProductDto productDto)
+        public async Task<ActionResult> UpdateAsync([FromBody] UpdateProductDto updateProductDto)
         {
-            Ensure.Any.IsNotNull(productDto, nameof(productDto));
-            Ensure.Any.IsNotNull(productDto.Id, nameof(productDto.Id));
-            await _productService.UpdateAsync(productDto);
+            Ensure.Any.IsNotNull(updateProductDto, nameof(updateProductDto));
+            Ensure.Any.IsNotNull(updateProductDto.Id, nameof(updateProductDto.Id));
+            await _productService.UpdateAsync(updateProductDto);
 
             return NoContent();
         }

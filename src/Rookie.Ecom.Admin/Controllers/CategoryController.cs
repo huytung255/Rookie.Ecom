@@ -20,19 +20,19 @@ namespace Rookie.Ecom.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<CategoryDto>> CreateAsync([FromBody] CategoryDto categoryDto)
+        public async Task<ActionResult<CategoryDto>> CreateAsync([FromBody] CreateCategoryDto createCategoryDto)
         {
-            Ensure.Any.IsNotNull(categoryDto, nameof(categoryDto));
-            var asset = await _categoryService.AddAsync(categoryDto);
+            Ensure.Any.IsNotNull(createCategoryDto, nameof(createCategoryDto));
+            var asset = await _categoryService.AddAsync(createCategoryDto);
             return Created(Endpoints.Category, asset);
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateAsync([FromBody] CategoryDto categoryDto)
+        public async Task<ActionResult> UpdateAsync([FromBody] UpdateCategoryDto updateCategoryDto)
         {
-            Ensure.Any.IsNotNull(categoryDto, nameof(categoryDto));
-            Ensure.Any.IsNotNull(categoryDto.Id, nameof(categoryDto.Id));
-            await _categoryService.UpdateAsync(categoryDto);
+            Ensure.Any.IsNotNull(updateCategoryDto, nameof(updateCategoryDto));
+            Ensure.Any.IsNotNull(updateCategoryDto.Id, nameof(updateCategoryDto.Id));
+            await _categoryService.UpdateAsync(updateCategoryDto);
 
             return NoContent();
         }
@@ -60,9 +60,9 @@ namespace Rookie.Ecom.Admin.Controllers
             => await _categoryService.PagedQueryAsync(name, page, limit);
 
         [HttpPut("image")]
-        public async Task<ActionResult<ProductImageDto>> UpdateCategoryImageAsync([FromForm] CategoryDto categoryDto)
+        public async Task<ActionResult<ProductImageDto>> UpdateCategoryImageAsync([FromForm] UpdateCategoryImageDto updateCategoryImageDto)
         {
-            await _categoryService.UpdateImageAsync(categoryDto);
+            await _categoryService.UpdateImageAsync(updateCategoryImageDto);
             return NoContent();
         }
     }

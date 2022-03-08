@@ -14,7 +14,11 @@ namespace Rookie.Ecom.Business
         private void FromPresentationLayer()
         {
             CreateMap<CategoryDto, Category>().ForMember(d => d.Products, t => t.Ignore());
+            CreateMap<CreateCategoryDto, Category>();
+            CreateMap<UpdateCategoryDto, Category>();
             CreateMap<ProductDto, Product>().ForMember(d => d.ProductImages, t => t.Ignore());
+            CreateMap<CreateProductDto, Product>();
+            CreateMap<UpdateProductDto, Product>();
             CreateMap<ProductImageDto, ProductImage>();
         }
 

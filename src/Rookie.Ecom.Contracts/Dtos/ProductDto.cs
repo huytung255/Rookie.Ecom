@@ -12,9 +12,30 @@ namespace Rookie.Ecom.Contracts.Dtos
         public decimal Price { get; set; }
         public string Desc { get; set; }
         public string CategoryId { get; set; }
+        public string CategoryName { get; set; }
         public bool IsFeatured { get; set; }
         public bool IsAvailable { get; set; }
         public List<ProductImageDto> ProductImages { get; set; }
     }
+    public class CreateProductDto
+    {
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+        public string Desc { get; set; }
+        public string CategoryId { get; set; }
+        public bool IsFeatured { get; set; }
+        public bool IsAvailable { get; set; }
+    }
+    public class UpdateProductDto
+    {
+        public Guid? Id { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+        public string Desc { get; set; }
+        public string CategoryId { get; set; }
+        public bool IsFeatured { get; set; }
+        public bool IsAvailable { get; set; }
+    }
+
 
 }

@@ -45,7 +45,6 @@ export const actionCreators = {
     const temp = getState().categories.categoryDetail;
     const url = `api/Category`;
     const res = await axiosClient.put(url, {
-      ...temp,
       id,
       name,
       desc,
@@ -57,9 +56,6 @@ export const actionCreators = {
     const temp = getState().categories.categoryDetail;
     const url = `api/Category/image`;
     var formData = new FormData();
-    Object.keys(temp).forEach((e) =>
-      formData.append(capitalizeFirstLetter(e), temp[e])
-    );
     formData.set("Id", id);
     formData.append("ImageFile", image);
     const res = await axiosClient.put(url, formData);

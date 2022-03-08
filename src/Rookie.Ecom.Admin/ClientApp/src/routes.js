@@ -21,6 +21,7 @@ import Category from "./views/Category";
 import Tables from "./views/examples/Tables.js";
 import Icons from "./views/examples/Icons.js";
 import CategoryDetail from "./views/CategoryDetail";
+import Product from "./views/Product";
 
 var routes = [
   {
@@ -43,6 +44,13 @@ var routes = [
     icon: "ni ni-archive-2 text-primary",
     component: CategoryDetail,
     listed: false,
+  },
+  {
+    path: "/product",
+    name: "Product",
+    icon: "ni ni-basket text-primary",
+    component: Product,
+    listed: true,
   },
   {
     path: "/icons",

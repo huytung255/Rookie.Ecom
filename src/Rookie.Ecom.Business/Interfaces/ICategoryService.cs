@@ -16,12 +16,12 @@ namespace Rookie.Ecom.Business.Interfaces
 
         Task<CategoryDto> GetByNameAsync(string name);
 
-        Task<CategoryDto> AddAsync(CategoryDto categoryDto);
+        Task<CategoryDto> AddAsync(CreateCategoryDto createCategoryDto);
 
         Task DeleteAsync(Guid id);
 
-        Task UpdateAsync(CategoryDto categoryDto);
+        Task UpdateAsync(UpdateCategoryDto updateCategoryDto);
 
-        Task UpdateImageAsync(CategoryDto categoryDto);
+        Task UpdateImageAsync(UpdateCategoryImageDto updateCategoryImageDto);
     }
 }

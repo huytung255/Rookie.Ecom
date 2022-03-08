@@ -26,11 +26,11 @@ namespace Rookie.Ecom.Business.Services
             _mapper = mapper;
         }
 
-        public async Task<CategoryDto> AddAsync(CategoryDto categoryDto)
+        public async Task<CategoryDto> AddAsync(CreateCategoryDto createCategoryDto)
         {
-            if (categoryDto == null)
+            if (createCategoryDto == null)
                 throw new ArgumentNullException();
-            var category = _mapper.Map<Category>(categoryDto);
+            var category = _mapper.Map<Category>(createCategoryDto);
             category.Id = new Guid();
             category.CreatedDate = DateTime.Now;
             category.UpdatedDate = DateTime.Now;
@@ -45,11 +45,14 @@ namespace Rookie.Ecom.Business.Services
             await _baseRepository.DeleteAsync(id);
         }
 
-        public async Task UpdateAsync(CategoryDto categoryDto)
+        public async Task UpdateAsync(UpdateCategoryDto updateCategoryDto)
         {
-            var category = _mapper.Map<Category>(categoryDto);
-            category.UpdatedDate = DateTime.Now;
-            await _baseRepository.UpdateAsync(category);
+            var data = await _baseRepository.GetByIdAsync(updateCategoryDto.Id);
+            //var category = _mapper.Map<Category>(updateCategoryDto);
+            data.Name = updateCategoryDto.Name;
+            data.Desc = updateCategoryDto.Desc;
+            data.UpdatedDate = DateTime.Now;
+            await _baseRepository.UpdateAsync(data);
         }
 
         public async Task<IEnumerable<CategoryDto>> GetAllAsync()
@@ -98,12 +101,13 @@ namespace Rookie.Ecom.Business.Services
             };
         }
 
-        public async Task UpdateImageAsync(CategoryDto categoryDto)
+        public async Task UpdateImageAsync(UpdateCategoryImageDto updateCategoryImageDto)
         {
-            var category = _mapper.Map<Category>(categoryDto);
-            category.UpdatedDate = DateTime.Now;
-            category.ImageUrl = await _storageService.SaveFile(categoryDto.ImageFile);
-            await _baseRepository.UpdateAsync(category);
+            var data = await _baseRepository.GetByIdAsync(updateCategoryImageDto.Id);
+            //var category = _mapper.Map<Category>(updateCategoryImageDto);
+            data.UpdatedDate = DateTime.Now;
+            data.ImageUrl = await _storageService.SaveFile(updateCategoryImageDto.ImageFile);
+            await _baseRepository.UpdateAsync(data);
         }
     }
 }

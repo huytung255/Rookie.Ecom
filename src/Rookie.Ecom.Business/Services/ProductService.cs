@@ -24,9 +24,9 @@ namespace Rookie.Ecom.Business.Services
             _mapper = mapper;
         }
 
-        public async Task<ProductDto> AddAsync(ProductDto productDto)
+        public async Task<ProductDto> AddAsync(CreateProductDto createProductDto)
         {
-            var product = _mapper.Map<Product>(productDto);
+            var product = _mapper.Map<Product>(createProductDto);
             product.Id = new Guid();
             product.CreatedDate = DateTime.Now;
             product.UpdatedDate = DateTime.Now;
@@ -41,9 +41,16 @@ namespace Rookie.Ecom.Business.Services
             await _baseRepository.DeleteAsync(id);
         }
 
-        public async Task UpdateAsync(ProductDto productDto)
+        public async Task UpdateAsync(UpdateProductDto updateProductDto)
         {
-            var product = _mapper.Map<Product>(productDto);
+            var product = await _baseRepository.GetByIdAsync(updateProductDto.Id);
+            var updateProduct = _mapper.Map<Product>(updateProductDto);
+            product.Name = updateProduct.Name;
+            product.Price = updateProduct.Price;
+            product.Desc = updateProduct.Desc;
+            product.CategoryId = updateProduct.CategoryId;
+            product.IsAvailable = updateProduct.IsAvailable;
+            product.IsFeatured = updateProduct.IsFeatured;
             product.UpdatedDate = DateTime.Now;
             await _baseRepository.UpdateAsync(product);
         }
