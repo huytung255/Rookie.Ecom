@@ -11,7 +11,7 @@ namespace Rookie.Ecom.Contracts.Dtos
         public string Name { get; set; }
         public decimal Price { get; set; }
         public string Desc { get; set; }
-        public Guid CategoryId { get; set; }
+        public string CategoryId { get; set; }
         public bool IsFeatured { get; set; }
         public bool IsAvailable { get; set; }
         public List<ProductImageDto> ProductImages { get; set; }

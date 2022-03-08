@@ -29,7 +29,10 @@ namespace Rookie.Ecom.DataAccessor.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
+            builder.Entity<Category>(entity =>
+            {
+                entity.ToTable(name: "Categories").HasMany(p => p.Products).WithOne(t=>t.Category).OnDelete(DeleteBehavior.SetNull);
+            });
             builder.Entity<User>(entity =>
             {
                 entity.ToTable(name: "Users");

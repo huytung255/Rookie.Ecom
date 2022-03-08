@@ -23,6 +23,7 @@ namespace Rookie.Ecom.IntegrationTests
         private readonly SqliteInMemoryFixture _fixture;
         private readonly IBaseRepository<Category> _categoryRepository;
         private readonly IMapper _mapper;
+        private readonly IFileStorageService _fileStorageService;
 
         public CategoryControllerShould(SqliteInMemoryFixture fixture)
         {
@@ -37,7 +38,7 @@ namespace Rookie.Ecom.IntegrationTests
         public async Task Add_New_Category_Success()
         {
             // Arrange
-            var categoryService = new CategoryService(_categoryRepository, _mapper);
+            var categoryService = new CategoryService(_categoryRepository, _fileStorageService, _mapper);
             var categoryController = new CategoryController(categoryService);
 
             var newCategory = new CategoryDto { Name = "Test Category", Desc = "TC" };
@@ -66,7 +67,7 @@ namespace Rookie.Ecom.IntegrationTests
             var existCategory = new Category { Id = Guid.NewGuid(), Name = "Laptop", Desc = "LT" };
             await _categoryRepository.AddAsync(existCategory);
 
-            var categoryService = new CategoryService(_categoryRepository, _mapper);
+            var categoryService = new CategoryService(_categoryRepository, _fileStorageService, _mapper);
             var categoryController = new CategoryController(categoryService);
 
             var newCategory = new CategoryDto { Name = "Laptop 2", Desc = "ABC" };
@@ -100,7 +101,7 @@ namespace Rookie.Ecom.IntegrationTests
             await _categoryRepository.AddAsync(category3);
             await _categoryRepository.AddAsync(category4);
 
-            var categoryService = new CategoryService(_categoryRepository, _mapper);
+            var categoryService = new CategoryService(_categoryRepository, _fileStorageService, _mapper);
             var categoryController = new CategoryController(categoryService);
 
             // Act

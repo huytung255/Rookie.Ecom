@@ -28,6 +28,7 @@ namespace Rookie.Ecom.UnitTests.Business
         private readonly CategoryService _categoryService;
         private readonly Mock<IBaseRepository<Category>> _categoryRepository;
         private readonly IMapper _mapper;
+        private readonly IFileStorageService _fileStorageService;
 
         public CategoryServiceShould()
         {
@@ -38,6 +39,7 @@ namespace Rookie.Ecom.UnitTests.Business
 
             _categoryService = new CategoryService(
                     _categoryRepository.Object,
+                    _fileStorageService,
                     _mapper
                 );
         }

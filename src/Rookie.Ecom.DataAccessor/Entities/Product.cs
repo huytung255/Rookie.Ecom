@@ -15,7 +15,7 @@ namespace Rookie.Ecom.DataAccessor.Entities
         [Required]
         public string Desc { get; set; }
         [ForeignKey("Category")]
-        public Guid CategoryId { get; set; }
+        public Guid? CategoryId { get; set; }
         public bool IsFeatured { get; set; }
         public bool IsAvailable { get; set; }
         public Category Category { get; set; }
