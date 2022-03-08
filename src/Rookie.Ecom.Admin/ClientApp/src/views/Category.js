@@ -44,8 +44,12 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { actionCreators } from "../store/Category";
 import EmptyHeader from "../components/Headers/EmptyHeader.js";
+import NewCategoryModal from "../components/Modals/NewCategoryModal";
+import DeleteCategoryModal from "../components/Modals/DeleteCategoryModal";
 const Category = ({
   requestCategories,
+  addCategory,
+  deleteCategory,
   categories,
   currentPage,
   totalPages,
@@ -70,7 +74,14 @@ const Category = ({
           <div className="col">
             <Card className="shadow">
               <CardHeader className="border-0">
-                <h3 className="mb-0">Category</h3>
+                <Row className="align-items-center">
+                  <div className="col">
+                    <h3 className="mb-0">Category</h3>
+                  </div>
+                  <div className="col text-right">
+                    <NewCategoryModal addCategory={addCategory} />
+                  </div>
+                </Row>
               </CardHeader>
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
@@ -90,11 +101,15 @@ const Category = ({
                 <tbody>
                   {categories.map((cat, i) => {
                     return (
-                      <tr>
+                      <tr key={i}>
                         <td className="text-center">
                           <Media className="align-items-center">
-                            <div className="avatar rounded-circle">
-                              <img alt={cat.name} src={cat.imageUrl} />
+                            <div className="">
+                              <img
+                                className="img-fluid"
+                                alt={cat.name}
+                                src={cat.imageUrl}
+                              />
                             </div>
                           </Media>
                         </td>
@@ -111,14 +126,10 @@ const Category = ({
                           </Button>
                         </td>
                         <td className="text-center">
-                          <Button
-                            className="btn-icon-only text-danger"
-                            role="button"
-                            color=""
-                            size=""
-                          >
-                            <i className="fas fa-trash-alt"></i>
-                          </Button>
+                          <DeleteCategoryModal
+                            id={cat.id}
+                            deleteCategory={deleteCategory}
+                          />
                         </td>
                       </tr>
                     );

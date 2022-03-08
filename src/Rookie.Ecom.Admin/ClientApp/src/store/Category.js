@@ -8,11 +8,21 @@ function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 export const actionCreators = {
+  addCategory: (name, desc) => async (dispatch, getState) => {
+    const url = `api/Category`;
+    const res = await axiosClient.post(url, {
+      name,
+      desc,
+    });
+    dispatch(
+      actionCreators.requestCategories(getState().categories.currentPage)
+    );
+  },
   requestCategories: (page) => async (dispatch, getState) => {
-    if (page === getState().categories.page) {
-      // Don't issue a duplicate request (we already have or are loading the requested data)
-      return;
-    }
+    // if (page === getState().categories.currentPage) {
+    //   // Don't issue a duplicate request (we already have or are loading the requested data)
+    //   return;
+    // }
 
     dispatch({ type: requestCategoryType, page });
 
@@ -53,7 +63,15 @@ export const actionCreators = {
     formData.set("Id", id);
     formData.append("ImageFile", image);
     const res = await axiosClient.put(url, formData);
-    actionCreators.requestCategoryDetail(id);
+    dispatch(actionCreators.requestCategoryDetail(id));
+  },
+  deleteCategory: (id) => async (dispatch, getState) => {
+    if (!id) return;
+    const url = `api/Category/${id}`;
+    const res = await axiosClient.delete(url);
+    dispatch(
+      actionCreators.requestCategories(getState().categories.currentPage)
+    );
   },
 };
 

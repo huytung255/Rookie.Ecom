@@ -43,7 +43,6 @@ const CategoryDetail = ({
   match,
   categoryDetail,
 }) => {
-  const [image, setImage] = useState(null);
   const {
     handleSubmit,
     control,
@@ -83,7 +82,7 @@ const CategoryDetail = ({
                 />
               </CardHeader>
               <CardBody className="pt-0 text-center">
-                <Button color="info" size="sm" className="button-input">
+                <a className="btn btn-info btn-sm button-input">
                   <i className="fas fa-camera mr-1"></i>
                   Upload picture
                   <input
@@ -91,7 +90,7 @@ const CategoryDetail = ({
                     type="file"
                     onChange={onImageChange}
                   />
-                </Button>
+                </a>
               </CardBody>
             </Card>
           </Col>
@@ -164,14 +163,13 @@ const CategoryDetail = ({
                 </Form>
               </CardBody>
               <CardFooter className="bg-white border-0 text-right">
-                <Button
-                  color="primary"
+                <a
                   onClick={handleSubmit(onClick)}
-                  size="sm"
+                  className="btn btn-primary btn-sm"
                 >
                   <i className="fas fa-save mr-1"></i>
                   Save
-                </Button>
+                </a>
               </CardFooter>
             </Card>
           </Col>
