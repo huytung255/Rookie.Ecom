@@ -17,7 +17,7 @@
 */
 
 // reactstrap components
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { actionCreators } from "../store/Category";
@@ -39,15 +39,18 @@ import { Controller, useForm } from "react-hook-form";
 const CategoryDetail = ({
   requestCategoryDetail,
   updateCategoryDetail,
+  updateCategoryImage,
   match,
   categoryDetail,
 }) => {
+  const [image, setImage] = useState(null);
   const {
     handleSubmit,
     control,
     formState: { errors, isValid },
     setValue,
   } = useForm({ mode: "all" });
+
   useEffect(() => {
     requestCategoryDetail(match.params.id);
   }, []);
@@ -58,6 +61,12 @@ const CategoryDetail = ({
   const onClick = (data) => {
     updateCategoryDetail(match.params.id, data.name, data.desc);
   };
+  const onImageChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      const img = event.target.files[0];
+      updateCategoryImage(match.params.id, img);
+    }
+  };
   return (
     <React.Fragment>
       <EmptyHeader />
@@ -67,16 +76,21 @@ const CategoryDetail = ({
           <Col className=" mb-5 mb-xl-0" xl="4">
             <Card className="card-profile shadow">
               <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                <img alt="..." src="https://picsum.photos/200" />
+                <img
+                  className="img-fluid"
+                  alt={categoryDetail.name}
+                  src={categoryDetail.imageUrl}
+                />
               </CardHeader>
               <CardBody className="pt-0 text-center">
-                <Button
-                  color="info"
-                  onClick={(e) => e.preventDefault()}
-                  size="sm"
-                >
+                <Button color="info" size="sm" className="button-input">
                   <i className="fas fa-camera mr-1"></i>
                   Upload picture
+                  <input
+                    id="image-upload"
+                    type="file"
+                    onChange={onImageChange}
+                  />
                 </Button>
               </CardBody>
             </Card>

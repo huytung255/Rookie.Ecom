@@ -4,6 +4,9 @@ const receiveCategoryType = "RECEIVE_CATEGORIES";
 const receiveCategoryDetailType = "RECEIVE_CATEGORY_DETAIL";
 const initialState = { categories: [], isLoading: false, categoryDetail: {} };
 
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 export const actionCreators = {
   requestCategories: (page) => async (dispatch, getState) => {
     if (page === getState().categories.page) {
@@ -29,12 +32,27 @@ export const actionCreators = {
   },
   updateCategoryDetail: (id, name, desc) => async (dispatch, getState) => {
     if (!id) return;
+    const temp = getState().categories.categoryDetail;
     const url = `api/Category`;
     const res = await axiosClient.put(url, {
+      ...temp,
       id,
       name,
       desc,
     });
+    // actionCreators.requestCategoryDetail(id);
+  },
+  updateCategoryImage: (id, image) => async (dispatch, getState) => {
+    if (!id) return;
+    const temp = getState().categories.categoryDetail;
+    const url = `api/Category/image`;
+    var formData = new FormData();
+    Object.keys(temp).forEach((e) =>
+      formData.append(capitalizeFirstLetter(e), temp[e])
+    );
+    formData.set("Id", id);
+    formData.append("ImageFile", image);
+    const res = await axiosClient.put(url, formData);
     actionCreators.requestCategoryDetail(id);
   },
 };

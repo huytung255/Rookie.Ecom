@@ -10,7 +10,9 @@ using Rookie.Ecom.Admin.Filters;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-
+using Microsoft.Extensions.FileProviders;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace Rookie.Ecom.Admin
 {
@@ -71,6 +73,11 @@ namespace Rookie.Ecom.Admin
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(@"D:\Rookies\Projects\netcore-redux-id4-mentor\src\Rookie.Ecom.Customer\wwwroot\images"),
+                RequestPath = new PathString("/images")
+            });
             app.UseSpaStaticFiles();
             app.UseSwagger()
                 .UseSwaggerUI(c =>

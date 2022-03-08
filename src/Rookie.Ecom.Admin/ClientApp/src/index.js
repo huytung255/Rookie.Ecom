@@ -2,6 +2,7 @@ import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import "../src/assets/plugins/nucleo/css/nucleo.css";
 import "../node_modules/@fortawesome/fontawesome-free/css/all.min.css";
 import "../src/assets/css/argon-dashboard-react.css";
+import "../src/assets/css/style.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
