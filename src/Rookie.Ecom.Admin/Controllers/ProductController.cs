@@ -59,18 +59,18 @@ namespace Rookie.Ecom.Admin.Controllers
     => await _productService.GetByIdAsync(id);
 
         [HttpPost("image")]
-        public async Task<ActionResult<ProductImageDto>> CreateProductImageAsync([FromForm] ProductImageDto productImageDto)
+        public async Task<ActionResult<ProductImageDto>> CreateProductImageAsync([FromForm] CreateProductImageDto createProductImageDto)
         {
             //Ensure.Any.IsNotNull(productImageDto, nameof(productImageDto));
-            var asset = await _productImageService.AddAsync(productImageDto);
+            var asset = await _productImageService.AddAsync(createProductImageDto);
             return Created(Endpoints.Product, asset);
         }
         [HttpPut("image")]
-        public async Task<ActionResult<ProductImageDto>> UpdateProductImageAsync([FromForm] ProductImageDto productImageDto)
+        public async Task<ActionResult<ProductImageDto>> UpdateProductImageAsync([FromForm] UpdateProductImageDto updateProductImageDto)
         {
             //Ensure.Any.IsNotNull(productImageDto, nameof(productImageDto));
-            Ensure.Any.IsNotNull(productImageDto.Id, nameof(productImageDto.Id));
-            await _productImageService.UpdateAsync(productImageDto);
+            Ensure.Any.IsNotNull(updateProductImageDto.Id, nameof(updateProductImageDto.Id));
+            await _productImageService.UpdateAsync(updateProductImageDto);
             return NoContent();
         }
         [HttpDelete("image/{imageId}")]

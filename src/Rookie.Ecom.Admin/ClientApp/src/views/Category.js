@@ -45,8 +45,8 @@ import { connect } from "react-redux";
 import { actionCreators } from "../store/Category";
 import EmptyHeader from "../components/Headers/EmptyHeader.js";
 import NewCategoryModal from "../components/Modals/NewCategoryModal";
-import DeleteCategoryModal from "../components/Modals/DeleteCategoryModal";
 import { addDefaultSrc, defaultSrc } from "../utils/imgManager";
+import DeleteModal from "../components/Modals/DeleteModal";
 const Category = ({
   requestCategories,
   addCategory,
@@ -128,9 +128,10 @@ const Category = ({
                           </Button>
                         </td>
                         <td className="text-center">
-                          <DeleteCategoryModal
+                          <DeleteModal
                             id={cat.id}
-                            deleteCategory={deleteCategory}
+                            title="category"
+                            deleteFunc={deleteCategory}
                           />
                         </td>
                       </tr>

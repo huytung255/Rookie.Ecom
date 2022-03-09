@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import axiosClient from "../axios/axiosClient";
 const requestCategoryType = "REQUEST_CATEGORIES";
 const receiveCategoryType = "RECEIVE_CATEGORIES";
@@ -16,13 +17,23 @@ function capitalizeFirstLetter(string) {
 export const actionCreators = {
   addCategory: (name, desc) => async (dispatch, getState) => {
     const url = `api/Category`;
-    const res = await axiosClient.post(url, {
-      name,
-      desc,
-    });
-    dispatch(
-      actionCreators.requestCategories(getState().categories.currentPage)
-    );
+    toast
+      .promise(
+        axiosClient.post(url, {
+          name,
+          desc,
+        }),
+        {
+          pending: "Creating...",
+          success: `Category "${name}" is created.`,
+          error: "Error!",
+        }
+      )
+      .then(() => {
+        dispatch(
+          actionCreators.requestCategories(getState().categories.currentPage)
+        );
+      });
   },
   requestAllCategories: () => async (dispatch, getState) => {
     const url = `api/Category`;
@@ -57,12 +68,22 @@ export const actionCreators = {
   updateCategoryDetail: (id, name, desc) => async (dispatch, getState) => {
     if (!id) return;
     const url = `api/Category`;
-    const res = await axiosClient.put(url, {
-      id,
-      name,
-      desc,
-    });
-    dispatch(actionCreators.requestCategoryDetail(id));
+    toast
+      .promise(
+        axiosClient.put(url, {
+          id,
+          name,
+          desc,
+        }),
+        {
+          pending: "Updating...",
+          success: "Category detail is updated.",
+          error: "Error!",
+        }
+      )
+      .then(() => {
+        dispatch(actionCreators.requestCategoryDetail(id));
+      });
   },
   updateCategoryImage: (id, image) => async (dispatch, getState) => {
     if (!id) return;
@@ -70,16 +91,30 @@ export const actionCreators = {
     var formData = new FormData();
     formData.set("Id", id);
     formData.append("ImageFile", image);
-    const res = await axiosClient.put(url, formData);
-    dispatch(actionCreators.requestCategoryDetail(id));
+    toast
+      .promise(axiosClient.put(url, formData), {
+        pending: "Updating...",
+        success: "Category image is updated.",
+        error: "Error!",
+      })
+      .then(() => {
+        dispatch(actionCreators.requestCategoryDetail(id));
+      });
   },
   deleteCategory: (id) => async (dispatch, getState) => {
     if (!id) return;
     const url = `api/Category/${id}`;
-    const res = await axiosClient.delete(url);
-    dispatch(
-      actionCreators.requestCategories(getState().categories.currentPage)
-    );
+    toast
+      .promise(axiosClient.delete(url), {
+        pending: "Deleting...",
+        success: "Category is deleted.",
+        error: "Error!",
+      })
+      .then(() => {
+        dispatch(
+          actionCreators.requestCategories(getState().categories.currentPage)
+        );
+      });
   },
 };
 

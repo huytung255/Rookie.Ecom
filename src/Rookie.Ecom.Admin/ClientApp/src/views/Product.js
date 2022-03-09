@@ -26,12 +26,12 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { actionCreators } from "../store/Product";
 import EmptyHeader from "../components/Headers/EmptyHeader.js";
-import NewCategoryModal from "../components/Modals/NewCategoryModal";
-import DeleteCategoryModal from "../components/Modals/DeleteCategoryModal";
+import DeleteModal from "../components/Modals/DeleteModal";
 import NewProductModal from "../components/Modals/NewProductModal";
 import { addDefaultSrc, defaultSrc } from "../utils/imgManager";
 const Product = ({
   requestProducts,
+  deleteProduct,
   products,
   currentPage,
   totalPages,
@@ -111,8 +111,8 @@ const Product = ({
                                 className="img-fluid rounded"
                                 alt={p.name}
                                 src={
-                                  p.productImages.length !== 0
-                                    ? p.productImages[0].imageUrl
+                                  p.defaultImage
+                                    ? p.defaultImage.imageUrl
                                     : defaultSrc
                                 }
                                 onError={addDefaultSrc}
@@ -138,7 +138,13 @@ const Product = ({
                             <i className="fas fa-pen"></i>
                           </Button>
                         </td>
-                        <td className="text-center"></td>
+                        <td className="text-center">
+                          <DeleteModal
+                            id={p.id}
+                            title="product"
+                            deleteFunc={deleteProduct}
+                          />
+                        </td>
                       </tr>
                     );
                   })}

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-const DeleteCategoryModal = ({ id, deleteCategory }) => {
+const DeleteModal = ({ id, title, deleteFunc }) => {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
   const onDelete = () => {
-    deleteCategory(id);
+    deleteFunc(id);
     toggle();
   };
   return (
@@ -20,9 +20,9 @@ const DeleteCategoryModal = ({ id, deleteCategory }) => {
       </Button>
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader className="align-items-center " tag="h3" toggle={toggle}>
-          Delete category
+          Delete {title}
         </ModalHeader>
-        <ModalBody>Do you really want to delete this category?</ModalBody>
+        <ModalBody>Do you really want to delete this {title}?</ModalBody>
         <ModalFooter>
           <a className="btn btn-danger btn-sm" onClick={onDelete}>
             Yes
@@ -36,4 +36,4 @@ const DeleteCategoryModal = ({ id, deleteCategory }) => {
   );
 };
 
-export default DeleteCategoryModal;
+export default DeleteModal;

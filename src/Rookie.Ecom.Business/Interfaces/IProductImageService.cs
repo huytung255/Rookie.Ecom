@@ -16,10 +16,10 @@ namespace Rookie.Ecom.Business.Interfaces
         Task<ProductImageDto> GetByIdAsync(Guid id);
 
 
-        Task<ProductImageDto> AddAsync(ProductImageDto productImageDto);
+        Task<ProductImageDto> AddAsync(CreateProductImageDto createProductImageDto);
 
         Task DeleteAsync(Guid id,string imagePath);
 
-        Task UpdateAsync(ProductImageDto productImageDto);
+        Task UpdateAsync(UpdateProductImageDto updateProductImageDto);
     }
 }

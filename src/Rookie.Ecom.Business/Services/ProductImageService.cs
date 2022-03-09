@@ -29,15 +29,15 @@ namespace Rookie.Ecom.Business.Services
             _mapper = mapper;
         }
 
-        public async Task<ProductImageDto> AddAsync(ProductImageDto productImageDto)
+        public async Task<ProductImageDto> AddAsync(CreateProductImageDto createProductImageDto)
         {
-            var productImage = _mapper.Map<ProductImage>(productImageDto);
+            var productImage = _mapper.Map<ProductImage>(createProductImageDto);
             productImage.Id = new Guid();
             productImage.CreatedDate = DateTime.Now;
             productImage.UpdatedDate = DateTime.Now;
             productImage.CreatorId = null;
             productImage.Published = true;
-            productImage.ImageUrl = await _storageService.SaveFile(productImageDto.ImageFile);
+            productImage.ImageUrl = await _storageService.SaveFile(createProductImageDto.ImageFile);
             var item = await _baseRepository.AddAsync(productImage);
             return _mapper.Map<ProductImageDto>(item);
         }
@@ -48,9 +48,11 @@ namespace Rookie.Ecom.Business.Services
             await _baseRepository.DeleteAsync(id);
         }
 
-        public async Task UpdateAsync(ProductImageDto productImageDto)
+        public async Task UpdateAsync(UpdateProductImageDto updateProductImageDto)
         {
-            var productImage = _mapper.Map<ProductImage>(productImageDto);
+            var productImage = await _baseRepository.GetByIdAsync(updateProductImageDto.Id);
+            productImage.Caption = updateProductImageDto.Caption;
+            productImage.IsDefault = updateProductImageDto.IsDefault;
             productImage.UpdatedDate = DateTime.Now;
             await _baseRepository.UpdateAsync(productImage);
         }

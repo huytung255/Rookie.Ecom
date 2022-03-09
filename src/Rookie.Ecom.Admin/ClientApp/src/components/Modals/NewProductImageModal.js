@@ -9,16 +9,16 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Dropdown,
+  Label,
 } from "reactstrap";
 import { Controller, useForm } from "react-hook-form";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { actionCreators } from "../../store/Product";
-import ProductForm from "../ProductForm";
-const NewProductModal = ({ addProduct }) => {
+import ProductImageForm from "../ProductImageForm";
+const NewProductImageModal = ({ addProductImage, productDetail }) => {
   const [modal, setModal] = useState(false);
-  const [category, setCategory] = useState("");
+  const [image, setImage] = useState(null);
   const {
     register,
     handleSubmit,
@@ -27,21 +27,21 @@ const NewProductModal = ({ addProduct }) => {
     setValue,
   } = useForm({ mode: "all" });
   const toggle = () => setModal(!modal);
+  const onImageChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      const img = event.target.files[0];
+      setImage(img);
+    }
+  };
   const onAdd = (data) => {
-    const { name, desc, price, isFeatured, isAvailable } = data;
-    addProduct(
-      name,
-      parseFloat(price),
-      desc,
-      category,
-      isFeatured === "true",
-      isAvailable === "true"
-    );
-    toggle();
+    if (image) {
+      const { caption, isDefault } = data;
+      addProductImage(productDetail.id, image, caption, isDefault === "true");
+      toggle();
+    }
   };
   useEffect(() => {
-    setValue("isFeatured", "true");
-    setValue("isAvailable", "true");
+    setValue("isDefault", "true");
   }, []);
   return (
     <React.Fragment>
@@ -49,17 +49,37 @@ const NewProductModal = ({ addProduct }) => {
         <i className="fas fa-plus mr-1"></i>
         New
       </a>
-      <Modal isOpen={modal} toggle={toggle} scrollable size="lg">
+      <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader className="align-items-center " tag="h3" toggle={toggle}>
-          Add a new product
+          Add a new product image
         </ModalHeader>
         <ModalBody>
-          <ProductForm
+          <div>
+            <Row>
+              <Col md="12">
+                <FormGroup>
+                  <label className="form-control-label">Image</label>
+                  <div className="custom-file">
+                    <Input
+                      id="productImage"
+                      className="custom-file-input"
+                      type="file"
+                      onChange={onImageChange}
+                      accept="image/*"
+                    />
+                    <Label className="custom-file-label" for="productImage">
+                      {image ? image.name : "Choose file"}
+                    </Label>
+                  </div>
+                </FormGroup>
+              </Col>
+            </Row>
+          </div>
+          <ProductImageForm
             register={register}
             control={control}
             errors={errors}
-            category={category}
-            setCategory={setCategory}
+            shouldUnregister={true}
           />
         </ModalBody>
         <ModalFooter>
@@ -77,4 +97,4 @@ const NewProductModal = ({ addProduct }) => {
 export default connect(
   (state) => state.products,
   (dispatch) => bindActionCreators(actionCreators, dispatch)
-)(NewProductModal);
+)(NewProductImageModal);

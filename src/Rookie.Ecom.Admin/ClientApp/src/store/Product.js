@@ -3,11 +3,12 @@ import axiosClient from "../axios/axiosClient";
 const requestProductType = "REQUEST_PRODUCTS";
 const receiveProductType = "RECEIVE_PRODUCTS";
 const receiveProductDetailType = "RECEIVE_PRODUCT_DETAIL";
-const initialState = { products: [], isLoading: false, productDetail: {} };
+const initialState = {
+  products: [],
+  isLoading: false,
+  productDetail: { productImages: [] },
+};
 
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
 export const actionCreators = {
   addProduct:
     (name, price, desc, categoryId, isFeatured, isAvailable) =>
@@ -66,6 +67,79 @@ export const actionCreators = {
           dispatch(actionCreators.requestProductDetail(id));
         });
     },
+  deleteProduct: (id) => async (dispatch, getState) => {
+    if (!id) return;
+    const url = `api/product/${id}`;
+    toast
+      .promise(axiosClient.delete(url), {
+        pending: "Deleting...",
+        success: "Product is deleted.",
+        error: "Error!",
+      })
+      .then(() => {
+        dispatch(
+          actionCreators.requestProducts(getState().products.currentPage)
+        );
+      });
+  },
+  addProductImage:
+    (productId, image, caption, isDefault) => async (dispatch, getState) => {
+      if (!productId) return;
+      const url = `api/product/image`;
+      var formData = new FormData();
+      formData.append("ProductId", productId);
+      formData.append("ImageFile", image);
+      formData.append("Caption", caption);
+      formData.append("IsDefault", isDefault);
+      toast
+        .promise(axiosClient.post(url, formData), {
+          pending: "Uploading image...",
+          success: "A product image is created.",
+          error: "Error!",
+        })
+        .then(() => {
+          dispatch(actionCreators.requestProductDetail(productId));
+        });
+    },
+  updateProductImage:
+    (id, caption, isDefault) => async (dispatch, getState) => {
+      if (!id) return;
+      const url = `api/product/image`;
+      var formData = new FormData();
+      formData.append("Id", id);
+      formData.append("Caption", caption);
+      formData.append("IsDefault", isDefault);
+      toast
+        .promise(axiosClient.put(url, formData), {
+          pending: "Updating image...",
+          success: "A product image is updated.",
+          error: "Error!",
+        })
+        .then(() => {
+          dispatch(
+            actionCreators.requestProductDetail(
+              getState().products.productDetail.id
+            )
+          );
+        });
+    },
+  deleteProductImage: (id) => async (dispatch, getState) => {
+    if (!id) return;
+    const url = `api/product/image/${id}`;
+    toast
+      .promise(axiosClient.delete(url), {
+        pending: "Deleting image...",
+        success: "A product image is deleted.",
+        error: "Error!",
+      })
+      .then(() => {
+        dispatch(
+          actionCreators.requestProductDetail(
+            getState().products.productDetail.id
+          )
+        );
+      });
+  },
 };
 
 export const reducer = (state, action) => {

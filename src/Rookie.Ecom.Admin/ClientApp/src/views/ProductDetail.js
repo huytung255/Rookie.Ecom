@@ -14,11 +14,14 @@ import {
   Row,
   Col,
   CardFooter,
+  Carousel,
 } from "reactstrap";
 import EmptyHeader from "../components/Headers/EmptyHeader.js";
 import { Controller, useForm } from "react-hook-form";
 import { addDefaultSrc, defaultSrc } from "../utils/imgManager";
 import ProductForm from "../components/ProductForm";
+import ProductImageManager from "../components/ProductImageTable";
+import MyCarousel from "../components/MyCarousel";
 const ProductDetail = ({
   requestProductDetail,
   updateProductDetail,
@@ -73,24 +76,19 @@ const ProductDetail = ({
           <Col className=" mb-5 mb-xl-0" xl="4">
             <Card className="card-profile shadow">
               <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                <img
-                  className="img-fluid rounded"
-                  alt={productDetail.name}
-                  src={defaultSrc}
-                  onError={addDefaultSrc}
-                />
-              </CardHeader>
-              <CardBody className="pt-0 text-center">
-                <a className="btn btn-info btn-sm button-input">
-                  <i className="fas fa-camera mr-1"></i>
-                  Upload picture
-                  <input
-                    id="image-upload"
-                    type="file"
-                    onChange={onImageChange}
+                {productDetail.productImages.length !== 0 ? (
+                  <MyCarousel
+                    items={productDetail.productImages}
+                    defaultItem={productDetail.defaultImage}
                   />
-                </a>
-              </CardBody>
+                ) : (
+                  <img
+                    className="img-fluid rounded"
+                    alt={productDetail.name}
+                    src={defaultSrc}
+                  />
+                )}
+              </CardHeader>
             </Card>
           </Col>
           <Col className="" xl="8">
@@ -120,6 +118,7 @@ const ProductDetail = ({
           </Col>
         </Row>
       </Container>
+      <ProductImageManager />
     </React.Fragment>
   );
 };
