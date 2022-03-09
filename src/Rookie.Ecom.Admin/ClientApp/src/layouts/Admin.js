@@ -23,7 +23,7 @@ import { Container } from "reactstrap";
 import AdminNavbar from "../components/Navbars/AdminNavbar.js";
 import AdminFooter from "../components/Footers/AdminFooter.js";
 import Sidebar from "../components/Sidebar/Sidebar";
-
+import { ToastContainer } from "react-toastify";
 import routes from "../routes";
 
 const Admin = (props) => {
@@ -45,14 +45,15 @@ const Admin = (props) => {
   };
 
   const getBrandText = (path) => {
-    for (let i = 0; i < routes.length; i++) {
-      if (
-        props.location.pathname.indexOf(routes[i].layout + routes[i].path) !==
-        -1
-      ) {
-        return routes[i].name;
-      }
-    }
+    // for (let i = 0; i < routes.length; i++) {
+    //   if (
+    //     props.location.pathname.indexOf(routes[i].layout + routes[i].path) !==
+    //     -1
+    //   ) {
+    //     return routes[i].name;
+    //   }
+    // }
+    // return "Brand";
     return "Brand";
   };
 
@@ -62,16 +63,13 @@ const Admin = (props) => {
         {...props}
         routes={routes}
         logo={{
-          innerLink: "/admin/index",
+          innerLink: "/dashboard",
           imgSrc: require("../assets/img/brand/argon-react.png").default,
           imgAlt: "...",
         }}
       />
       <div className="main-content" ref={mainContent}>
-        <AdminNavbar
-          {...props}
-          //brandText={getBrandText(props.location.pathname)}
-        />
+        <AdminNavbar {...props} brandText={getBrandText} />
         <Switch>
           {getRoutes(routes)}
           <Redirect from="*" to="/dashboard" />
@@ -80,6 +78,7 @@ const Admin = (props) => {
           <AdminFooter />
         </Container>
       </div>
+      <ToastContainer />
     </React.Fragment>
   );
 };

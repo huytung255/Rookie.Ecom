@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import axiosClient from "../axios/axiosClient";
 const requestProductType = "REQUEST_PRODUCTS";
 const receiveProductType = "RECEIVE_PRODUCTS";
@@ -44,16 +45,26 @@ export const actionCreators = {
     async (dispatch, getState) => {
       if (!id) return;
       const url = `api/product`;
-      const res = await axiosClient.put(url, {
-        id,
-        name,
-        price,
-        desc,
-        categoryId,
-        isFeatured,
-        isAvailable,
-      });
-      dispatch(actionCreators.requestProductDetail(id));
+      toast
+        .promise(
+          axiosClient.put(url, {
+            id,
+            name,
+            price,
+            desc,
+            categoryId,
+            isFeatured,
+            isAvailable,
+          }),
+          {
+            pending: "Updating...",
+            success: "Product detail is updated.",
+            error: "Error!",
+          }
+        )
+        .then(() => {
+          dispatch(actionCreators.requestProductDetail(id));
+        });
     },
 };
 
