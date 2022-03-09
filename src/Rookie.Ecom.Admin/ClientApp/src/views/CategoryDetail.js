@@ -36,6 +36,7 @@ import {
 } from "reactstrap";
 import EmptyHeader from "../components/Headers/EmptyHeader.js";
 import { Controller, useForm } from "react-hook-form";
+import { addDefaultSrc, defaultSrc } from "../utils/imgManager";
 const CategoryDetail = ({
   requestCategoryDetail,
   updateCategoryDetail,
@@ -76,9 +77,14 @@ const CategoryDetail = ({
             <Card className="card-profile shadow">
               <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
                 <img
-                  className="img-fluid"
+                  className="img-fluid rounded"
                   alt={categoryDetail.name}
-                  src={categoryDetail.imageUrl}
+                  src={
+                    categoryDetail.imageUrl
+                      ? categoryDetail.imageUrl
+                      : defaultSrc
+                  }
+                  onError={addDefaultSrc}
                 />
               </CardHeader>
               <CardBody className="pt-0 text-center">

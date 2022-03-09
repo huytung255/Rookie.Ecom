@@ -29,6 +29,7 @@ import EmptyHeader from "../components/Headers/EmptyHeader.js";
 import NewCategoryModal from "../components/Modals/NewCategoryModal";
 import DeleteCategoryModal from "../components/Modals/DeleteCategoryModal";
 import NewProductModal from "../components/Modals/NewProductModal";
+import { addDefaultSrc, defaultSrc } from "../utils/imgManager";
 const Product = ({
   requestProducts,
   products,
@@ -37,6 +38,21 @@ const Product = ({
   location,
   isLoading,
 }) => {
+  const renderStatus = (status) => (
+    <Badge color="" className="badge-dot mr-4">
+      {status ? (
+        <React.Fragment>
+          <i className="bg-success" />
+          Yes
+        </React.Fragment>
+      ) : (
+        <React.Fragment>
+          <i className="bg-warning" />
+          No
+        </React.Fragment>
+      )}
+    </Badge>
+  );
   const fetchProducts = (page) => {
     requestProducts(page);
   };
@@ -73,6 +89,9 @@ const Product = ({
                     <th scope="col">Name</th>
                     <th scope="col">Price</th>
                     <th scope="col">Category</th>
+                    <th scope="col">Featured</th>
+                    <th scope="col">Available</th>
+
                     <th scope="col" className="text-center">
                       Edit
                     </th>
@@ -89,12 +108,14 @@ const Product = ({
                           <Media className="align-items-center">
                             <div className="">
                               <img
-                                className="img-fluid"
+                                className="img-fluid rounded"
                                 alt={p.name}
                                 src={
-                                  p.productImages.length !== 0 &&
-                                  p.productImages[0].imageUrl
+                                  p.productImages.length !== 0
+                                    ? p.productImages[0].imageUrl
+                                    : defaultSrc
                                 }
+                                onError={addDefaultSrc}
                               />
                             </div>
                           </Media>
@@ -104,6 +125,8 @@ const Product = ({
                         <td className="w-100">
                           {p.category && p.category.name}
                         </td>
+                        <td className="w-100">{renderStatus(p.isFeatured)}</td>
+                        <td className="w-100">{renderStatus(p.isAvailable)}</td>
                         <td className="text-center">
                           <Button
                             className="btn-icon-only text-success"

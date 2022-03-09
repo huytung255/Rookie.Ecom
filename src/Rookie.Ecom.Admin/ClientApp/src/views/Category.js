@@ -46,6 +46,7 @@ import { actionCreators } from "../store/Category";
 import EmptyHeader from "../components/Headers/EmptyHeader.js";
 import NewCategoryModal from "../components/Modals/NewCategoryModal";
 import DeleteCategoryModal from "../components/Modals/DeleteCategoryModal";
+import { addDefaultSrc, defaultSrc } from "../utils/imgManager";
 const Category = ({
   requestCategories,
   addCategory,
@@ -106,9 +107,10 @@ const Category = ({
                           <Media className="align-items-center">
                             <div className="">
                               <img
-                                className="img-fluid"
+                                className="img-fluid rounded"
                                 alt={cat.name}
-                                src={cat.imageUrl}
+                                src={cat.imageUrl ? cat.imageUrl : defaultSrc}
+                                onError={addDefaultSrc}
                               />
                             </div>
                           </Media>

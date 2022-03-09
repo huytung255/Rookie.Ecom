@@ -109,10 +109,9 @@ const ProductForm = ({
             {...register("isFeatured")}
             className="form-check-input"
             type="radio"
-            name="isFeaturedRadios"
+            name="isFeatured"
             id="isFeaturedRadios1"
-            value={true}
-            checked
+            value="true"
           />
           <label className="form-check-label" htmlFor="isFeaturedRadios1">
             Yes
@@ -123,9 +122,9 @@ const ProductForm = ({
             {...register("isFeatured")}
             className="form-check-input"
             type="radio"
-            name="isFeaturedRadios"
+            name="isFeatured"
             id="isFeaturedRadios2"
-            value={false}
+            value="false"
           />
           <label className="form-check-label" htmlFor="isFeaturedRadios2">
             No
@@ -139,10 +138,9 @@ const ProductForm = ({
             {...register("isAvailable")}
             className="form-check-input"
             type="radio"
-            name="isAvailableRadios"
+            name="isAvailable"
             id="isAvailableRadios1"
-            value={true}
-            checked
+            value="true"
           />
           <label className="form-check-label" htmlFor="isAvailableRadios1">
             Yes
@@ -153,9 +151,9 @@ const ProductForm = ({
             {...register("isAvailable")}
             className="form-check-input"
             type="radio"
-            name="isFeaturedRadios"
+            name="isAvailable"
             id="isAvailableRadios2"
-            value={false}
+            value="false"
           />
           <label className="form-check-label" htmlFor="isAvailableRadios2">
             No

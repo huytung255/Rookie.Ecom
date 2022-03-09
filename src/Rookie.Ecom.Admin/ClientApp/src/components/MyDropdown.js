@@ -16,14 +16,17 @@ const MyDropdown = ({ value, setValue, items }) => {
   return (
     <Dropdown isOpen={open} toggle={toggle}>
       <DropdownToggle tag="a" className="btn btn-info btn-sm" caret>
-        {value !== "" ? items[value] : "No items selected"}
+        {value !== "" ? items[value] : "No items chosen"}
       </DropdownToggle>
+
       <DropdownMenu container="body">
         {Object.keys(items).map((i) => (
           <DropdownItem onClick={() => onItemClick(i)} key={i}>
             {items[i]}
           </DropdownItem>
         ))}
+        <DropdownItem divider></DropdownItem>
+        <DropdownItem onClick={() => onItemClick("")}>Not chosen</DropdownItem>
       </DropdownMenu>
     </Dropdown>
   );

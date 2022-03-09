@@ -46,7 +46,7 @@ const NewProductModal = ({ addProduct }) => {
         <i className="fas fa-plus mr-1"></i>
         New
       </a>
-      <Modal isOpen={modal} toggle={toggle}>
+      <Modal isOpen={modal} toggle={toggle} scrollable size="lg">
         <ModalHeader className="align-items-center " tag="h3" toggle={toggle}>
           Add a new product
         </ModalHeader>
