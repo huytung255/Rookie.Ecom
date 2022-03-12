@@ -24,6 +24,7 @@ import CategoryDetail from "./views/CategoryDetail";
 import Product from "./views/Product";
 import ProductDetail from "./views/ProductDetail";
 import ProfilePage from "./components/profile/ProfilePage";
+import CallbackPage from "./components/callback/CallbackPage";
 var routes = [
   {
     path: "/dashboard",
@@ -87,6 +88,13 @@ var routes = [
     icon: "ni ni-bullet-list-67 text-red",
     component: Tables,
     listed: true,
+  },
+  {
+    path: "/callback",
+    name: "Callback",
+    icon: "",
+    component: CallbackPage,
+    listed: false,
   },
 ];
 export default routes;

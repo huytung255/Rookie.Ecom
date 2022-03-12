@@ -6,7 +6,7 @@ using Rookie.Ecom.DataAccessor;
 using System.Reflection;
 using Refit;
 using System;
-using Rookie.Ecom.DataAccessor.Interfaces;
+
 
 namespace Rookie.Ecom.Business
 {
@@ -17,7 +17,9 @@ namespace Rookie.Ecom.Business
 
             services.AddDataAccessorLayer(configuration);
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
-           
+
+
+
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IProductImageService, ProductImageService>();

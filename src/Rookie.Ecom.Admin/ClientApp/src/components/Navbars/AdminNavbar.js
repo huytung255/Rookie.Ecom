@@ -35,8 +35,19 @@ import {
   Container,
   Media,
 } from "reactstrap";
-
+import userManager from "../../utils/userManager";
+import { connect } from "react-redux";
 const AdminNavbar = (props) => {
+  const { user } = props;
+  const onLogoutButtonClick = (event) => {
+    event.preventDefault();
+    userManager.signoutRedirect({ id_token_hint: user.id_token });
+    userManager.removeUser(); // removes the user data from sessionStorage
+  };
+  const onLoginButtonClick = (event) => {
+    event.preventDefault();
+    userManager.signinRedirect();
+  };
   return (
     <React.Fragment>
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
@@ -77,6 +88,14 @@ const AdminNavbar = (props) => {
                   <span>My profile</span>
                 </DropdownItem>
 
+                <DropdownItem onClick={onLoginButtonClick}>
+                  <i className="ni ni-single-02" />
+                  <span>Login</span>
+                </DropdownItem>
+                <DropdownItem onClick={onLogoutButtonClick}>
+                  <i className="ni ni-single-02" />
+                  <span>Logout</span>
+                </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
                   <i className="ni ni-user-run" />
@@ -91,4 +110,17 @@ const AdminNavbar = (props) => {
   );
 };
 
-export default AdminNavbar;
+function mapStateToProps(state) {
+  return {
+    user: state.oidc.user,
+    isAuthenticated: state.oidc.user && !state.oidc.user.expired,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminNavbar);

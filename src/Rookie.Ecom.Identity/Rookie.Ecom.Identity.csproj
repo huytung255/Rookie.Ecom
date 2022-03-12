@@ -7,10 +7,12 @@
   <ItemGroup>
     <PackageReference Include="FluentValidation.AspNetCore" Version="10.4.0" />
     <PackageReference Include="IdentityServer4" Version="4.1.2" />
+    <PackageReference Include="IdentityServer4.AspNetIdentity" Version="4.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.14" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Rookie.Ecom.Business\Rookie.Ecom.Business.csproj" />
     <ProjectReference Include="..\Rookie.Ecom.DataAccessor\Rookie.Ecom.DataAccessor.csproj" />
   </ItemGroup>
 

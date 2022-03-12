@@ -1,24 +1,24 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { CallbackComponent } from 'redux-oidc';
-import { push } from 'react-router-redux';
-import userManager from '../../utils/userManager';
+import React from "react";
+import { connect } from "react-redux";
+import { CallbackComponent } from "redux-oidc";
+import { push } from "react-router-redux";
+import { useHistory } from "react-router-dom";
+import userManager from "../../utils/userManager";
 
-class CallbackPage extends React.Component {
-  render() {
-    return (
-      <CallbackComponent
-        userManager={userManager}
-        successCallback={() => this.props.dispatch(push('/'))}
-        errorCallback={error => {
-          this.props.dispatch(push('/'));
-          console.error(error);
-        }}
-      >
-        <div>Redirecting...</div>
-      </CallbackComponent>
-    );
-  }
-}
+const CallbackPage = () => {
+  const history = useHistory();
+  return (
+    <CallbackComponent
+      userManager={userManager}
+      successCallback={() => history.push("/dashboard")}
+      errorCallback={(error) => {
+        history.push("/");
+        console.error(error);
+      }}
+    >
+      <div>Redirecting...</div>
+    </CallbackComponent>
+  );
+};
 
 export default connect()(CallbackPage);

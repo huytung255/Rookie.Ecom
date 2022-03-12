@@ -111,23 +111,23 @@ namespace IdentityServerHost.Quickstart.UI
             {
                 model.Username = Regex.Replace(model.Username, @"\s", "");
                 var checkuser = await _userManager.FindByNameAsync(model.Username);
-                if (checkuser != null)
-                {
-                    // if the user cancels, send a result back into IdentityServer as if they 
-                    // denied the consent (even if this client does not require consent).
-                    // this will send back an access denied OIDC error response to the client.
-                    await _interaction.DenyAuthorizationAsync(context, AuthorizationError.AccessDenied);
+                //if (checkuser != null)
+                //{
+                //    // if the user cancels, send a result back into IdentityServer as if they 
+                //    // denied the consent (even if this client does not require consent).
+                //    // this will send back an access denied OIDC error response to the client.
+                //    await _interaction.DenyAuthorizationAsync(context, AuthorizationError.AccessDenied);
 
-                    // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
-                    if (context.IsNativeClient())
-                    {
-                        // The client is native, so this change in how to
-                        // return the response is for better UX for the end user.
-                        return this.LoadingPage("Redirect", model.ReturnUrl);
-                    }
+                //    // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
+                //    if (context.IsNativeClient())
+                //    {
+                //        // The client is native, so this change in how to
+                //        // return the response is for better UX for the end user.
+                //        return this.LoadingPage("Redirect", model.ReturnUrl);
+                //    }
 
-                    return Redirect(model.ReturnUrl);
-                }
+                //    return Redirect(model.ReturnUrl);
+                //}
                 var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberLogin, lockoutOnFailure: true);
 
 

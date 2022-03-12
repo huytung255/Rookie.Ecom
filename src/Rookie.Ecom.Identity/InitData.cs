@@ -41,6 +41,17 @@ namespace Rookie.Ecom.Identity
                 }
             };
         }
+        public static IEnumerable<ApiResource> ApiResources => new ApiResource[]
+        {
+                    new ApiResource("api1", "API #1") {Scopes = {"roles"} },
+                    // local API
+                    new ApiResource(IdentityServerConstants.LocalApi.ScopeName),
+        };
+
+        public static IEnumerable<ApiScope> ApiScopes => new ApiScope[]
+        {
+            new ApiScope("roles", new List<string>() { "role", "location" }),
+        };
 
         // identity-related resources (scopes)
         public static IEnumerable<IdentityResource> GetIdentityResources()

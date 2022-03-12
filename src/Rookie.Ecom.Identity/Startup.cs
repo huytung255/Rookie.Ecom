@@ -8,8 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Rookie.Ecom.Business;
+using Rookie.Ecom.DataAccessor;
 using Rookie.Ecom.DataAccessor.Data;
 using Rookie.Ecom.DataAccessor.Entities;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Reflection;
 
@@ -28,24 +31,13 @@ namespace Rookie.Ecom.Identity
         }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppIdentityDbContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-            });
+            //services.AddDbContext<AppIdentityDbContext>(options =>
+            //{
+            //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            //});
 
-            services.AddIdentity<User, IdentityRole>(options =>
-            {
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireDigit = false;
-                options.Password.RequiredLength = 0;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireLowercase = false;
-                options.Password.RequiredUniqueChars = 0;
-            })
-            .AddEntityFrameworkStores<AppIdentityDbContext>()
-            .AddDefaultTokenProviders();
 
+            services.AddBusinessLayer(Configuration);
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowOrigins",
@@ -58,39 +50,65 @@ namespace Rookie.Ecom.Identity
             });
 
             services.AddMvc()
-.AddFluentValidation(fv =>
-{
-    fv.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-})
-.AddNewtonsoftJson(options =>
-{
-    options.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc;
-    options.SerializerSettings.DateFormatString = "dd'/'MM'/'yyyy";
-})
-.ConfigureApiBehaviorOptions(options =>
-{
-    options.InvalidModelStateResponseFactory = c =>
-    {
+            .AddFluentValidation(fv =>
+            {
+                fv.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            })
+            .AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc;
+                options.SerializerSettings.DateFormatString = "dd'/'MM'/'yyyy";
+            })
+            .ConfigureApiBehaviorOptions(options =>
+            {
+                options.InvalidModelStateResponseFactory = c =>
+                {
 
 
-        var errors = string.Join('\n', c.ModelState.Values.Where(v => v.Errors.Count > 0)
-            .SelectMany(v => v.Errors)
-            .Select(v => v.ErrorMessage));
+                    var errors = string.Join('\n', c.ModelState.Values.Where(v => v.Errors.Count > 0)
+                        .SelectMany(v => v.Errors)
+                        .Select(v => v.ErrorMessage));
 
-        return new BadRequestObjectResult(new
-        {
-            ErrorCode = StatusCodes.Status400BadRequest,
-            Message = errors
-        });
-    };
-});
+                    return new BadRequestObjectResult(new
+                    {
+                        ErrorCode = StatusCodes.Status400BadRequest,
+                        Message = errors
+                    });
+                };
+            });
+            //JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
+            //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ADMIN_ROLE_POLICY", policy =>
+                {
+                    policy.AddAuthenticationSchemes("Bearer");
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireRole("Admin");
+                });
+                options.AddPolicy("CUSTOMER_AUTHENTICATE_POLICY", policy =>
+                {
+                    policy.AddAuthenticationSchemes("Bearer");
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireRole("Customer");
+                });
+                options.DefaultPolicy = options.GetPolicy("CUSTOMER_AUTHENTICATE_POLICY");
+            });
 
-
+            //services.AddIdentityServer()
+            //.AddDeveloperSigningCredential()
+            //.AddInMemoryIdentityResources(InitData.GetIdentityResources())
+            //.AddInMemoryClients(InitData.GetClients())
+            //.AddInMemoryApiScopes(InitData.ApiScopes)
+            //.AddInMemoryApiResources(InitData.ApiResources)
+            //.AddAspNetIdentity<User>();
             services.AddIdentityServer()
-                .AddDeveloperSigningCredential()
-                .AddTestUsers(InitData.GetUsers())
-                .AddInMemoryIdentityResources(InitData.GetIdentityResources())
-                .AddInMemoryClients(InitData.GetClients());
+    .AddDeveloperSigningCredential()
+    .AddInMemoryIdentityResources(InitData.GetIdentityResources())
+    .AddInMemoryClients(InitData.GetClients())
+    .AddAspNetIdentity<User>();
+
+            SeedIdentityData.EnsureSeedData(Configuration.GetConnectionString("DbConnection"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
