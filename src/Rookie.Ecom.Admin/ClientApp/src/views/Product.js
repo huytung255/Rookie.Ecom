@@ -132,7 +132,7 @@ const Product = ({
                             className="btn-icon-only text-success"
                             role="button"
                             tag={NavLink}
-                            to={`/product/${p.id}`}
+                            to={`/admin/product/${p.id}`}
                             color=""
                           >
                             <i className="fas fa-pen"></i>

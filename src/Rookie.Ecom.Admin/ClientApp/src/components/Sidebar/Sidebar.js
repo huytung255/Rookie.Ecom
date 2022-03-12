@@ -75,7 +75,7 @@ const Sidebar = (props) => {
         return (
           <NavItem key={key}>
             <NavLink
-              to={prop.path}
+              to={prop.layout + prop.path}
               tag={NavLinkRRD}
               onClick={closeCollapse}
               activeClassName="active"

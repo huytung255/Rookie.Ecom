@@ -121,7 +121,7 @@ const Category = ({
                             className="btn-icon-only text-success"
                             role="button"
                             tag={NavLink}
-                            to={`/category/${cat.id}`}
+                            to={`/admin/category/${cat.id}`}
                             color=""
                           >
                             <i className="fas fa-pen"></i>

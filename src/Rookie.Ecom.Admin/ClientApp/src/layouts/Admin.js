@@ -16,7 +16,13 @@
 
 */
 import React from "react";
-import { useLocation, Route, Switch, Redirect } from "react-router-dom";
+import {
+  useLocation,
+  Route,
+  Switch,
+  Redirect,
+  useHistory,
+} from "react-router-dom";
 // reactstrap components
 import { Container } from "reactstrap";
 // core components
@@ -25,8 +31,11 @@ import AdminFooter from "../components/Footers/AdminFooter.js";
 import Sidebar from "../components/Sidebar/Sidebar";
 import { ToastContainer } from "react-toastify";
 import routes from "../routes";
-
+import { connect } from "react-redux";
 const Admin = (props) => {
+  const history = useHistory();
+  const { user } = props;
+  if (!user) history.push("/auth/login");
   const mainContent = React.useRef(null);
   // const location = useLocation();
 
@@ -38,9 +47,18 @@ const Admin = (props) => {
 
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
-      return (
-        <Route path={prop.path} exact component={prop.component} key={key} />
-      );
+      if (prop.layout === "/admin") {
+        return (
+          <Route
+            exact
+            path={prop.layout + prop.path}
+            component={prop.component}
+            key={key}
+          />
+        );
+      } else {
+        return null;
+      }
     });
   };
 
@@ -56,7 +74,7 @@ const Admin = (props) => {
     // return "Brand";
     return "Brand";
   };
-
+  if (!props.user) return <Redirect to="/auth/login" />;
   return (
     <React.Fragment>
       <Sidebar
@@ -72,7 +90,7 @@ const Admin = (props) => {
         <AdminNavbar {...props} brandText={getBrandText} />
         <Switch>
           {getRoutes(routes)}
-          <Redirect from="*" to="/dashboard" />
+          {/* <Redirect from="*" to="/admin/dashboard" /> */}
         </Switch>
         <Container fluid>
           <AdminFooter />
@@ -93,4 +111,10 @@ const Admin = (props) => {
   );
 };
 
-export default Admin;
+function mapStateToProps(state) {
+  return {
+    user: state.oidc.user,
+  };
+}
+
+export default connect(mapStateToProps)(Admin);

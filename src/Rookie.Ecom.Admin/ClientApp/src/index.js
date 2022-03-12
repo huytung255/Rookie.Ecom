@@ -15,8 +15,9 @@ import registerServiceWorker from "./registerServiceWorker";
 
 import { OidcProvider } from "redux-oidc";
 import userManager from "./utils/userManager";
-import { BrowserRouter } from "react-router-dom";
-
+import { BrowserRouter, Route, Redirect } from "react-router-dom";
+import AuthLayout from "./layouts/Auth";
+import CallbackPage from "./components/callback/CallbackPage";
 // Create browser history to use in the Redux store
 const baseUrl = document.getElementsByTagName("base")[0].getAttribute("href");
 const history = createBrowserHistory({ basename: baseUrl });
@@ -34,7 +35,13 @@ ReactDOM.render(
         <App />
       </ConnectedRouter> */}
       <BrowserRouter>
-        <App />
+        <Route path="/admin" render={(props) => <App {...props} />} />
+        <Route path="/auth" render={(props) => <AuthLayout {...props} />} />
+        <Route
+          path="/callback"
+          render={(props) => <CallbackPage {...props} />}
+        />
+        <Redirect from="/" to="/admin/dashboard" />
       </BrowserRouter>
     </OidcProvider>
   </Provider>,

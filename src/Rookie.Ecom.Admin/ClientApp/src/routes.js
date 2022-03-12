@@ -25,6 +25,7 @@ import Product from "./views/Product";
 import ProductDetail from "./views/ProductDetail";
 import ProfilePage from "./components/profile/ProfilePage";
 import CallbackPage from "./components/callback/CallbackPage";
+import Login from "./views/examples/Login.js";
 var routes = [
   {
     path: "/dashboard",
@@ -32,6 +33,7 @@ var routes = [
     icon: "ni ni-tv-2 text-primary",
     component: Index,
     listed: true,
+    layout: "/admin",
   },
   {
     path: "/category",
@@ -39,6 +41,7 @@ var routes = [
     icon: "ni ni-archive-2 text-primary",
     component: Category,
     listed: true,
+    layout: "/admin",
   },
   {
     path: "/category/:id",
@@ -46,6 +49,7 @@ var routes = [
     icon: "ni ni-archive-2 text-primary",
     component: CategoryDetail,
     listed: false,
+    layout: "/admin",
   },
   {
     path: "/product",
@@ -53,6 +57,7 @@ var routes = [
     icon: "ni ni-basket text-primary",
     component: Product,
     listed: true,
+    layout: "/admin",
   },
   {
     path: "/product/:id",
@@ -60,6 +65,7 @@ var routes = [
     icon: "ni ni-basket text-primary",
     component: ProductDetail,
     listed: false,
+    layout: "/admin",
   },
   {
     path: "/profile",
@@ -67,6 +73,7 @@ var routes = [
     icon: "ni ni-basket text-primary",
     component: ProfilePage,
     listed: true,
+    layout: "/admin",
   },
   {
     path: "/icons",
@@ -74,6 +81,7 @@ var routes = [
     icon: "ni ni-planet text-blue",
     component: Icons,
     listed: true,
+    layout: "/admin",
   },
   {
     path: "/user-profile",
@@ -81,6 +89,7 @@ var routes = [
     icon: "ni ni-single-02 text-yellow",
     component: Profile,
     listed: true,
+    layout: "/admin",
   },
   {
     path: "/tables",
@@ -88,13 +97,15 @@ var routes = [
     icon: "ni ni-bullet-list-67 text-red",
     component: Tables,
     listed: true,
+    layout: "/admin",
   },
   {
-    path: "/callback",
-    name: "Callback",
-    icon: "",
-    component: CallbackPage,
+    path: "/login",
+    name: "Test",
+    icon: "ni ni-key-25 text-info",
+    component: Login,
     listed: false,
+    layout: "/auth",
   },
 ];
 export default routes;
