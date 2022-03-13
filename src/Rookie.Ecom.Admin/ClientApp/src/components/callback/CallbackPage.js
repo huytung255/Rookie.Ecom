@@ -10,7 +10,7 @@ const CallbackPage = () => {
   return (
     <CallbackComponent
       userManager={userManager}
-      successCallback={() => history.push("/admin/dashboard")}
+      successCallback={() => history.push("/")}
       errorCallback={(error) => {
         history.push("/");
         console.error(error);

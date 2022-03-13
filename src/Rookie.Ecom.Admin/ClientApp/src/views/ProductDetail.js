@@ -22,12 +22,14 @@ import { addDefaultSrc, defaultSrc } from "../utils/imgManager";
 import ProductForm from "../components/ProductForm";
 import ProductImageManager from "../components/ProductImageTable";
 import MyCarousel from "../components/MyCarousel";
+import { useParams } from "react-router-dom";
 const ProductDetail = ({
   requestProductDetail,
   updateProductDetail,
   match,
   productDetail,
 }) => {
+  const { id } = useParams();
   const [category, setCategory] = useState("");
   const {
     register,
@@ -38,7 +40,7 @@ const ProductDetail = ({
   } = useForm({ mode: "all" });
 
   useEffect(() => {
-    requestProductDetail(match.params.id);
+    requestProductDetail(id);
   }, []);
   useEffect(() => {
     setValue("name", productDetail.name);
@@ -51,7 +53,7 @@ const ProductDetail = ({
   const onClick = (data) => {
     const { name, desc, price, isFeatured, isAvailable } = data;
     updateProductDetail(
-      match.params.id,
+      id,
       name,
       parseFloat(price),
       desc,
@@ -59,14 +61,8 @@ const ProductDetail = ({
       isFeatured === "true",
       isAvailable === "true"
     );
-    // updateProductDetail(match.params.id, data.name, data.desc);
   };
-  const onImageChange = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      const img = event.target.files[0];
-      //   updateCategoryImage(match.params.id, img);
-    }
-  };
+
   return (
     <React.Fragment>
       <EmptyHeader />

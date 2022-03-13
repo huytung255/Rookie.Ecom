@@ -39,7 +39,7 @@ import {
   Button,
 } from "reactstrap";
 // core components
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { actionCreators } from "../store/Category";
@@ -54,9 +54,9 @@ const Category = ({
   categories,
   currentPage,
   totalPages,
-  location,
   isLoading,
 }) => {
+  const location = useLocation();
   const fetchCatagories = (page) => {
     requestCategories(page);
   };
@@ -121,7 +121,7 @@ const Category = ({
                             className="btn-icon-only text-success"
                             role="button"
                             tag={NavLink}
-                            to={`/admin/category/${cat.id}`}
+                            to={`/category/${cat.id}`}
                             color=""
                           >
                             <i className="fas fa-pen"></i>

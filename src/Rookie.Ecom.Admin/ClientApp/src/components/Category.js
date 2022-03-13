@@ -69,13 +69,13 @@ function renderPagination(props) {
     <p className="clearfix text-center">
       <Link
         className="btn btn-default pull-left"
-        to={`/admin/category/${prevStartDateIndex}`}
+        to={`/category/${prevStartDateIndex}`}
       >
         Previous
       </Link>
       <Link
         className="btn btn-default pull-right"
-        to={`/admin/category/${nextStartDateIndex}`}
+        to={`/category/${nextStartDateIndex}`}
       >
         Next
       </Link>

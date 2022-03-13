@@ -34,8 +34,7 @@ import routes from "../routes";
 import { connect } from "react-redux";
 const Admin = (props) => {
   const history = useHistory();
-  const { user } = props;
-  if (!user) history.push("/auth/login");
+  const { children, ...rest } = props;
   const mainContent = React.useRef(null);
   // const location = useLocation();
 
@@ -44,23 +43,6 @@ const Admin = (props) => {
   //   document.scrollingElement.scrollTop = 0;
   //   mainContent.current.scrollTop = 0;
   // }, [location]);
-
-  const getRoutes = (routes) => {
-    return routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
-        return (
-          <Route
-            exact
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
-      } else {
-        return null;
-      }
-    });
-  };
 
   const getBrandText = (path) => {
     // for (let i = 0; i < routes.length; i++) {
@@ -74,11 +56,10 @@ const Admin = (props) => {
     // return "Brand";
     return "Brand";
   };
-  if (!props.user) return <Redirect to="/auth/login" />;
   return (
     <React.Fragment>
       <Sidebar
-        {...props}
+        {...rest}
         routes={routes}
         logo={{
           innerLink: "/dashboard",
@@ -87,11 +68,12 @@ const Admin = (props) => {
         }}
       />
       <div className="main-content" ref={mainContent}>
-        <AdminNavbar {...props} brandText={getBrandText} />
-        <Switch>
+        <AdminNavbar {...rest} brandText={getBrandText} />
+        {/* <Switch>
           {getRoutes(routes)}
-          {/* <Redirect from="*" to="/admin/dashboard" /> */}
-        </Switch>
+          <Redirect from="*" to="/dashboard" />
+        </Switch> */}
+        {children}
         <Container fluid>
           <AdminFooter />
         </Container>

@@ -15,6 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+import React from "react";
 import Index from "./views/Index";
 import Profile from "./views/examples/Profile.js";
 import Category from "./views/Category";
@@ -28,84 +29,81 @@ import CallbackPage from "./components/callback/CallbackPage";
 import Login from "./views/examples/Login.js";
 var routes = [
   {
-    path: "/dashboard",
+    path: "/",
     name: "Dashboard",
     icon: "ni ni-tv-2 text-primary",
-    component: Index,
+    component: <Index />,
     listed: true,
-    layout: "/admin",
   },
   {
     path: "/category",
     name: "Category",
     icon: "ni ni-archive-2 text-primary",
-    component: Category,
+    component: <Category />,
     listed: true,
-    layout: "/admin",
   },
   {
     path: "/category/:id",
     name: "Category Detail",
     icon: "ni ni-archive-2 text-primary",
-    component: CategoryDetail,
+    component: <CategoryDetail />,
     listed: false,
-    layout: "/admin",
   },
   {
     path: "/product",
     name: "Product",
     icon: "ni ni-basket text-primary",
-    component: Product,
+    component: <Product />,
     listed: true,
-    layout: "/admin",
   },
   {
     path: "/product/:id",
     name: "Product Detail",
     icon: "ni ni-basket text-primary",
-    component: ProductDetail,
+    component: <ProductDetail />,
     listed: false,
-    layout: "/admin",
   },
   {
     path: "/profile",
     name: "Profile",
     icon: "ni ni-basket text-primary",
-    component: ProfilePage,
+    component: <ProfilePage />,
     listed: true,
-    layout: "/admin",
   },
   {
     path: "/icons",
     name: "Icons",
     icon: "ni ni-planet text-blue",
-    component: Icons,
+    component: <Icons />,
     listed: true,
-    layout: "/admin",
   },
   {
     path: "/user-profile",
     name: "User Profile",
     icon: "ni ni-single-02 text-yellow",
-    component: Profile,
+    component: <Profile />,
     listed: true,
-    layout: "/admin",
   },
   {
     path: "/tables",
     name: "Tables",
     icon: "ni ni-bullet-list-67 text-red",
-    component: Tables,
+    component: <Tables />,
     listed: true,
-    layout: "/admin",
   },
   {
     path: "/login",
     name: "Test",
     icon: "ni ni-key-25 text-info",
-    component: Login,
+    component: <Login />,
     listed: false,
-    layout: "/auth",
+  },
+  {
+    path: "/callback",
+    name: "Callback",
+    icon: "",
+    component: CallbackPage,
+    listed: false,
   },
 ];
 export default routes;

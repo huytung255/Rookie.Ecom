@@ -34,15 +34,7 @@ ReactDOM.render(
       {/* <ConnectedRouter history={history}>
         <App />
       </ConnectedRouter> */}
-      <BrowserRouter>
-        <Route path="/admin" render={(props) => <App {...props} />} />
-        <Route path="/auth" render={(props) => <AuthLayout {...props} />} />
-        <Route
-          path="/callback"
-          render={(props) => <CallbackPage {...props} />}
-        />
-        <Redirect from="/" to="/admin/dashboard" />
-      </BrowserRouter>
+      <App />
     </OidcProvider>
   </Provider>,
   rootElement

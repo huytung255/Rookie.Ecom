@@ -21,7 +21,7 @@ import {
   Button,
 } from "reactstrap";
 // core components
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { actionCreators } from "../store/Product";
@@ -35,9 +35,9 @@ const Product = ({
   products,
   currentPage,
   totalPages,
-  location,
   isLoading,
 }) => {
+  const location = useLocation();
   const renderStatus = (status) => (
     <Badge color="" className="badge-dot mr-4">
       {status ? (
@@ -132,7 +132,7 @@ const Product = ({
                             className="btn-icon-only text-success"
                             role="button"
                             tag={NavLink}
-                            to={`/admin/product/${p.id}`}
+                            to={`/product/${p.id}`}
                             color=""
                           >
                             <i className="fas fa-pen"></i>

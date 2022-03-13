@@ -37,6 +37,7 @@ import {
 import EmptyHeader from "../components/Headers/EmptyHeader.js";
 import { Controller, useForm } from "react-hook-form";
 import { addDefaultSrc, defaultSrc } from "../utils/imgManager";
+import { useParams } from "react-router-dom";
 const CategoryDetail = ({
   requestCategoryDetail,
   updateCategoryDetail,
@@ -44,6 +45,7 @@ const CategoryDetail = ({
   match,
   categoryDetail,
 }) => {
+  const { id } = useParams();
   const {
     handleSubmit,
     control,
@@ -52,19 +54,19 @@ const CategoryDetail = ({
   } = useForm({ mode: "all" });
 
   useEffect(() => {
-    requestCategoryDetail(match.params.id);
+    requestCategoryDetail(id);
   }, []);
   useEffect(() => {
     setValue("name", categoryDetail.name);
     setValue("desc", categoryDetail.desc);
   }, [categoryDetail]);
   const onClick = (data) => {
-    updateCategoryDetail(match.params.id, data.name, data.desc);
+    updateCategoryDetail(id, data.name, data.desc);
   };
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       const img = event.target.files[0];
-      updateCategoryImage(match.params.id, img);
+      updateCategoryImage(id, img);
     }
   };
   return (
