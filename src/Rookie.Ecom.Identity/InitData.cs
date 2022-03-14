@@ -58,9 +58,15 @@ namespace Rookie.Ecom.Identity
         {
             return new List<IdentityResource>
             {
+                //new IdentityResources.OpenId(),
+                //new IdentityResources.Profile(),
+                //new IdentityResource("roles", "Your role(s)", new List<string>() { "role" })
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile(),
-                new IdentityResource("roles", "Your role(s)", new List<string>() { "role" })
+                new IdentityResource(
+                    name: "profile",
+                    userClaims: new[] { "name", "website", "role" },
+                    displayName: "Your profile data"
+                ),
             };
         }
 

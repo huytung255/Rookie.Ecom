@@ -13,6 +13,7 @@ using System.Text.Json.Serialization;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Rookie.Ecom.Admin
 {
@@ -45,6 +46,25 @@ namespace Rookie.Ecom.Admin
                 ops.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
                 ops.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+                //builder.WithOrigins("*").WithHeaders("*").WithMethods("*");
+            }));
+            JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = "Bearer";
+                options.DefaultChallengeScheme = "oidc";
+            })
+            .AddIdentityServerAuthentication("Bearer", options =>
+            {
+                options.ApiName = "api1";
+                options.Authority = "https://localhost:5001";
+
+            });
 
             services.AddHttpContextAccessor();
             services.AddBusinessLayer(Configuration);
@@ -54,6 +74,27 @@ namespace Rookie.Ecom.Admin
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
+            });
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ADMIN_ROLE_POLICY", policy =>
+                {
+                    policy.AddAuthenticationSchemes("Bearer");
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireRole("Admin");
+                });
+                options.AddPolicy("CUSTOMER_ROLE_POLICY", policy =>
+                {
+                    policy.AddAuthenticationSchemes("Bearer");
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireRole("Customer");
+                });
+                options.AddPolicy("DEFAULT_AUTHENTICATE_POLICY", policy =>
+                {
+                    policy.AddAuthenticationSchemes("Bearer");
+                    policy.RequireAuthenticatedUser();
+                });
+                options.DefaultPolicy = options.GetPolicy("DEFAULT_AUTHENTICATE_POLICY");
             });
         }
 
@@ -84,14 +125,16 @@ namespace Rookie.Ecom.Admin
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
                 });
-
+            app.UseAuthentication();
             app.UseRouting();
-
+            app.UseCors("MyPolicy");
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
+                //endpoints.MapControllerRoute(
+                //    name: "default",
+                //    pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapControllers();
             });
 
             app.UseSpa(spa =>

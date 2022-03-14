@@ -1,4 +1,6 @@
 ﻿using EnsureThat;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Rookie.Ecom.Business.Interfaces;
 using Rookie.Ecom.Contracts;
@@ -10,7 +12,10 @@ using System.Threading.Tasks;
 
 namespace Rookie.Ecom.Admin.Controllers
 {
+    [EnableCors("MyPolicy")]
     [Route("api/[controller]")]
+    [ApiController]
+    [Authorize]
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
@@ -21,6 +26,7 @@ namespace Rookie.Ecom.Admin.Controllers
             _productImageService = productImageService;
         }
 
+        [Authorize(Policy = "ADMIN_ROLE_POLICY")]
         [HttpPost]
         public async Task<ActionResult<ProductDto>> CreateAsync([FromBody] CreateProductDto createProductDto)
         {
@@ -37,6 +43,7 @@ namespace Rookie.Ecom.Admin.Controllers
     FindAsync(string name, int page = 1, int limit = 10)
     => await _productService.PagedQueryAsync(name, page, limit);
 
+        [Authorize(Policy = "ADMIN_ROLE_POLICY")]
         [HttpPut]
         public async Task<ActionResult> UpdateAsync([FromBody] UpdateProductDto updateProductDto)
         {
@@ -46,6 +53,8 @@ namespace Rookie.Ecom.Admin.Controllers
 
             return NoContent();
         }
+
+        [Authorize(Policy = "ADMIN_ROLE_POLICY")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteAssetAsync([FromRoute] Guid id)
         {
@@ -54,10 +63,12 @@ namespace Rookie.Ecom.Admin.Controllers
             await _productService.DeleteAsync(id);
             return NoContent();
         }
+
         [HttpGet("{id}")]
         public async Task<ProductDto> GetByIdAsync(Guid id)
     => await _productService.GetByIdAsync(id);
 
+        [Authorize(Policy = "ADMIN_ROLE_POLICY")]
         [HttpPost("image")]
         public async Task<ActionResult<ProductImageDto>> CreateProductImageAsync([FromForm] CreateProductImageDto createProductImageDto)
         {
@@ -65,6 +76,8 @@ namespace Rookie.Ecom.Admin.Controllers
             var asset = await _productImageService.AddAsync(createProductImageDto);
             return Created(Endpoints.Product, asset);
         }
+
+        [Authorize(Policy = "ADMIN_ROLE_POLICY")]
         [HttpPut("image")]
         public async Task<ActionResult<ProductImageDto>> UpdateProductImageAsync([FromForm] UpdateProductImageDto updateProductImageDto)
         {
@@ -73,6 +86,8 @@ namespace Rookie.Ecom.Admin.Controllers
             await _productImageService.UpdateAsync(updateProductImageDto);
             return NoContent();
         }
+
+        [Authorize(Policy = "ADMIN_ROLE_POLICY")]
         [HttpDelete("image/{imageId}")]
         public async Task<ActionResult> DeleteProductImageAsync([FromRoute] Guid imageId)
         {

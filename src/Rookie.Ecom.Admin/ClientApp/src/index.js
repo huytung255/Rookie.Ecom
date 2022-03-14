@@ -15,17 +15,11 @@ import registerServiceWorker from "./registerServiceWorker";
 
 import { OidcProvider } from "redux-oidc";
 import userManager from "./utils/userManager";
-import { BrowserRouter, Route, Redirect } from "react-router-dom";
-import AuthLayout from "./layouts/Auth";
-import CallbackPage from "./components/callback/CallbackPage";
 // Create browser history to use in the Redux store
 const baseUrl = document.getElementsByTagName("base")[0].getAttribute("href");
 const history = createBrowserHistory({ basename: baseUrl });
-
-// Get the application-wide store instance, prepopulating with state from the server where available.
 const initialState = window.initialReduxState;
 const store = configureStore(history, initialState);
-
 const rootElement = document.getElementById("root");
 
 ReactDOM.render(
@@ -41,3 +35,4 @@ ReactDOM.render(
 );
 
 registerServiceWorker();
+export { store };

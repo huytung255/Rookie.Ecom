@@ -11,9 +11,6 @@ const initialState = {
   categoryDetail: {},
 };
 
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
 export const actionCreators = {
   addCategory: (name, desc) => async (dispatch, getState) => {
     const url = `api/Category`;
@@ -52,11 +49,15 @@ export const actionCreators = {
     dispatch({ type: requestCategoryType, page });
 
     const url = `api/Category/find?page=${page + 1}`;
-    const res = await axiosClient.get(url);
-    const { data } = res;
-    const categories = data.items;
-    const { totalPages } = data;
-    dispatch({ type: receiveCategoryType, page, categories, totalPages });
+    try {
+      const res = await axiosClient.get(url);
+      const { data } = res;
+      const categories = data.items;
+      const { totalPages } = data;
+      dispatch({ type: receiveCategoryType, page, categories, totalPages });
+    } catch (error) {
+      console.log(error);
+    }
   },
   requestCategoryDetail: (id) => async (dispatch, getState) => {
     if (!id) return;

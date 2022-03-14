@@ -1,13 +1,13 @@
 import React from "react";
 import { useLocation, Redirect } from "react-router-dom";
-import Admin from "../layouts/Admin";
+import Auth from "../../layouts/Auth";
 import { connect } from "react-redux";
 function RequireAuth({ children, user }) {
-  if (!user) {
-    return <Redirect to="/login" />;
+  if (user) {
+    return <Redirect to="/" />;
   }
 
-  return <Admin>{children}</Admin>;
+  return <Auth>{children}</Auth>;
 }
 
 function mapStateToProps(state) {

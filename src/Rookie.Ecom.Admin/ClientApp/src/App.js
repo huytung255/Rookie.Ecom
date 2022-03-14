@@ -1,8 +1,8 @@
 import React from "react";
-import RequireAuth from "./components/RequireAuth";
+import RequireAuth from "./components/auth/RequireAuth";
 import routes from "./routes";
-import { Route, BrowserRouter, Switch } from "react-router-dom";
-import Auth from "./layouts/Auth";
+import { Route, BrowserRouter, Switch, Redirect } from "react-router-dom";
+import RequireLogout from "./components/auth/RequireLogout";
 const App = () => {
   //   const requireAuth = (component) => ;
   const getRoutes = (routes) => {
@@ -12,7 +12,7 @@ const App = () => {
           <Route
             exact
             path={prop.path}
-            component={() => <Auth>{prop.component}</Auth>}
+            component={() => <RequireLogout>{prop.component}</RequireLogout>}
           />
         );
       if (prop.path === "/callback")
@@ -33,7 +33,10 @@ const App = () => {
       <Route path="/callback" render={(props) => <CallbackPage {...props} />} />
       <Redirect from="/" to="/dashboard" />
       <Redirect from="*" to="/dashboard" /> */}
-      <Switch>{getRoutes(routes)}</Switch>
+      <Switch>
+        {getRoutes(routes)}
+        <Redirect from="*" to="/" />
+      </Switch>
     </BrowserRouter>
   );
 };

@@ -1,9 +1,10 @@
 import axios from "axios";
-
+import { store } from "..";
 const axiosClient = axios.create();
 axiosClient.interceptors.request.use(
   (config) => {
-    // config.headers.Authorization = "Bearer " + store.getState().user.token;
+    config.headers.Authorization =
+      "Bearer " + store.getState().oidc.user.access_token;
     return config;
   },
   (error) => {

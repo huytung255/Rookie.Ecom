@@ -32,6 +32,7 @@ import Sidebar from "../components/Sidebar/Sidebar";
 import { ToastContainer } from "react-toastify";
 import routes from "../routes";
 import { connect } from "react-redux";
+import brandImg from "../assets/img/brand/argon-react.png";
 const Admin = (props) => {
   const history = useHistory();
   const { children, ...rest } = props;
@@ -62,8 +63,8 @@ const Admin = (props) => {
         {...rest}
         routes={routes}
         logo={{
-          innerLink: "/dashboard",
-          imgSrc: require("../assets/img/brand/argon-react.png").default,
+          innerLink: "/",
+          imgSrc: brandImg,
           imgAlt: "...",
         }}
       />

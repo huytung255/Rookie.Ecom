@@ -76,7 +76,7 @@ namespace Rookie.Ecom.Identity
                     });
                 };
             });
-            //JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
+            JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
             //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             services.AddAuthorization(options =>
             {
@@ -86,13 +86,18 @@ namespace Rookie.Ecom.Identity
                     policy.RequireAuthenticatedUser();
                     policy.RequireRole("Admin");
                 });
-                options.AddPolicy("CUSTOMER_AUTHENTICATE_POLICY", policy =>
+                options.AddPolicy("CUSTOMER_ROLE_POLICY", policy =>
                 {
                     policy.AddAuthenticationSchemes("Bearer");
                     policy.RequireAuthenticatedUser();
                     policy.RequireRole("Customer");
                 });
-                options.DefaultPolicy = options.GetPolicy("CUSTOMER_AUTHENTICATE_POLICY");
+                options.AddPolicy("DEFAULT_AUTHENTICATE_POLICY", policy =>
+                {
+                    policy.AddAuthenticationSchemes("Bearer");
+                    policy.RequireAuthenticatedUser();
+                });
+                options.DefaultPolicy = options.GetPolicy("DEFAULT_AUTHENTICATE_POLICY");
             });
 
             //services.AddIdentityServer()
@@ -106,6 +111,8 @@ namespace Rookie.Ecom.Identity
     .AddDeveloperSigningCredential()
     .AddInMemoryIdentityResources(InitData.GetIdentityResources())
     .AddInMemoryClients(InitData.GetClients())
+    .AddInMemoryApiScopes(InitData.ApiScopes)
+    .AddInMemoryApiResources(InitData.ApiResources)
     .AddAspNetIdentity<User>();
 
             SeedIdentityData.EnsureSeedData(Configuration.GetConnectionString("DbConnection"));
