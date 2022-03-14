@@ -1,0 +1,207 @@
+﻿.fa-minus, .fa-plus {
+    color: black;
+}
+
+.btn-stepper {
+    background-color: #ffe745;
+}
+
+    .btn-stepper:hover, .btn-stepper:active {
+        color: #ffffff;
+        background-color: #73cca1;
+        border-color: #73cca1;
+    }
+
+        .btn-stepper:hover > .fa-minus, .btn-stepper:hover > .fa-plus {
+            color: #ffffff;
+        }
+
+.speech-bubble {
+    position: relative;
+    padding: 15px;
+    background: #ffe745;
+    color: black;
+    font-size: 17px;
+    font-weight: 500;
+    border-radius: .4em;
+}
+
+    .speech-bubble:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 20%;
+        width: 0;
+        height: 0;
+        border: 18px solid transparent;
+        border-right-color: #ffe745;
+        border-left: 0;
+        margin-top: -8px;
+        margin-left: -8px;
+    }
+
+.comment-profile {
+    position: relative;
+    text-align: center;
+    padding: 0px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.comment-picture {
+    margin: auto;
+}
+
+.comment-name {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1;
+    letter-spacing: .025em;
+    color: #6046b6;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.container-login {
+    background: rgba(0, 0, 0, 0.9);
+    margin: 100px auto;
+    max-width: 540px;
+    border-radius: 15px;
+    padding: 30px 60px;
+}
+
+.container-signup {
+    background: rgba(0, 0, 0, 0.9);
+    margin: 100px auto;
+    max-width: 960px;
+    border-radius: 15px;
+    padding: 30px 60px;
+}
+
+.rd-nav-link-cart {
+    padding: 15px 0px !important;
+}
+
+.number-spinner-cart {
+    max-width: 150px;
+}
+
+.delete-item-cart {
+    min-width: 80px;
+    height: auto;
+    margin-left: auto;
+}
+
+.button-wrap-cart {
+    color: white;
+    background-color: #6046b6;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+div.timepicker .gj-timepicker span button i {
+    color: black;
+    position: absolute !important;
+    font-size: 20px !important;
+    top: 50% !important;
+    left: 50% !important;
+    height: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+}
+
+div.timepicker .gj-timepicker span button {
+    padding: 20px;
+    background: #ffe745;
+    border-color: #ffe745;
+}
+
+.empty-name::before {
+    content: "Receiver's name is required!\A";
+    white-space: pre;
+}
+
+.empty-phone::after {
+    content: "Phone number is required!\A";
+    white-space: pre;
+}
+
+.empty-address::before {
+    content: "Address is required\A";
+    white-space: pre;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    height: 100px;
+    width: 100px;
+    background-size: 100%, 100%;
+    border-radius: 50%;
+    background-image: none;
+}
+
+    .carousel-control-next-icon:after {
+        content: '>';
+        font-size: 55px;
+        font-weight: 500;
+        color: #6046b6;
+    }
+
+    .carousel-control-prev-icon:after {
+        content: '<';
+        font-size: 55px;
+        font-weight: 500;
+        color: #6046b6;
+    }
+
+.carousel-indicators li {
+    background-color: #6046b6;
+}
+
+.peach-gradient {
+    background: linear-gradient(40deg, #ffd86f, #fc6262) !important;
+    color: white !important;
+    border-radius: 10em !important;
+    border: 0 !important;
+    text-transform: uppercase;
+    padding: .64rem 1.90rem !important;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+    font-size: .80rem !important;
+}
+
+.aqua-gradient {
+    background: linear-gradient(40deg, #2096ff, #05ffa3) !important;
+    color: white !important;
+    border-radius: 10em !important;
+    border: 0 !important;
+    text-transform: uppercase;
+    padding: .94rem 2.2rem !important;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+    font-size: .90rem !important;
+}
+
+.red-gradient {
+    background-image: linear-gradient(120deg, #f093fb 0%, #f5576c 100%) !important;
+    color: white !important;
+    border-radius: 10em !important;
+    border: 0 !important;
+    text-transform: uppercase;
+    padding: .64rem 1.90rem !important;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+    font-size: .80rem !important;
+}
+
+.scrollmenu {
+    overflow: auto;
+    white-space: nowrap;
+}
