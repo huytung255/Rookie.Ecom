@@ -45,10 +45,6 @@ const AdminNavbar = (props) => {
     userManager.signoutRedirect({ id_token_hint: user.id_token });
     userManager.removeUser(); // removes the user data from sessionStorage
   };
-  const onLoginButtonClick = (event) => {
-    event.preventDefault();
-    userManager.signinRedirect();
-  };
   return (
     <React.Fragment>
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">

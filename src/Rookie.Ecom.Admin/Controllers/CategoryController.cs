@@ -12,10 +12,11 @@ using System.Threading.Tasks;
 
 namespace Rookie.Ecom.Admin.Controllers
 {
+    
     [EnableCors("MyPolicy")]
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Policy = "ADMIN_ROLE_POLICY")]
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;
@@ -24,7 +25,7 @@ namespace Rookie.Ecom.Admin.Controllers
             _categoryService = categoryService;
         }
 
-        [Authorize(Policy = "ADMIN_ROLE_POLICY")]
+
         [HttpPost]
         public async Task<ActionResult<CategoryDto>> CreateAsync([FromBody] CreateCategoryDto createCategoryDto)
         {
@@ -33,7 +34,7 @@ namespace Rookie.Ecom.Admin.Controllers
             return Created(Endpoints.Category, asset);
         }
 
-        [Authorize(Policy = "ADMIN_ROLE_POLICY")]
+
         [HttpPut]
         public async Task<ActionResult> UpdateAsync([FromBody] UpdateCategoryDto updateCategoryDto)
         {
@@ -44,7 +45,6 @@ namespace Rookie.Ecom.Admin.Controllers
             return NoContent();
         }
 
-        [Authorize(Policy = "ADMIN_ROLE_POLICY")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteAssetAsync([FromRoute] Guid id)
         {
@@ -67,7 +67,7 @@ namespace Rookie.Ecom.Admin.Controllers
             FindAsync(string name, int page = 1, int limit = 10)
             => await _categoryService.PagedQueryAsync(name, page, limit);
 
-        [Authorize(Policy = "ADMIN_ROLE_POLICY")]
+
         [HttpPut("image")]
         public async Task<ActionResult<ProductImageDto>> UpdateCategoryImageAsync([FromForm] UpdateCategoryImageDto updateCategoryImageDto)
         {

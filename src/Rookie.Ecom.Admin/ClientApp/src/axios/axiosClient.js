@@ -1,5 +1,12 @@
 import axios from "axios";
 import { store } from "..";
+import userManager from "../utils/userManager";
+const Signout = () => {
+  userManager.signoutRedirect({
+    id_token_hint: store.getState().oidc.user.id_token,
+  });
+  userManager.removeUser(); // removes the user data from sessionStorage
+};
 const axiosClient = axios.create();
 axiosClient.interceptors.request.use(
   (config) => {
@@ -17,11 +24,10 @@ axiosClient.interceptors.response.use(
     return res;
   },
   (error) => {
-    // const { status } = error.response;
-    // if (status === 401) {
-    //   localStorage.clear();
-    //   window.location.href = "/sign-in";
-    // }
+    const { status } = error.response;
+    if (status === 403) {
+      Signout();
+    }
 
     return Promise.reject(error);
   }
