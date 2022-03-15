@@ -1,0 +1,82 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<section class="section section-lg bg-default text-md-left">
+    <div class="container wow fadeInLeft" data-wow-delay=".15s">
+        <div id="cart">
+            <div class="row p-3 mx-5 my-0 justify-content-between">
+                <article class="product-cart ">
+                    <div class="product-figure-cart "><img src="https://via.placeholder.com/150" alt="" width="150" height="150" />
+                    </div>
+                    <div class="product-detail-cart flex-column">
+                        <h5 class="product-name-cart">Example</h5>
+
+                        <p style="font-size: 15px; margin-top: auto">Số lượng:</p>
+                        <div class="input-group number-spinner number-spinner-cart">
+                            <span class="input-group-btn">
+                                <div class="btn btn-stepper " data-dir="dwn"><span class="fa fa-minus"></span></div>
+                            </span>
+                            <input type="number" class="form-control text-center" onkeypress="return isNumberKey(event)"
+                                value="5">
+                            <span class="input-group-btn " >
+                                <div class="btn btn-stepper " data-dir="up"><span class="fa fa-plus"></span></div>
+                            </span>
+                        </div>
+                    </div>
+                </article>
+
+                <div class="d-flex flex-column before-dropdown" style="width: auto;">
+                    <button class="btn btn-danger delete-item-cart " data-toggle="modal"
+                        data-target="#removeModal_1"><span class="fa fa-close"
+                            aria-hidden="true"></span></button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="removeModal_1" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Remove item</h5>
+                                    <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
+                                        <span class="fa fa-close" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Do you really want to remove this item?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                    <button type="button" class="btn btn-primary "
+                                         data-dismiss="modal">Yes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h6 class="product-price-cart mt-auto mb-0" style="text-align: right;"><span
+                            class="total-price">45</span></h6>
+                </div>
+            </div>
+            <hr class="my-3 mx-5">
+  
+        </div>
+
+        <div class="row-reverse mx-5" style="text-align: right;" id="sum">
+            <h5 class="total-price-cart">Tổng tiền:</h5>
+            <h5 class="total-price-cart">$<span class="sum">50</span></h5>
+        </div>
+
+        <h3 class="mb-5">NO ITEMS IN CART YET.</h3>
+
+        <div class="row justify-content-between justify-content-center mx-5"
+            style="text-align: center;">
+            <div class="button-wrap p-0 w-auto"><a class="button button-md button-primary button-winona"
+                    href="/products">Continue Shopping</a></div>
+
+            <div class="button-wrap m-0 p-0  w-auto"><a class="button button-md button-primary button-winona"
+                    href="./check-out">Check out</a></div>
+
+        </div>
+    </div>
+
+</section>
+@{
+}

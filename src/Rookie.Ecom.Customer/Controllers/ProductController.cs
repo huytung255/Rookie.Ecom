@@ -17,6 +17,8 @@ namespace Rookie.Ecom.Customer.Controllers
             var result = await _productService.PagedQueryAsync(name, page, limit);
             return View(result);
         }
+
+
         public async Task<IActionResult> Detail(Guid id)
         {
             var result = await _productService.GetByIdAsync(id);
