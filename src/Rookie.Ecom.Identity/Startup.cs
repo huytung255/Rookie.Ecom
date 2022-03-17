@@ -12,6 +12,7 @@ using Rookie.Ecom.Business;
 using Rookie.Ecom.DataAccessor;
 using Rookie.Ecom.DataAccessor.Data;
 using Rookie.Ecom.DataAccessor.Entities;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Reflection;
@@ -38,6 +39,18 @@ namespace Rookie.Ecom.Identity
 
 
             services.AddBusinessLayer(Configuration);
+            services.AddIdentity<User, IdentityRole<Guid>>(options =>
+            {
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 0;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequiredUniqueChars = 0;
+            })
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowOrigins",
@@ -107,13 +120,13 @@ namespace Rookie.Ecom.Identity
             //.AddInMemoryApiScopes(InitData.ApiScopes)
             //.AddInMemoryApiResources(InitData.ApiResources)
             //.AddAspNetIdentity<User>();
-            services.AddIdentityServer()
-    .AddDeveloperSigningCredential()
-    .AddInMemoryIdentityResources(InitData.GetIdentityResources())
-    .AddInMemoryClients(InitData.GetClients())
-    .AddInMemoryApiScopes(InitData.ApiScopes)
-    .AddInMemoryApiResources(InitData.ApiResources)
-    .AddAspNetIdentity<User>();
+
+            var builder = services.AddIdentityServer()
+            .AddDeveloperSigningCredential()
+            .AddInMemoryIdentityResources(InitData.GetIdentityResources())
+            .AddInMemoryApiScopes(InitData.ApiScopes)
+            .AddInMemoryClients(InitData.GetClients())
+            .AddAspNetIdentity<User>();
 
             SeedIdentityData.EnsureSeedData(Configuration.GetConnectionString("DbConnection"));
         }

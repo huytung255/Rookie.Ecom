@@ -62,11 +62,7 @@ namespace Rookie.Ecom.Identity
                 //new IdentityResources.Profile(),
                 //new IdentityResource("roles", "Your role(s)", new List<string>() { "role" })
                 new IdentityResources.OpenId(),
-                new IdentityResource(
-                    name: "profile",
-                    userClaims: new[] { "name", "website", "role" },
-                    displayName: "Your profile data"
-                ),
+                new IdentityResources.Profile(),
             };
         }
 
@@ -131,6 +127,25 @@ namespace Rookie.Ecom.Identity
                     //    "https://localhost:5011/"
                     //},
                     AllowAccessTokensViaBrowser = true
+                },
+                new Client
+                {
+                    ClientId = "mvc",
+                    ClientSecrets = { new Secret("secret".Sha256()) },
+
+                    AllowedGrantTypes = GrantTypes.Code,
+
+                    // where to redirect to after login
+                    RedirectUris = { "https://localhost:5021/signin-oidc" },
+
+                    // where to redirect to after logout
+                    PostLogoutRedirectUris = { "https://localhost:5021/signout-callback-oidc" },
+
+                    AllowedScopes = new List<string>
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile
+                    }
                 }
             };
         }

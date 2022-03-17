@@ -80,8 +80,13 @@
                                         </li>
                                         <li>
                                             <div class="unit unit-spacing-xs">
-                                                <div class="unit-body"><a class="address" href="/login">Log in</a></div>
+                                                <div class="unit-body"><a class="address" asp-area="" asp-controller="Home" asp-action="Login">Log in</a></div>
                                                 <div class="unit-body"><a class="address" href="/signup">Sign up</a></div>
+                                                @if (User.Identity.IsAuthenticated)
+                                                {
+                                                 <div class="unit-body"><a class="address" asp-area="" asp-controller="Home" asp-action="Logout">Log out</a></div>
+                                                }
+
                                             </div>
                                         </li>
                                     </ul>

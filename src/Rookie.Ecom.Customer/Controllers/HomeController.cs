@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Rookie.Ecom.Customer.Models;
 using System;
@@ -22,7 +23,14 @@ namespace Rookie.Ecom.Customer.Controllers
         {
             return View();
         }
-
+        public IActionResult Login()
+        {
+            return Challenge(new AuthenticationProperties { RedirectUri = "/" }, "oidc");
+        }
+        public IActionResult Logout()
+        {
+            return SignOut("Cookies", "oidc");
+        }
         public IActionResult Privacy()
         {
             return View();
