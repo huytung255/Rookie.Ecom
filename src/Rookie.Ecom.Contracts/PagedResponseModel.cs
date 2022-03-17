@@ -2,14 +2,8 @@ using System.Collections.Generic;
 
 namespace Rookie.Ecom.Contracts
 {
-    public class PagedResponseModel<TModel>
+    public class PagedResponseModel<TModel> : BasePagedResponseModel
     {
-        public int CurrentPage { get; set; }
-
-        public int TotalItems { get; set; }
-
-        public int TotalPages { get; set; }
-
         public IEnumerable<TModel> Items { get; set; }
     }
 }

@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="~/css/fonts.css">
     <link rel="stylesheet" href="~/css/style.css">
     <link rel="stylesheet" href="~/css/custom.css">
+
 </head>
 <body>
     <div class="preloader">
@@ -80,11 +81,15 @@
                                         </li>
                                         <li>
                                             <div class="unit unit-spacing-xs">
-                                                <div class="unit-body"><a class="address" asp-area="" asp-controller="Home" asp-action="Login">Log in</a></div>
-                                                <div class="unit-body"><a class="address" href="/signup">Sign up</a></div>
+
                                                 @if (User.Identity.IsAuthenticated)
                                                 {
-                                                 <div class="unit-body"><a class="address" asp-area="" asp-controller="Home" asp-action="Logout">Log out</a></div>
+                                                    <div class="unit-body"><a class="address" asp-area="" asp-controller="Home" asp-action="Logout">Log out</a></div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="unit-body"><a class="address" asp-area="" asp-controller="Home" asp-action="Login">Log in</a></div>
+                                                    <div class="unit-body"><a class="address" href="/signup">Sign up</a></div>
                                                 }
 
                                             </div>
@@ -99,11 +104,11 @@
                                             <a class="rd-nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                                         </li>
                                         <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Product" ? "rd-nav-item active" : "rd-nav-item")">
-                                            <a class="rd-nav-link" asp-area="" asp-controller="Product" asp-action="Index">Product</a>
+                                            <a class="rd-nav-link" asp-area="" asp-controller="Product" asp-action="Index" asp-route-page="1">Product</a>
                                         </li>
                                         <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Cart" ? "rd-nav-item active" : "rd-nav-item")">
                                             <a class="rd-nav-link" asp-area="" asp-controller="Cart" asp-action="Index">
-                                                Cart<span class="ml-1 badge badge-dark">9</span>
+                                                Cart<span class="ml-1 badge badge-dark" id="cartbadge"></span>
                                             </a>
                                         </li>
                                     </ul>
@@ -211,9 +216,10 @@
             </div>
         </footer>
     </div>
-
+            <script src="~/js/jquery-3.6.0.min.js"></script>
     <script src="~/js/core.min.js"></script>
     <script src="~/js/script.js"></script>
+    <script src="~/js/myscript.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

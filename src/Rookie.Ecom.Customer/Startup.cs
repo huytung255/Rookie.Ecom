@@ -50,6 +50,10 @@ namespace Rookie.Ecom.Customer
 
                 options.SaveTokens = true;
             });
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
             services.AddBusinessLayer(Configuration);
             //services.AddBusinessLayer(Configuration);
             //services.AddDataAccessorLayer(Configuration);
@@ -83,7 +87,7 @@ namespace Rookie.Ecom.Customer
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

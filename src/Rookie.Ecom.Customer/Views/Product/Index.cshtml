@@ -1,8 +1,9 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@*@using Rookie.Ecom.Customer.Views.Shared*@
-
+@using Rookie.Ecom.Contracts
+@using Rookie.Ecom.Contracts.Dtos
+@model PagedResponseModel<ProductDto>
 @{
 }
 <section class="section section-lg bg-default">
@@ -33,12 +34,19 @@
                     <li class="list-category-item wow fadeInRight" role="presentation" data-wow-delay=".6s">
                         <a href="#tabs-4-7" data-toggle="tab">Desserts</a>
                     </li>
+                </ul>
             </div>
             <div class="col-lg-8 col-xl-9">
                 <div class="row">
-                     @await Component.InvokeAsync("ProductCard")
+                    @{
+                        foreach (var product in Model.Items)
+                        {
+                            @await Component.InvokeAsync("ProductCard", product)
+                        }
+                    }
+                     
                 </div>
-
+                 @await Component.InvokeAsync("Pagination", Model)
             </div>
 
         </div>
