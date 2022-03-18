@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Link } from "react-router-dom";
 // reactstrap components
@@ -38,13 +38,22 @@ import {
 import userManager from "../../utils/userManager";
 import { connect } from "react-redux";
 import Img from "../../assets/img/theme/team-4-800x800.jpg";
+import { actionCreators } from "../../store/Profile";
+import { bindActionCreators } from "redux";
 const AdminNavbar = (props) => {
-  const { user } = props;
+  const { user, profile, requestProfile } = props;
+  //const { requestProfile } = profile;
   const onLogoutButtonClick = (event) => {
     event.preventDefault();
     userManager.signoutRedirect({ id_token_hint: user.id_token });
     userManager.removeUser(); // removes the user data from sessionStorage
   };
+  const fetchProfile = (id) => {
+    requestProfile(id);
+  };
+  useEffect(() => {
+    fetchProfile(user.profile.sub);
+  }, []);
   return (
     <React.Fragment>
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
@@ -65,16 +74,18 @@ const AdminNavbar = (props) => {
                   </span>
                   <Media className="ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm font-weight-bold">
-                      Jessica Jones
+                      {profile.fullName}
                     </span>
                   </Media>
                 </Media>
               </DropdownToggle>
               <DropdownMenu className="dropdown-menu-arrow" right>
                 <DropdownItem className="noti-title" header tag="div">
-                  <h6 className="text-overflow m-0">Welcome!</h6>
+                  <h6 className="text-overflow m-0">
+                    Welcome, {profile.fullName}!
+                  </h6>
                 </DropdownItem>
-                <DropdownItem to="/user-profile" tag={Link}>
+                <DropdownItem to="/profile" tag={Link}>
                   <i className="ni ni-single-02" />
                   <span>My profile</span>
                 </DropdownItem>
@@ -97,13 +108,12 @@ function mapStateToProps(state) {
   return {
     user: state.oidc.user,
     isAuthenticated: state.oidc.user && !state.oidc.user.expired,
+    profile: state.profile,
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
+  return bindActionCreators(actionCreators, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminNavbar);

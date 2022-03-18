@@ -91,10 +91,9 @@ namespace Rookie.Ecom.UnitTests.Business
                 Name = "name"
             };
 
-            var categoryDto = new CategoryDto()
+            var categoryDto = new CreateCategoryDto()
             {
                 Desc = "code",
-                Id = Guid.NewGuid(),
                 Name = "name"
             };
             _categoryRepository.Setup(x => x

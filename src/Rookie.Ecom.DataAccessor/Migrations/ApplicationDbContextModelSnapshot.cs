@@ -553,6 +553,9 @@ namespace Rookie.Ecom.DataAccessor.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("UserAddress")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -568,37 +571,6 @@ namespace Rookie.Ecom.DataAccessor.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("Rookie.Ecom.DataAccessor.Entities.UserAddress", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Published")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserAddresses");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -752,17 +724,6 @@ namespace Rookie.Ecom.DataAccessor.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Rookie.Ecom.DataAccessor.Entities.UserAddress", b =>
-                {
-                    b.HasOne("Rookie.Ecom.DataAccessor.Entities.User", "User")
-                        .WithMany("UserAddresses")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Rookie.Ecom.DataAccessor.Entities.Category", b =>
                 {
                     b.Navigation("Products");
@@ -794,8 +755,6 @@ namespace Rookie.Ecom.DataAccessor.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("Ratings");
-
-                    b.Navigation("UserAddresses");
                 });
 #pragma warning restore 612, 618
         }

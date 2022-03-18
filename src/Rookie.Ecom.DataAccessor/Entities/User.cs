@@ -15,7 +15,7 @@ namespace Rookie.Ecom.DataAccessor.Entities
         public DateTime Dob { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
-        public List<UserAddress> UserAddresses { get; set; }
+        public string UserAddress { get; set; }
         public List<Order> Orders { get; set; }
         public List<Rating> Ratings { get; set; }
     }

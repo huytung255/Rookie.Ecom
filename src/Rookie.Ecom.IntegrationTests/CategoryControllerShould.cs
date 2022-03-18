@@ -41,7 +41,7 @@ namespace Rookie.Ecom.IntegrationTests
             var categoryService = new CategoryService(_categoryRepository, _fileStorageService, _mapper);
             var categoryController = new CategoryController(categoryService);
 
-            var newCategory = new CategoryDto { Name = "Test Category", Desc = "TC" };
+            var newCategory = new CreateCategoryDto { Name = "Test Category", Desc = "TC" };
 
             // Act
             var result = await categoryController.CreateAsync(newCategory);
@@ -70,7 +70,7 @@ namespace Rookie.Ecom.IntegrationTests
             var categoryService = new CategoryService(_categoryRepository, _fileStorageService, _mapper);
             var categoryController = new CategoryController(categoryService);
 
-            var newCategory = new CategoryDto { Name = "Laptop 2", Desc = "ABC" };
+            var newCategory = new CreateCategoryDto { Name = "Laptop 2", Desc = "ABC" };
 
             // Act
             var result = await categoryController.CreateAsync(newCategory);

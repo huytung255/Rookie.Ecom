@@ -24,6 +24,7 @@ namespace Rookie.Ecom.Business
             CreateMap<ProductImageDto, ProductImage>();
             CreateMap<CreateProductImageDto, ProductImage>();
             CreateMap<UpdateProductImageDto, ProductImage>();
+            CreateMap<UserDto, User>();
         }
 
         private void FromDataAccessorLayer()
@@ -31,6 +32,7 @@ namespace Rookie.Ecom.Business
             CreateMap<Category, CategoryDto>();
             CreateMap<Product, ProductDto>().ForMember(d => d.DefaultImage, t => t.MapFrom(x => FindDefault(x.ProductImages)));
             CreateMap<ProductImage, ProductImageDto>();
+            CreateMap<User, UserDto>();
         }
         private ProductImage FindDefault(List<ProductImage> list)
         {

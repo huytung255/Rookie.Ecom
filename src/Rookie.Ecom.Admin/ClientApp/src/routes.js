@@ -17,14 +17,11 @@
 */
 import React from "react";
 import Index from "./views/Index";
-import Profile from "./views/examples/Profile.js";
+import Profile from "./views/Profile.js";
 import Category from "./views/Category";
-import Tables from "./views/examples/Tables.js";
-import Icons from "./views/examples/Icons.js";
 import CategoryDetail from "./views/CategoryDetail";
 import Product from "./views/Product";
 import ProductDetail from "./views/ProductDetail";
-import ProfilePage from "./components/profile/ProfilePage";
 import CallbackPage from "./components/callback/CallbackPage";
 import Login from "./views/examples/Login.js";
 var routes = [
@@ -66,9 +63,9 @@ var routes = [
   {
     path: "/profile",
     name: "Profile",
-    icon: "ni ni-basket text-primary",
-    component: <ProfilePage />,
-    listed: true,
+    icon: "",
+    component: <Profile />,
+    listed: false,
   },
   {
     path: "/login",

@@ -17,7 +17,6 @@ namespace Rookie.Ecom.DataAccessor.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<Rating> Ratings { get; set; }
-        public DbSet<UserAddress> UserAddresses { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

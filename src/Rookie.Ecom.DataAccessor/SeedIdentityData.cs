@@ -84,9 +84,12 @@ namespace Rookie.Ecom.DataAccessor
                 {
                     FullName = "John Doe",
                     UserName = "admin",
+                    Email = "admin@ecom.com",
+                    UserAddress = "791 Aviation Way, Gardena, California",
                     CreatedDate = DateTime.Now,
                     UpdatedDate = DateTime.Now,
-                    Dob = DateTime.ParseExact("2000-05-25", "yyyy-MM-dd", null)
+                    Dob = DateTime.ParseExact("2000-05-25", "yyyy-MM-dd", null),
+                    PhoneNumber = "0123456789"
                 };
                 var result = userMgr.CreateAsync(user1, "admin").Result;
                 if (!result.Succeeded)
@@ -94,18 +97,6 @@ namespace Rookie.Ecom.DataAccessor
                     throw new Exception(result.Errors.First().Description);
                 }
 
-                //result = userMgr.AddClaimsAsync(user1, new List<Claim>
-                //    {
-                //        new Claim(IdentityModel.JwtClaimTypes.GivenName, "John"),
-                //        new Claim(IdentityModel.JwtClaimTypes.FamilyName, "Doe"),
-                //        new Claim(IdentityModel.JwtClaimTypes.Role, "Admin"),
-                //        new Claim("location", "HN")
-                //    }).Result;
-
-                //if (!result.Succeeded)
-                //{
-                //    throw new Exception(result.Errors.First().Description);
-                //}
 
                 result = userMgr.AddToRoleAsync(user1, "Admin").Result;
                 if (!result.Succeeded)
@@ -114,36 +105,52 @@ namespace Rookie.Ecom.DataAccessor
                 }
             }
 
-            var user2 = userMgr.FindByNameAsync("examplecustomer").Result;
+            var user2 = userMgr.FindByNameAsync("customer1").Result;
             if (user2 == null)
             {
                 user2 = new User
                 {
-                    FullName = "Example Customer",
-                    UserName = "examplecustomer",
+                    FullName = "Mark Chris",
+                    UserName = "customer1",
+                    Email = "customer1@example.com",
+                    UserAddress = "1414 Willis Avenue, Port Orange, Florida",
                     CreatedDate = DateTime.Now,
                     UpdatedDate = DateTime.Now,
-                    Dob = DateTime.ParseExact("2000-01-01", "yyyy-MM-dd", null)
+                    Dob = DateTime.ParseExact("2000-01-01", "yyyy-MM-dd", null),
+                    PhoneNumber = "0123456789"
                 };
                 var result = userMgr.CreateAsync(user2, "password@123").Result;
                 if (!result.Succeeded)
                 {
                     throw new Exception(result.Errors.First().Description);
                 }
-
-                //result = userMgr.AddClaimsAsync(user2, new List<Claim>
-                //    {
-                //        new Claim(IdentityModel.JwtClaimTypes.GivenName, "John"),
-                //        new Claim(IdentityModel.JwtClaimTypes.FamilyName, "Doe"),
-                //        new Claim(IdentityModel.JwtClaimTypes.Role, "Staff"),
-                //        new Claim("location", "HN")
-                //    }).Result;
-
-                //if (!result.Succeeded)
-                //{
-                //    throw new Exception(result.Errors.First().Description);
-                //}
                 result = userMgr.AddToRoleAsync(user2, "Customer").Result;
+                if (!result.Succeeded)
+                {
+                    throw new Exception(result.Errors.First().Description);
+                }
+            }
+
+            var user3 = userMgr.FindByNameAsync("customer2").Result;
+            if (user3 == null)
+            {
+                user3 = new User
+                {
+                    FullName = "Felicity Gage",
+                    UserName = "customer2",
+                    Email = "customer2@example.com",
+                    UserAddress = "2207 Prospect Valley Road, Irvine, California",
+                    CreatedDate = DateTime.Now,
+                    UpdatedDate = DateTime.Now,
+                    Dob = DateTime.ParseExact("2000-02-02", "yyyy-MM-dd", null),
+                    PhoneNumber = "9876543210"
+                };
+                var result = userMgr.CreateAsync(user3, "password@123").Result;
+                if (!result.Succeeded)
+                {
+                    throw new Exception(result.Errors.First().Description);
+                }
+                result = userMgr.AddToRoleAsync(user3, "Customer").Result;
                 if (!result.Succeeded)
                 {
                     throw new Exception(result.Errors.First().Description);
