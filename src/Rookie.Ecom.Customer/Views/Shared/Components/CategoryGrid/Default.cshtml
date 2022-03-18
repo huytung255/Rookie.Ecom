@@ -1,0 +1,30 @@
+﻿@using Rookie.Ecom.Contracts.Dtos
+@model List<CategoryDto>
+@{
+    //pageIndex=?&keyword=?
+    var urlTemplate = Url.Action(null,"Product") + "?category={0}&page=1";
+
+}
+<section class="section section-md bg-default">
+    <div class="container">
+        <h3 class="oh-desktop"><span class="d-inline-block wow slideInDown">Our Menu</span></h3>
+        <div class="row row-md row-30">
+            @foreach (var category in Model)
+           {
+              <div class="col-sm-6 col-lg-4">
+                <a class="oh-desktop" href="@urlTemplate.Replace("{0}", @category.Id.ToString())">
+                    <!-- Services Terri-->
+                    <article class="services-terri wow slideInUp">
+                        <div class="services-terri-figure">
+                            <img src=@category.ImageUrl alt="" width="370" height="278" />
+                        </div>
+                        <div class="services-terri-caption">
+                            <h5 class="services-terri-title"><a href="@urlTemplate.Replace("{0}", @category.Id.ToString())">@category.Name</a></h5>
+                        </div>
+                    </article>
+                </a>
+            </div>
+           }
+        </div>
+    </div>
+</section>
