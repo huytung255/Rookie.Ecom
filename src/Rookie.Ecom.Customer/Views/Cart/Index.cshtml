@@ -69,8 +69,6 @@
                     </div>
                     <hr class="my-3 mx-5">
                 }
-
-
             </div>
             <div class="row-reverse mx-5" style="text-align: right;" id="sum">
                 <h5 class="total-price-cart">Total:</h5>
@@ -85,7 +83,7 @@
 
                 <div class="button-wrap m-0 p-0  w-auto">
                     <a class="button button-md button-primary button-winona"
-                   href="./check-out">Check out</a>
+                   asp-controller="Cart" asp-action="Checkout">Check out</a>
                 </div>
 
             </div>
@@ -94,15 +92,7 @@
         {
             <h3 class="mb-5 text-center">NO ITEMS IN CART YET.</h3>
         }
-
-
-
-
-
     </div>
-
 </section>
 </div>
 
-@{
-}

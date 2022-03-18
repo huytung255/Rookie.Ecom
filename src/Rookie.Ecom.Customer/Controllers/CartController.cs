@@ -112,6 +112,17 @@ namespace Rookie.Ecom.Customer.Controllers
 
         }
 
+        public IActionResult Checkout()
+        {
+            List<CartItemVM> currentCart = new List<CartItemVM>();
+            currentCart = GetCart();
+            var cartVM = new CartVM()
+            {
+                Items = currentCart,
+                Total = Math.Round(currentCart.Sum(x => x.Price * x.Quantity), 2)
+            };
+            return View(cartVM);
+        }
         private List<CartItemVM> GetCart()
         {
             var session = HttpContext.Session.GetString(_cartSession);
