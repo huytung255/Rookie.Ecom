@@ -47,7 +47,7 @@ const UserList = ({ profileList, isLoading, requestProfileList }) => {
               <CardHeader className="border-0">
                 <Row className="align-items-center">
                   <div className="col">
-                    <h3 className="mb-0">Category</h3>
+                    <h3 className="mb-0">Users</h3>
                   </div>
                 </Row>
               </CardHeader>
