@@ -20,7 +20,7 @@
 import React from "react";
 
 import { Button, Row, Col, Container } from "reactstrap";
-import userManager from "../../utils/userManager";
+import userManager from "../utils/userManager";
 import { connect } from "react-redux";
 const Login = () => {
   const onLoginButtonClick = (event) => {

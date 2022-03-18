@@ -6,6 +6,7 @@ using Rookie.Ecom.Business.Interfaces;
 using Rookie.Ecom.Contracts.Dtos;
 using Rookie.Ecom.DataAccessor.Entities;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Rookie.Ecom.Identity.Quickstart.Account
@@ -24,10 +25,18 @@ namespace Rookie.Ecom.Identity.Quickstart.Account
         }
 
         [HttpGet]
-        public async Task<IEnumerable<User>> GetAsync()
+        public async Task<IEnumerable<UserDto>> GetAsync()
         {
             var users = _userManager.Users;
-            return users;
+            var res = users.Select(user => new UserDto
+            {
+                FullName = user.FullName,
+                PhoneNumber = user.PhoneNumber,
+                UserAddress = user.UserAddress,
+                Dob = user.Dob,
+                Email = user.Email,
+            }).ToList();
+            return res;
         }
 
         [HttpGet("{id}")]

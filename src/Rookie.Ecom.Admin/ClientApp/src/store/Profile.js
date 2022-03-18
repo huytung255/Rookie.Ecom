@@ -1,10 +1,10 @@
-import { toast } from "react-toastify";
 import axiosClient from "../axios/axiosClient";
 
 const receiveProfileType = "RECEIVE_PROFILE";
-
+const receiveProfileListType = "RECEIVE_PROFILE_LIST";
+const requestProfileListType = "REQUEST_PROFILE_LIST";
 const initialState = {
-  profile: {},
+  profileList: [],
 };
 
 export const actionCreators = {
@@ -15,6 +15,14 @@ export const actionCreators = {
     const { data } = res;
     dispatch({ type: receiveProfileType, data });
   },
+  requestProfileList: () => async (dispatch, getState) => {
+    dispatch({ type: requestProfileListType });
+    const url = `https://localhost:5001/api/User`;
+    const res = await axiosClient.get(url);
+    const { data } = res;
+    console.log(data);
+    dispatch({ type: receiveProfileListType, data });
+  },
 };
 
 export const reducer = (state, action) => {
@@ -24,6 +32,21 @@ export const reducer = (state, action) => {
     return {
       ...state,
       ...action.data,
+      isLoading: false,
+    };
+  }
+
+  if (action.type === requestProfileListType) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+
+  if (action.type === receiveProfileListType) {
+    return {
+      ...state,
+      profileList: action.data,
       isLoading: false,
     };
   }

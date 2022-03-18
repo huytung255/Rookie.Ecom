@@ -23,7 +23,8 @@ import CategoryDetail from "./views/CategoryDetail";
 import Product from "./views/Product";
 import ProductDetail from "./views/ProductDetail";
 import CallbackPage from "./components/callback/CallbackPage";
-import Login from "./views/examples/Login.js";
+import Login from "./views/Login.js";
+import UserList from "./views/UserList";
 var routes = [
   {
     path: "/",
@@ -66,6 +67,13 @@ var routes = [
     icon: "",
     component: <Profile />,
     listed: false,
+  },
+  {
+    path: "/user-list",
+    name: "User List",
+    icon: "ni ni-single-02 text-info",
+    component: <UserList />,
+    listed: true,
   },
   {
     path: "/login",
