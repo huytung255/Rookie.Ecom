@@ -12,11 +12,11 @@ namespace Rookie.Ecom.Business.Interfaces
     {
         Task<IEnumerable<ProductDto>> GetAllAsync();
 
-        Task<PagedResponseModel<ProductDto>> PagedQueryAsync(string name, int page, int limit);
+        Task<PagedResponseModel<ProductDto>> PagedQueryAsync(string category, int page, int limit);
 
         Task<ProductDto> GetByIdAsync(Guid id);
 
-        Task<ProductDto> GetByNameAsync(string name);
+        Task<IEnumerable<ProductDto>> GetByFeatureAsync();
 
         Task<ProductDto> AddAsync(CreateProductDto createProductDto);
 

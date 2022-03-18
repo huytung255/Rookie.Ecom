@@ -1,0 +1,22 @@
+﻿@using Microsoft.Extensions.Primitives
+@using Rookie.Ecom.Contracts.Dtos
+@model List<CategoryDto>
+@{
+    //pageIndex=?&keyword=?
+    var urlTemplate = Url.Action() + "?category={0}&page=1";
+
+}
+<h5 class="text-spacing-200 text-capitalize">CATEGORY</h5>
+<ul class="nav list-category list-category-down-md-inline-block">
+    <li class="list-category-item wow fadeInRight" role="presentation" data-wow-delay="0s">
+        <a class='@(StringValues.IsNullOrEmpty(Context.Request.Query["category"])  ? "active" : "")'
+           href="@urlTemplate.Replace("{0}", "")" data-toggle="tab">All products</a>
+    </li>
+    @foreach (var category in Model)
+    {
+        <li class="list-category-item wow fadeInRight" role="presentation" data-wow-delay=".1s">
+            <a class='@(Context.Request.Query["category"] == category.Id.ToString() ? "active" : "")'
+            href="@urlTemplate.Replace("{0}", @category.Id.ToString())" data-toggle="tab">@category.Name</a>
+        </li>
+    }
+</ul>

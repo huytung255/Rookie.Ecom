@@ -6,47 +6,35 @@
 @model PagedResponseModel<ProductDto>
 @{
 }
+<section class="bg-gray-7">
+    <div class="breadcrumbs-custom box-transform-wrap context-dark">
+        <div class="container">
+            <h3 class="breadcrumbs-custom-title">Product</h3>
+            <div class="breadcrumbs-custom-decor"></div>
+        </div>
+        <div class="box-transform" style="background-image: url(images/bg-1.jpg);"></div>
+    </div>
+</section>
 <section class="section section-lg bg-default">
     <div class="container">
         <div class="tabs-custom row row-50 justify-content-center flex-lg-row-reverse text-center text-md-left">
             <div class="col-lg-4 col-xl-3">
-                <h5 class="text-spacing-200 text-capitalize">CATEGORY</h5>
-                <ul class="nav list-category list-category-down-md-inline-block">
-                    <li class="list-category-item wow fadeInRight" role="presentation" data-wow-delay="0s">
-                        <a class="active"
-                           href="#tabs-4-1" data-toggle="tab">All products</a>
-                    </li>
-                    <li class="list-category-item wow fadeInRight" role="presentation" data-wow-delay=".1s">
-                        <a href="#tabs-4-2" data-toggle="tab">Combos</a>
-                    </li>
-                    <li class="list-category-item wow fadeInRight" role="presentation" data-wow-delay=".2s">
-                        <a href="#tabs-4-3" data-toggle="tab">Pizzas</a>
-                    </li>
-                    <li class="list-category-item wow fadeInRight" role="presentation" data-wow-delay=".3s">
-                        <a href="#tabs-4-4" data-toggle="tab">Burgers</a>
-                    </li>
-                    <li class="list-category-item wow fadeInRight" role="presentation" data-wow-delay=".4s">
-                        <a href="#tabs-4-5" data-toggle="tab">Spaghetti</a>
-                    </li>
-                    <li class="list-category-item wow fadeInRight" role="presentation" data-wow-delay=".5s">
-                        <a href="#tabs-4-6" data-toggle="tab">Drinks</a>
-                    </li>
-                    <li class="list-category-item wow fadeInRight" role="presentation" data-wow-delay=".6s">
-                        <a href="#tabs-4-7" data-toggle="tab">Desserts</a>
-                    </li>
-                </ul>
+                 @await Component.InvokeAsync("CategoryList")
             </div>
             <div class="col-lg-8 col-xl-9">
                 <div class="row">
                     @{
                         foreach (var product in Model.Items)
                         {
+                            <div class="col-sm-6 col-lg-4 col-xl-4 my-3">
                             @await Component.InvokeAsync("ProductCard", product)
+                            </div>
+                            
                         }
                     }
-                     
+
                 </div>
-                 @await Component.InvokeAsync("Pagination", Model)
+                @await Component.InvokeAsync("Pagination", Model)
             </div>
 
         </div>

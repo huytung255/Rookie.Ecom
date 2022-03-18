@@ -1,0 +1,17 @@
+﻿@using Rookie.Ecom.Contracts.Dtos
+@model IEnumerable<ProductDto>
+<section class="section section-lg bg-default">
+    <div class="container">
+        <h3 class="oh-desktop"><span class="d-inline-block wow slideInUp">Featured Product</span></h3>
+        <div class="row row-lg row-30">
+            @foreach (var item in Model)
+            {
+                <div class="col-sm-6 col-lg-4 col-xl-3">
+                    <!-- Product-->
+                    @await Component.InvokeAsync("ProductCard", item)
+                </div>
+            }
+
+        </div>
+    </div>
+</section>

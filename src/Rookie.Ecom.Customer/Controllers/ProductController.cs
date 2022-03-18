@@ -14,9 +14,9 @@ namespace Rookie.Ecom.Customer.Controllers
             _productService = productService;
         }
 
-        public async Task<IActionResult> Index(string name, int page = 1, int limit = 9)
+        public async Task<IActionResult> Index(string category, int page = 1, int limit = 9)
         {
-            var result = await _productService.PagedQueryAsync(name, page, limit);
+            var result = await _productService.PagedQueryAsync(category, page, limit);
             return View(result);
         }
 

@@ -126,6 +126,7 @@ namespace Rookie.Ecom.Identity
             .AddInMemoryIdentityResources(InitData.GetIdentityResources())
             .AddInMemoryApiScopes(InitData.ApiScopes)
             .AddInMemoryClients(InitData.GetClients())
+            .AddInMemoryApiResources(InitData.ApiResources)
             .AddAspNetIdentity<User>();
 
             SeedIdentityData.EnsureSeedData(Configuration.GetConnectionString("DbConnection"));
