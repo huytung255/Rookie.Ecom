@@ -33,7 +33,7 @@ namespace Rookie.Ecom.Identity.Quickstart.Account
                 FullName = user.FullName,
                 PhoneNumber = user.PhoneNumber,
                 UserAddress = user.UserAddress,
-                Dob = user.Dob,
+                Dob = user.Dob.ToShortDateString(),
                 Email = user.Email,
             }).ToList();
             return res;
@@ -49,7 +49,7 @@ namespace Rookie.Ecom.Identity.Quickstart.Account
                 FullName = user.FullName,
                 PhoneNumber = user.PhoneNumber,
                 UserAddress = user.UserAddress,
-                Dob = user.Dob,
+                Dob = user.Dob.ToShortDateString(),
                 Email = user.Email,
             };
             return res;

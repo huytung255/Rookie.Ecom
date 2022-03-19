@@ -46,8 +46,8 @@ namespace Rookie.Ecom.Business.Services
         public async Task UpdateAsync(UpdateProductImageDto updateProductImageDto)
         {
             var productImage = await _baseRepository.GetByIdAsync(updateProductImageDto.Id);
-            var updatedProductImage = _mapper.Map(updateProductImageDto, productImage)
-            await _baseRepository.UpdateAsync(productImage);
+            var updatedProductImage = _mapper.Map(updateProductImageDto, productImage);
+            await _baseRepository.UpdateAsync(updatedProductImage);
         }
 
         public async Task<IEnumerable<ProductImageDto>> GetAllAsync()

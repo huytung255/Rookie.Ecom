@@ -24,9 +24,9 @@ namespace Rookie.Ecom.Business.Services
             _mapper = mapper;
         }
 
-        public async Task<OrderDto> AddAsync(OrderDto orderDto)
+        public async Task<OrderDto> AddAsync(CreateOrderDto createOrderDto)
         {
-            var order = _mapper.Map<Order>(orderDto);
+            var order = _mapper.Map<Order>(createOrderDto);
             var item = await _baseRepository.AddAsync(order);
             return _mapper.Map<OrderDto>(item);
         }
@@ -44,10 +44,21 @@ namespace Rookie.Ecom.Business.Services
             return _mapper.Map<List<OrderDto>>(orders);
         }
 
-        public async Task<OrderDto> GetByIdAsync(Guid id)
+        public async Task<OrderDto> GetByIdAsync(string id)
         {
-            var order = await _baseRepository.GetByAsync(x => x.Id == id, "OrderDetails");
+            var query = _baseRepository.Entities;
+            
+            var order = query.Include(ord => ord.OrderDetails).ThenInclude(detail => detail.Product).ThenInclude(product => product.ProductImages).FirstOrDefault(x => x.Id == Guid.Parse(id));
+
+            //var order = await _baseRepository.GetByAsync(x => x.Id == Guid.Parse(id), "OrderDetails");
             return _mapper.Map<OrderDto>(order);
+        }
+
+        public async Task<IEnumerable<OrderDto>> GetByUserId(string userId)
+        {
+            var query = _baseRepository.Entities;
+            query = query.Where(x => x.UserId == Guid.Parse(userId)).Include("OrderDetails");
+            return _mapper.Map<IEnumerable<OrderDto>>(query);
         }
 
         public async Task<PagedResponseModel<OrderDto>> PagedQueryAsync(int page, int limit)

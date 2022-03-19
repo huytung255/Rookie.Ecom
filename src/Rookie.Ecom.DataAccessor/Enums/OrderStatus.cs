@@ -8,7 +8,7 @@ namespace Rookie.Ecom.DataAccessor.Enums
 {
     public enum OrderStatus
     {
-        InProgress,
+        Processing,
         Confirmed,
         Shipping,
         Success,

@@ -16,10 +16,12 @@ namespace Rookie.Ecom.Customer.Controllers
     public class CartController : Controller
     {
         private readonly IProductService _productService;
+        private readonly IOrderService _orderService;
         private readonly string _cartSession = "CartSession";
-        public CartController(IProductService productService)
+        public CartController(IProductService productService, IOrderService orderService)
         {
             _productService = productService;
+            _orderService = orderService;
         }
         public IActionResult Index()
         {
@@ -130,10 +132,10 @@ namespace Rookie.Ecom.Customer.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Checkout(IFormCollection fc)
+        public async Task<IActionResult> Checkout(IFormCollection fc)
         {
-            var name = fc.First(x => x.Key == "name").Value;
             var id = User.FindFirst("sub").Value;
+
             List<CartItemVM> currentCart = new List<CartItemVM>();
             currentCart = GetCart();
             var cartVM = new CartVM()
@@ -141,6 +143,24 @@ namespace Rookie.Ecom.Customer.Controllers
                 Items = currentCart,
                 Total = Math.Round(currentCart.Sum(x => x.Price * x.Quantity), 2)
             };
+
+            var orderDetails = currentCart.Select(item => new CreateOrderDetailDto()
+            {
+                ProductId = Guid.Parse(item.ProductId),
+                Quantity = item.Quantity,
+                UnitPrice = item.Price
+            });
+
+            var order = new CreateOrderDto()
+            {
+                UserId = Guid.Parse(id),
+                ReceiverFullName = fc.First(x => x.Key == "name").Value,
+                ShippingAddress = fc.First(x => x.Key == "address").Value,
+                ReceiverPhoneNumber = fc.First(x => x.Key == "phone").Value,
+                Note = fc.First(x => x.Key == "note").Value,
+                OrderDetails = orderDetails.ToList()
+            };
+            await _orderService.AddAsync(order);
             return View("Index");
         }
         private List<CartItemVM> GetCart()

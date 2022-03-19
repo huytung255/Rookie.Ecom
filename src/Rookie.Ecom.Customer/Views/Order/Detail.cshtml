@@ -1,0 +1,93 @@
+﻿@using Rookie.Ecom.Contracts.Dtos
+
+@model OrderDto
+<section class="bg-gray-7">
+    <div class="breadcrumbs-custom box-transform-wrap context-dark">
+        <div class="container">
+            <h3 class="breadcrumbs-custom-title">Order detail</h3>
+            <div class="breadcrumbs-custom-decor"></div>
+        </div>
+        <div class="box-transform" style="background-image: url(/images/bg-1.jpg);"></div>
+    </div>
+</section>
+<section class="section section-lg bg-default text-md-left">
+    <div class="container">
+        <div class="row row-60 justify-content-center">
+            <div class="col-lg-6">
+
+                @foreach (var item in Model.OrderDetails)
+                {
+                    <div class="row p-3 my-0 justify-content-between">
+                        <article class="product-cart ">
+                            <div class="product-figure-cart ">
+                                <img src=@item.Product.DefaultImage.ImageUrl alt=@item.Product.Name width="80" height="80" />
+                            </div>
+                            <div class="product-detail-cart flex-column">
+                                <h6 class="aside-contacts-title">@item.Product.Name</h6>
+
+                                <p class="aside-contacts-title text-muted mt-auto">Quantity: @item.Quantity</p>
+                            </div>
+                        </article>
+
+                        <div class="d-flex flex-column before-dropdown" style="width: auto;">
+                            <h6 class="mt-auto mb-0" style="text-align: right;">
+                                <span class="aside-contacts-title">@(item.UnitPrice * item.Quantity)</span>
+                            </h6>
+                        </div>
+                    </div>
+                    <hr class="my-1 ">
+                }
+                <h6 class="aside-contacts-title mt-4 text-center text-md-right" style="font-size: 15px;">Total: @Model.Total</h6>
+            </div>
+            <div class="col-lg-6">
+                <div class="aside-contacts">
+                    <div class="row row-30">
+                        <div class="col-sm-6 col-lg-12 aside-contacts-item">
+                            <p class="aside-contacts-title">Created Date</p>
+                            <div class="unit unit-spacing-xs justify-content-center justify-content-md-start">
+                                <div class="unit-left"><span class="icon mdi mdi-calendar-blank"></span></div>
+                                <div class="unit-body"><span class="phone">@Model.CreatedDate.ToString()</span></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-12 aside-contacts-item">
+                            <p class="aside-contacts-title">Status</p>
+                            <div class="unit unit-spacing-xs justify-content-center justify-content-md-start">
+                                <div class="unit-left"><span class="icon mdi mdi-information"></span></div>
+                                <div class="unit-body"><span class="phone">@Model.OrderStatus</span></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-12 aside-contacts-item">
+                            <p class="aside-contacts-title">Receiver's name</p>
+                            <div class="unit unit-spacing-xs justify-content-center justify-content-md-start">
+                                <div class="unit-left"><span class="icon mdi mdi-account"></span></div>
+                                <div class="unit-body"><span class="phone">@Model.ReceiverFullName</span></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-12 aside-contacts-item">
+                            <p class="aside-contacts-title">Phone</p>
+                            <div class="unit unit-spacing-xs justify-content-center justify-content-md-start">
+                                <div class="unit-left"><span class="icon mdi mdi-phone"></span></div>
+                                <div class="unit-body"><span class="phone">@Model.ReceiverPhoneNumber</span></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-12 aside-contacts-item">
+                            <p class="aside-contacts-title">Shipping Address</p>
+                            <div class="unit unit-spacing-xs justify-content-center justify-content-md-start">
+                                <div class="unit-left"><span class="icon mdi mdi-map-marker"></span></div>
+                                <div class="unit-body"><span class="mail">@Model.ShippingAddress</span></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-12 aside-contacts-item">
+                            <p class="aside-contacts-title">Note</p>
+                            <div class="unit unit-spacing-xs justify-content-center justify-content-md-start">
+                                <div class="unit-left"><span class="icon mdi mdi-note"></span></div>
+                                <div class="unit-body"><span class="address">@Model.Note</span></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
