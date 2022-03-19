@@ -31,11 +31,6 @@ namespace Rookie.Ecom.Business.Services
             if (createCategoryDto == null)
                 throw new ArgumentNullException();
             var category = _mapper.Map<Category>(createCategoryDto);
-            category.Id = new Guid();
-            category.CreatedDate = DateTime.Now;
-            category.UpdatedDate = DateTime.Now;
-            category.CreatorId = null;
-            category.Published = true;
             var item = await _baseRepository.AddAsync(category);
             return _mapper.Map<CategoryDto>(item);
         }
@@ -47,12 +42,9 @@ namespace Rookie.Ecom.Business.Services
 
         public async Task UpdateAsync(UpdateCategoryDto updateCategoryDto)
         {
-            var data = await _baseRepository.GetByIdAsync(updateCategoryDto.Id);
-            //var category = _mapper.Map<Category>(updateCategoryDto);
-            data.Name = updateCategoryDto.Name;
-            data.Desc = updateCategoryDto.Desc;
-            data.UpdatedDate = DateTime.Now;
-            await _baseRepository.UpdateAsync(data);
+            var category = await _baseRepository.GetByIdAsync(updateCategoryDto.Id);
+            var updatedCategory = _mapper.Map(updateCategoryDto, category);
+            await _baseRepository.UpdateAsync(updatedCategory);
         }
 
         public async Task<IEnumerable<CategoryDto>> GetAllAsync()

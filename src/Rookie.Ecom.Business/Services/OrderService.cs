@@ -27,11 +27,6 @@ namespace Rookie.Ecom.Business.Services
         public async Task<OrderDto> AddAsync(OrderDto orderDto)
         {
             var order = _mapper.Map<Order>(orderDto);
-            order.Id = new Guid();
-            order.CreatedDate = DateTime.Now;
-            order.UpdatedDate = DateTime.Now;
-            order.CreatorId = null;
-            order.Published = true;
             var item = await _baseRepository.AddAsync(order);
             return _mapper.Map<OrderDto>(item);
         }

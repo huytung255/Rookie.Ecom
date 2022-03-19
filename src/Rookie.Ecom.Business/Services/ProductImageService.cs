@@ -32,11 +32,6 @@ namespace Rookie.Ecom.Business.Services
         public async Task<ProductImageDto> AddAsync(CreateProductImageDto createProductImageDto)
         {
             var productImage = _mapper.Map<ProductImage>(createProductImageDto);
-            productImage.Id = new Guid();
-            productImage.CreatedDate = DateTime.Now;
-            productImage.UpdatedDate = DateTime.Now;
-            productImage.CreatorId = null;
-            productImage.Published = true;
             productImage.ImageUrl = await _storageService.SaveFile(createProductImageDto.ImageFile);
             var item = await _baseRepository.AddAsync(productImage);
             return _mapper.Map<ProductImageDto>(item);
@@ -51,9 +46,7 @@ namespace Rookie.Ecom.Business.Services
         public async Task UpdateAsync(UpdateProductImageDto updateProductImageDto)
         {
             var productImage = await _baseRepository.GetByIdAsync(updateProductImageDto.Id);
-            productImage.Caption = updateProductImageDto.Caption;
-            productImage.IsDefault = updateProductImageDto.IsDefault;
-            productImage.UpdatedDate = DateTime.Now;
+            var updatedProductImage = _mapper.Map(updateProductImageDto, productImage)
             await _baseRepository.UpdateAsync(productImage);
         }
 

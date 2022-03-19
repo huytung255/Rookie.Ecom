@@ -17,4 +17,12 @@ namespace Rookie.Ecom.Contracts.Dtos
         public List<OrderDetailDto> OrderDetails { get; set; }
 
     }
+    public class CreateOrderDto
+    {
+        public string Note { get; set; }
+        public string ShippingAddress { get; set; }
+        public string ReceiverFullName { get; set; }
+        public string ReceiverPhoneNumber { get; set; }
+        public List<CreateOrderDetailDto> OrderDetails { get; set; }
+    }
 }

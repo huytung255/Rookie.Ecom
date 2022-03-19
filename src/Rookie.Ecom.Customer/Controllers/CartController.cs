@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Rookie.Ecom.Business.Interfaces;
@@ -7,6 +8,7 @@ using Rookie.Ecom.Customer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Rookie.Ecom.Customer.Controllers
@@ -21,6 +23,7 @@ namespace Rookie.Ecom.Customer.Controllers
         }
         public IActionResult Index()
         {
+            
             List<CartItemVM> currentCart = new List<CartItemVM>();
             currentCart = GetCart();
             var cartVM = new CartVM()
@@ -112,6 +115,7 @@ namespace Rookie.Ecom.Customer.Controllers
 
         }
 
+        [Authorize]
         public IActionResult Checkout()
         {
             List<CartItemVM> currentCart = new List<CartItemVM>();
@@ -122,6 +126,22 @@ namespace Rookie.Ecom.Customer.Controllers
                 Total = Math.Round(currentCart.Sum(x => x.Price * x.Quantity), 2)
             };
             return View(cartVM);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult Checkout(IFormCollection fc)
+        {
+            var name = fc.First(x => x.Key == "name").Value;
+            var id = User.FindFirst("sub").Value;
+            List<CartItemVM> currentCart = new List<CartItemVM>();
+            currentCart = GetCart();
+            var cartVM = new CartVM()
+            {
+                Items = currentCart,
+                Total = Math.Round(currentCart.Sum(x => x.Price * x.Quantity), 2)
+            };
+            return View("Index");
         }
         private List<CartItemVM> GetCart()
         {
