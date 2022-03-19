@@ -162,7 +162,7 @@ namespace Rookie.Ecom.Customer.Controllers
                 Note = fc.First(x => x.Key == "note").Value,
                 OrderDetails = orderDetails.ToList()
             };
-            //var asset = await _orderService.AddAsync(order);
+            var asset = await _orderService.AddAsync(order);
             HttpContext.Session.Remove(_cartSession);
             return RedirectToAction("Index", "Home");
         }

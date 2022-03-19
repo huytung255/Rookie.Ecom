@@ -21,6 +21,25 @@ function postRating(userId, productId) {
         }
     })
 }
+function placeOrder() {
+    $("#order-form").submit(function (e) {
+
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+
+        var form = $(this);
+        var actionUrl = form.attr('action');
+
+        $.ajax({
+            type: "POST",
+            url: 'https://localhost:5021/Cart/Checkout',
+            data: form.serialize(), // serializes the form's elements.
+            success: function (data) {
+                window.location.href = 'https://localhost:5021/Order'
+            }
+        });
+
+    });
+}
 function increaseItemQuantity(id) {
     let data = { productId: id, quantity: 1 };
     $.ajax({
