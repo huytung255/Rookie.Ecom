@@ -57,6 +57,9 @@ namespace Rookie.Ecom.Business
                 .ForMember(d => d.CreatedDate, t => t.MapFrom(opt => DateTime.Now))
                 .ForMember(d => d.UpdatedDate, t => t.MapFrom(opt => DateTime.Now))
                 .ForMember(d => d.Published, t => t.MapFrom(opt => true));
+            CreateMap<UpdateOrderDto, Order>()
+                .ForMember(d => d.UpdatedDate, t => t.MapFrom(opt => DateTime.Now))
+                .ForAllOtherMembers(t => t.UseDestinationValue());
 
             CreateMap<OrderDetailDto, OrderDetail>();
             CreateMap<CreateOrderDetailDto, OrderDetail>()

@@ -25,6 +25,8 @@ import ProductDetail from "./views/ProductDetail";
 import CallbackPage from "./components/callback/CallbackPage";
 import Login from "./views/Login.js";
 import UserList from "./views/UserList";
+import Order from "./views/Order";
+import OrderDetail from "./views/OrderDetail";
 var routes = [
   {
     path: "/",
@@ -71,9 +73,23 @@ var routes = [
   {
     path: "/user-list",
     name: "User List",
-    icon: "ni ni-single-02 text-info",
+    icon: "ni ni-single-02 text-primary",
     component: <UserList />,
     listed: true,
+  },
+  {
+    path: "/order",
+    name: "Order",
+    icon: "ni ni-cart text-primary",
+    component: <Order />,
+    listed: true,
+  },
+  {
+    path: "/order/:id",
+    name: "Order Detail",
+    icon: "ni ni-cart text-primary",
+    component: <OrderDetail />,
+    listed: false,
   },
   {
     path: "/login",

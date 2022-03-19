@@ -31,7 +31,7 @@
 
                         <div class="d-flex flex-column before-dropdown" style="width: auto;">
                             <h6 class="mt-auto mb-0" style="text-align: right;">
-                                <span class="aside-contacts-title">@(item.UnitPrice * item.Quantity)</span>
+                                <span class="aside-contacts-title">Unit price: @(item.UnitPrice * item.Quantity)</span>
                             </h6>
                         </div>
                     </div>
@@ -53,7 +53,7 @@
                             <p class="aside-contacts-title">Status</p>
                             <div class="unit unit-spacing-xs justify-content-center justify-content-md-start">
                                 <div class="unit-left"><span class="icon mdi mdi-information"></span></div>
-                                <div class="unit-body"><span class="phone">@Model.OrderStatus</span></div>
+                                <div class="unit-body"><span class="phone">@Model.Status</span></div>
                             </div>
                         </div>
                         <div class="col-sm-6 col-lg-12 aside-contacts-item">

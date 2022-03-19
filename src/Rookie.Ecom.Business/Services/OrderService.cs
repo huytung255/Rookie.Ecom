@@ -31,11 +31,13 @@ namespace Rookie.Ecom.Business.Services
             return _mapper.Map<OrderDto>(item);
         }
 
-        public async Task UpdateAsync(OrderDto orderDto)
+        public async Task UpdateAsync(UpdateOrderDto updateOrderDto)
         {
-            var order = _mapper.Map<Order>(orderDto);
-            order.UpdatedDate = DateTime.Now;
-            await _baseRepository.UpdateAsync(order);
+            var query = _baseRepository.Entities;
+
+            var order = query.Include(ord => ord.User).Include(ord => ord.OrderDetails).ThenInclude(detail => detail.Product).ThenInclude(product => product.ProductImages).FirstOrDefault(x => x.Id == updateOrderDto.Id);
+            var updatedOrder = _mapper.Map(updateOrderDto, order);
+            await _baseRepository.UpdateAsync(updatedOrder);
         }
 
         public async Task<IEnumerable<OrderDto>> GetAllAsync()
@@ -48,7 +50,7 @@ namespace Rookie.Ecom.Business.Services
         {
             var query = _baseRepository.Entities;
             
-            var order = query.Include(ord => ord.OrderDetails).ThenInclude(detail => detail.Product).ThenInclude(product => product.ProductImages).FirstOrDefault(x => x.Id == Guid.Parse(id));
+            var order = query.Include(ord => ord.User).Include(ord => ord.OrderDetails).ThenInclude(detail => detail.Product).ThenInclude(product => product.ProductImages).FirstOrDefault(x => x.Id == Guid.Parse(id));
 
             //var order = await _baseRepository.GetByAsync(x => x.Id == Guid.Parse(id), "OrderDetails");
             return _mapper.Map<OrderDto>(order);
@@ -64,7 +66,7 @@ namespace Rookie.Ecom.Business.Services
         public async Task<PagedResponseModel<OrderDto>> PagedQueryAsync(int page, int limit)
         {
             var query = _baseRepository.Entities;
-
+            query = query.Include("User").Include("OrderDetails");
             var assets = await query
                 .AsNoTracking()
                 .PaginateAsync(page, limit);

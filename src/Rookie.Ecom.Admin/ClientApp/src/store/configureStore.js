@@ -6,6 +6,7 @@ import * as WeatherForecasts from "./WeatherForecasts";
 import * as Category from "./Category";
 import * as Product from "./Product";
 import * as Profile from "./Profile";
+import * as Order from "./Order";
 import createOidcMiddleware from "redux-oidc";
 import { reducer as oidc } from "redux-oidc";
 import userManager from "../utils/userManager";
@@ -15,6 +16,7 @@ export default function configureStore(history, initialState) {
     categories: Category.reducer,
     products: Product.reducer,
     profile: Profile.reducer,
+    orders: Order.reducer,
     counter: Counter.reducer,
     weatherForecasts: WeatherForecasts.reducer,
     oidc,

@@ -19,6 +19,6 @@ namespace Rookie.Ecom.Business.Interfaces
 
         Task<OrderDto> AddAsync(CreateOrderDto createOrderDto);
 
-        Task UpdateAsync(OrderDto orderDto);
+        Task UpdateAsync(UpdateOrderDto updateOrderDto);
     }
 }
