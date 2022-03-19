@@ -1,36 +1,29 @@
 ﻿@using Rookie.Ecom.Contracts.Dtos
 @model UserDto
-<section class="section section-lg bg-light text-md-left">
-    <div class="container">
-        <h4 class="text-spacing-25 text-transform-none text-center">Checkout information</h4>
-                <form class="rd-form rd-mailform text-center"  method="post" action="Checkout">
-                    <div class="row row-20 gutters-20">
-                        <div class="col-md-6">
-                            <div class="form-wrap">
-                                <input class="form-input" id="receiver-name" type="text" name="name" value="@Model.FullName">
-                                <label class="form-label" for="receiver-name">Receiver's Name</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-wrap">
-                                <input class="form-input" id="receiver-phone" type="text" name="phone" value="@Model.PhoneNumber">
-                                <label class="form-label" for="receiver-phone">Phone Number</label>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-wrap">
-                                <input class="form-input" id="receiver-address" type="text" name="address" value="@Model.UserAddress">
-                                <label class="form-label" for="receiver-address">Shipping Address</label>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-wrap">
-                                <label class="form-label" for="note">Note</label>
-                                <textarea class="form-input textarea-lg" id="note" name="note" ></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="button button-secondary button-winona" type="submit">Confirm</button>
-                </form>
+
+<div class="row row-20 gutters-20">
+    <div class="col-md-6">
+        <div class="form-wrap">
+            <input class="form-input" id="receiver-name" type="text" name="name" value="@Model.FullName">
+            <label class="form-label" for="receiver-name">Receiver's Name</label>
+        </div>
     </div>
-</section>
+    <div class="col-md-6">
+        <div class="form-wrap">
+            <input class="form-input" id="receiver-phone" type="text" name="phone" value="@Model.PhoneNumber">
+            <label class="form-label" for="receiver-phone">Phone Number</label>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="form-wrap">
+            <input class="form-input" id="receiver-address" type="text" name="address" value="@Model.UserAddress">
+            <label class="form-label" for="receiver-address">Shipping Address</label>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="form-wrap">
+            <label class="form-label" for="note">Note</label>
+            <textarea class="form-input textarea-lg" id="note" name="note"></textarea>
+        </div>
+    </div>
+</div>

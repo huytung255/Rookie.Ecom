@@ -87,6 +87,7 @@ const Product = ({
                       Image
                     </th>
                     <th scope="col">Name</th>
+                    <th scope="col">Rating</th>
                     <th scope="col">Price</th>
                     <th scope="col">Category</th>
                     <th scope="col">Featured</th>
@@ -121,6 +122,7 @@ const Product = ({
                           </Media>
                         </td>
                         <td className="w-100">{p.name}</td>
+                        <td className="w-100">{p.calculatedRating}</td>
                         <td className="w-100">{p.price}</td>
                         <td className="w-100">
                           {p.category && p.category.name}

@@ -47,6 +47,12 @@
 
     </div>
 </section>
-
-@await Component.InvokeAsync("CheckoutInfo")
-
+<section class="section section-lg bg-light text-md-left">
+    <div class="container">
+        <h4 class="text-spacing-25 text-transform-none text-center">Checkout information</h4>
+        <form class="rd-form rd-mailform text-center" asp-controller="Cart" asp-action="Checkout" asp-route-returnUrl="https://localhost:5011/" method="post">
+            @await Component.InvokeAsync("CheckoutInfo")
+            <button class="button button-secondary button-winona" type="submit">Confirm</button>
+        </form>
+    </div>
+</section>

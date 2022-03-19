@@ -67,16 +67,38 @@ namespace Rookie.Ecom.Business
                 .ForMember(d => d.CreatedDate, t => t.MapFrom(opt => DateTime.Now))
                 .ForMember(d => d.UpdatedDate, t => t.MapFrom(opt => DateTime.Now))
                 .ForMember(d => d.Published, t => t.MapFrom(opt => true));
+
+            CreateMap<RatingDto, Rating>();
+            CreateMap<CreateRatingDto, Rating>()
+                .ForMember(d => d.Id, t => t.NullSubstitute(new Guid()))
+                .ForMember(d => d.CreatedDate, t => t.MapFrom(opt => DateTime.Now))
+                .ForMember(d => d.UpdatedDate, t => t.MapFrom(opt => DateTime.Now))
+                .ForMember(d => d.Published, t => t.MapFrom(opt => true));
         }
 
         private void FromDataAccessorLayer()
         {
             CreateMap<Category, CategoryDto>();
-            CreateMap<Product, ProductDto>().ForMember(d => d.DefaultImage, t => t.MapFrom(x => FindDefault(x.ProductImages)));
+            CreateMap<Product, ProductDto>().ForMember(d => d.DefaultImage, t => t.MapFrom(x => FindDefault(x.ProductImages))).ForMember(d => d.CalculatedRating, t => t.MapFrom(x => CalculateRating(x.Ratings)));
             CreateMap<ProductImage, ProductImageDto>();
             CreateMap<User, UserDto>();
             CreateMap<Order, OrderDto>().ForMember(d => d.Total, t => t.MapFrom(x => CalculateTotal(x.OrderDetails)));
             CreateMap<OrderDetail, OrderDetailDto>();
+            CreateMap<Rating, RatingDto>();
+        }
+
+        private decimal CalculateRating(List<Rating> ratings)
+        {
+            decimal res = 0;
+            var count = 0;
+            foreach (Rating r in ratings)
+            {
+                res += r.Star;
+                count++;
+            }
+            if (count == 0) return 0;
+            res = res / count;
+            return Math.Round(res,2);
         }
 
         private decimal CalculateTotal(List<OrderDetail> orderDetails)

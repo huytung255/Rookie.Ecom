@@ -1,4 +1,5 @@
-﻿function addToCart(id,quantity) {
+﻿let star;
+function addToCart(id, quantity) {
     let data = { productId: id, quantity: quantity };
     $.ajax({
         type: "POST",
@@ -6,6 +7,18 @@
         data: JSON.stringify(data),
         contentType: "application/json",
         success: () => getCartSize()
+    })
+}
+function postRating(userId, productId) {
+    let data = { userId: userId, productId: productId, star: star, comment: $("#comment").val() };
+    $.ajax({
+        type: "POST",
+        url: 'https://localhost:5021/Rating',
+        data: JSON.stringify(data),
+        contentType: "application/json",
+        success: (res) => {
+            $("#product-detail").html(res)
+        }
     })
 }
 function increaseItemQuantity(id) {
@@ -46,7 +59,7 @@ function deleteItem(id) {
             }
         })
     })
-    
+
 }
 function getCartSize() {
 

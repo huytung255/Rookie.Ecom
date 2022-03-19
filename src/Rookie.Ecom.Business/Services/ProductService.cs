@@ -47,20 +47,21 @@ namespace Rookie.Ecom.Business.Services
 
         public async Task<IEnumerable<ProductDto>> GetAllAsync()
         {
-            var products = await _baseRepository.GetAllAsync("ProductImages,Category");
+            var products = await _baseRepository.GetAllAsync("ProductImages,Category,Ratings");
             return _mapper.Map<List<ProductDto>>(products);
         }
 
         public async Task<ProductDto> GetByIdAsync(Guid id)
         {
-            var product = await _baseRepository.GetByAsync(x => x.Id == id, "ProductImages");
+            var query = _baseRepository.Entities;
+            var product = query.Include(ord => ord.ProductImages).Include(ord => ord.Ratings).ThenInclude(rating => rating.User).FirstOrDefault(x => x.Id == id);
             return _mapper.Map<ProductDto>(product);
         }
 
         public async Task<IEnumerable<ProductDto>> GetByFeatureAsync()
         {
             var query = _baseRepository.Entities;
-            query = query.Where(x => x.IsFeatured == true).Include("ProductImages").Include("Category");
+            query = query.Where(x => x.IsFeatured == true).Include("ProductImages").Include("Category").Include("Ratings");
             return _mapper.Map<IEnumerable<ProductDto>>(query);
         }
 
@@ -68,7 +69,7 @@ namespace Rookie.Ecom.Business.Services
         {
             var query = _baseRepository.Entities;
 
-            query = query.Where(x => string.IsNullOrEmpty(category) || x.CategoryId.ToString().Contains(category)).Include("ProductImages").Include("Category");
+            query = query.Where(x => string.IsNullOrEmpty(category) || x.CategoryId.ToString().Contains(category)).Include("ProductImages").Include("Category").Include("Ratings");
 
             //query = query.OrderBy(x => x.Name);
 

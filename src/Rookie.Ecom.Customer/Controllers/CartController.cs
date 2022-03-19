@@ -122,6 +122,8 @@ namespace Rookie.Ecom.Customer.Controllers
         {
             List<CartItemVM> currentCart = new List<CartItemVM>();
             currentCart = GetCart();
+            if (!currentCart.Any())
+                return RedirectToAction("Index", "Home");
             var cartVM = new CartVM()
             {
                 Items = currentCart,
@@ -160,8 +162,9 @@ namespace Rookie.Ecom.Customer.Controllers
                 Note = fc.First(x => x.Key == "note").Value,
                 OrderDetails = orderDetails.ToList()
             };
-            await _orderService.AddAsync(order);
-            return View("Index");
+            //var asset = await _orderService.AddAsync(order);
+            HttpContext.Session.Remove(_cartSession);
+            return RedirectToAction("Index", "Home");
         }
         private List<CartItemVM> GetCart()
         {

@@ -23,6 +23,7 @@ namespace Rookie.Ecom.Business
             services.AddTransient<IProductImageService, ProductImageService>();
             services.AddTransient<IFileStorageService, FileStorageService>();
             services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IRatingService, RatingService>();
 
             services.AddRefitClient<IIdentityProviderService>()
                 .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://localhost:5001"));

@@ -6,9 +6,18 @@ using System.Threading.Tasks;
 
 namespace Rookie.Ecom.Contracts.Dtos
 {
-    public class RatingDto
+    public class RatingDto: BaseDto
     {
-        public Guid? Id { get; set; }
+        public Guid UserId { get; set; }
+        public Guid ProductId { get; set; }
+        public decimal Star { get; set; }
+        public string Comment { get; set; }
+        public UserDto User { get; set; }
+    }
+    public class CreateRatingDto
+    {
+        public Guid UserId { get; set; }
+        public Guid ProductId { get; set; }
         public decimal Star { get; set; }
         public string Comment { get; set; }
     }

@@ -1,111 +1,207 @@
 ﻿@using Rookie.Ecom.Contracts.Dtos
 
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
 @model ProductDto
-@{
-    var number = 1;
-}
 
-<section class="section section-md bg-default text-md-left">
-    <div class="container wow fadeInLeft" data-wow-delay=".15s">
-        <div class="row row-60 justify-content-center flex-lg-row">
-            <!-- <div class="col-lg-6 col-xl-5"><img src="images/product1-669x669.png" alt="" width="669" height="669"/>
-            </div> -->
-            <!-- Product-->
-            @if (Model.ProductImages.Count != 0)
-            {
-                <div id="carouselExampleIndicators" class="col-12 col-md-4 carousel slide" data-ride="carousel" data-interval=3000>
+<div id="product-detail">
+    <section class="section section-md bg-default text-md-left">
+        <div class="container wow fadeInLeft" data-wow-delay=".15s">
+            <div class="row row-60 justify-content-center flex-lg-row">
+                <!-- <div class="col-lg-6 col-xl-5"><img src="images/product1-669x669.png" alt="" width="669" height="669"/>
+                </div> -->
+                <!-- Product-->
+                @if (Model.ProductImages.Count != 0)
+                {
+                    <div id="carouselExampleIndicators" class="col-12 col-md-4 carousel slide" data-ride="carousel" data-interval=3000>
 
-                    <ol class="carousel-indicators">
-                        @{
-                            int i = 0;
-                        }
-                        @foreach (var item in Model.ProductImages)
-                        {
-                            <li data-target="#carouselExampleIndicators" data-slide-to=@i class=@(i == 0 ? "active" : "")></li>
-                            i++;
-                        }
-                    </ol>
+                        <ol class="carousel-indicators">
+                            @{
+                                int i = 0;
+                            }
+                            @foreach (var item in Model.ProductImages)
+                            {
+                                <li data-target="#carouselExampleIndicators" data-slide-to=@i class=@(i == 0 ? "active" : "")></li>
+                                i++;
+                            }
+                        </ol>
 
-                    <div class="carousel-inner" style="height: 350px">
-                        @{
-                            var first = true;
-                        }
-                        @foreach (var item in Model.ProductImages)
-                        {
-                            <div class="carousel-item @(first?Html.Raw("active"):Html.Raw(""))">
-                                <img class="d-block w-100" src=@item.ImageUrl alt=@item.Caption>
-                            </div>
-                            first = false;
-                        }
+                        <div class="carousel-inner" style="height: 350px">
+                            @{
+                                var first = true;
+                            }
+                            @foreach (var item in Model.ProductImages)
+                            {
+                                <div class="carousel-item @(first?Html.Raw("active"):Html.Raw(""))">
+                                    <img class="d-block w-100" src=@item.ImageUrl alt=@item.Caption>
+                                </div>
+                                first = false;
+                            }
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleIndicators"
+                       role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleIndicators"
+                       role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
                     </div>
-                    <a class="carousel-control-prev" href="#carouselExampleIndicators"
-                   role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carouselExampleIndicators"
-                   role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
-            }
-            else
-            {
-                <div class="col-12 col-md-4">
-                    <img src="/images/placeholder.png"/>
-                </div>
-                
-            }
-            <div class="col-12 col-md-8 d-flex flex-column justify-content-between">
-                <!-- <div class=""> -->
-                <article class="">
-                    <h4 class="heading-4" >@Model.Name</h4>
-                    <hr></hr>
-                    <p class=" my-3">
-                        @Model.Desc
-                    </p>
-                    <hr></hr>
-                    <h6 class="my-2 text-capitalize">
-                        Rating: <span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star text-gray-13"></span>
-                    </h6>
-                    <h6 class="my-2 text-capitalize">
-                        Price: @Model.Price
-                    </h6>
-
-                </article>
-
-                <div class="d-flex flex-column flex-md-row  align-items-center justify-content-between my-0">
-
-                    <div class="input-group" style="max-width: 250px">
-                        <button class="button button-xs button-primary button-winona btn-stepper " data-dir="dwn" onclick=decrement()><span class="fa fa-minus"></span></button>
-                        <input readonly type="number" class="form-control text-center py-0" value=1 min=1 id="quantity"/>
-                         <button class="button button-xs button-primary button-winona btn-stepper mt-0" data-dir="up" onclick=increment()><span class="fa fa-plus"></span></button>
+                }
+                else
+                {
+                    <div class="col-12 col-md-4">
+                        <img src="/images/placeholder.png" />
                     </div>
 
-                    <div class="">
-                        <div class="button-wrap">
-                            <div class="button button-xs button-primary button-winona" onclick=addToCart("@Model.Id",$("#quantity").val())>
-                                Add to
-                                cart
+                }
+                <div class="col-12 col-md-8 d-flex flex-column justify-content-between">
+                    <!-- <div class=""> -->
+                    <article class="">
+                        <h4 class="heading-4">@Model.Name</h4>
+                        <hr></hr>
+                        <p class=" my-3">
+                            @Model.Desc
+                        </p>
+                        <hr></hr>
+                        <h6 class="my-2 text-capitalize">
+                            Rating: Model.CalculatedRating
+                            <span class="product-rating">
+                                                            @for (var i = 1; i <= 5; i++)
+                            {
+                                if (i <= @Model.CalculatedRating)
+                                {<span class="mdi mdi-star"></span>}
+                                else
+                                {<span class="mdi mdi-star text-gray-13"></span>}
+                            }
+                            </span>
+
+
+                        </h6>
+                        <h6 class="my-2 text-capitalize">
+                            Price: @Model.Price
+                        </h6>
+
+                    </article>
+
+                    <div class="d-flex flex-column flex-md-row  align-items-center justify-content-between my-0">
+
+                        <div class="input-group" style="max-width: 250px">
+                            <button class="button button-xs button-primary button-winona btn-stepper " data-dir="dwn" onclick=decrement()><span class="fa fa-minus"></span></button>
+                            <input readonly type="number" class="form-control text-center py-0" value=1 min=1 id="quantity" />
+                            <button class="button button-xs button-primary button-winona btn-stepper mt-0" data-dir="up" onclick=increment()><span class="fa fa-plus"></span></button>
+                        </div>
+
+                        <div class="">
+                            <div class="button-wrap">
+                                <div class="button button-xs button-primary button-winona" onclick=addToCart("@Model.Id",$("#quantity").val())>
+                                    Add to
+                                    cart
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
+                </div>
             </div>
+
+
         </div>
 
+    </section>
+    <section class="section section-lg bg-gray-100 text-md-left pt-0 ">
+        <div class="container px-1 wow fadeInLeft" data-wow-delay=".15s">
+            <h4 class="text-spacing-25 text-transform-none text-center">Rating</h4>
+            @foreach (var rating in Model.Ratings)
+            {
+                <div class="d-flex bg-white rounded p-3 mb-2">
+                    <img src="~/images/comment-100x100.png" class="align-self-start mr-3" alt="" width="50" height="50" />
+                    <div>
+                        <div class="comment-name">
+                            @rating.User.FullName
+                        </div>
+                        <div class="comment-rating">
+                            @for (var i = 1; i <= 5; i++)
+                            {
+                                if (i <= @rating.Star)
+                                {
+                                    <span class="mdi mdi-star"></span>
+                                }
+                                else
+                                {
+                                    <span class="mdi mdi-star text-gray-13"></span>
+                                }
+                            }
+                        </div>
+                        <p class="mt-2">@rating.Comment</p>
+                    </div>
+                </div>
+            }
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="row row-60 justify-content-center">
+                    <div class="col-lg-8">
+                        <h4 class="text-spacing-25 text-transform-none text-center">Leave a rating</h4>
+                        <form class="rd-form rd-mailform">
+                            <div class="row row-20 gutters-20">
+                                <div class="col-12">
+                                    <p>Your rating:</p>
+                                    <div class="rating">
+                                        <label>
+                                            <input type="radio" name="stars" value="1" />
+                                            <span class="star mdi mdi-star"></span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="stars" value="2" />
+                                            <span class="star mdi mdi-star"></span>
+                                            <span class="star mdi mdi-star"></span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="stars" value="3" />
+                                            <span class="star mdi mdi-star"></span>
+                                            <span class="star mdi mdi-star"></span>
+                                            <span class="star mdi mdi-star"></span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="stars" value="4" />
+                                            <span class="star mdi mdi-star"></span>
+                                            <span class="star mdi mdi-star"></span>
+                                            <span class="star mdi mdi-star"></span>
+                                            <span class="star mdi mdi-star"></span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="stars" value="5" />
+                                            <span class="star mdi mdi-star"></span>
+                                            <span class="star mdi mdi-star"></span>
+                                            <span class="star mdi mdi-star"></span>
+                                            <span class="star mdi mdi-star"></span>
+                                            <span class="star mdi mdi-star"></span>
+                                        </label>
+                                    </div>
 
-    </div>
 
-</section>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-wrap">
+                                        <label class="form-label" for="comment">Comment</label>
+                                        <textarea class="form-input textarea-lg" id="comment" name="comment"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="button button-secondary button-winona" id="post-rating" onclick=postRating("@User.FindFirst("sub").Value","@Model.Id")>Submit</button>
+                        </form>
+                    </div>
+                </div>
+            }
+
+        </div>
+
+    </section>
+</div>
 
 @section scripts {
-    <script>
+<script>
         function increment(){
             $("#quantity").val( function(i, oldval) {
                 return ++oldval;
@@ -117,5 +213,9 @@
                 return --oldval;
             });
         }
-    </script>
+        $(':radio').change(function() {
+     star = this.value;
+    });
+
+</script>
 }

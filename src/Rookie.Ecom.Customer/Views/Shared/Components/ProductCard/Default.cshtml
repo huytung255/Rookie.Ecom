@@ -5,39 +5,45 @@
 @model ProductDto
 
 
-    <!-- Product-->
-    <article class="product wow fadeInLeft text-center px-1" data-wow-delay=".15s">
-        <div class="product-figure d-flex justify-content-center align-items-center" style="height: 161px; width: 161px">
-            <img src=@Model.DefaultImage.ImageUrl alt=@Model.DefaultImage.Caption />
-        </div>
-        <div class="product-rating">
-            <span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star text-gray-13"></span>
-        </div>
-        <h6 class="product-title">@Model.Name</h6>
-
-        <div class="product-price-wrap">
-            <div class="product-price">@Model.Price</div>
-        </div>
-        <div class="product-button">
-            <div class="button-wrap" >
-                <div class="button button-xs button-primary button-winona" onclick=addToCart("@Model.Id",1) id="addtocartsingle">
-                    Add to
-                    cart
-                </div>
-            </div>
-            <div class="button-wrap">
-                <a class="button button-xs button-secondary button-winona" asp-area="" asp-controller="Product" asp-action="Detail" asp-route-id=@Model.Id>
-                    View
-                    Product
-                </a>
-            </div>
-        </div>
-        @if (Model.IsFeatured)
+<!-- Product-->
+<article class="product wow fadeInLeft text-center px-1" data-wow-delay=".15s">
+    <div class="product-figure d-flex justify-content-center align-items-center" style="height: 161px; width: 161px">
+        <img src=@Model.DefaultImage.ImageUrl alt=@Model.DefaultImage.Caption />
+    </div>
+    <div class="product-rating">
+        @for (var i = 1; i <= 5; i++)
         {
-            <span class="product-badge product-badge-new">Featured</span>
+            if (i <= @Model.CalculatedRating)
+            {<span class="mdi mdi-star"></span>}
+            else
+            {<span class="mdi mdi-star text-gray-13"></span>}
         }
+    </div>
+    <h6 class="product-title">@Model.Name</h6>
 
-    </article>
+    <div class="product-price-wrap">
+        <div class="product-price">@Model.Price</div>
+    </div>
+    <div class="product-button">
+        <div class="button-wrap">
+            <div class="button button-xs button-primary button-winona" onclick=addToCart("@Model.Id",1) id="addtocartsingle">
+                Add to
+                cart
+            </div>
+        </div>
+        <div class="button-wrap">
+            <a class="button button-xs button-secondary button-winona" asp-area="" asp-controller="Product" asp-action="Detail" asp-route-id=@Model.Id>
+                View
+                Product
+            </a>
+        </div>
+    </div>
+    @if (Model.IsFeatured)
+    {
+        <span class="product-badge product-badge-new">Featured</span>
+    }
+
+</article>
 
 
 @{

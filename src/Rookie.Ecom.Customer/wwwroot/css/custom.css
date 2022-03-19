@@ -44,12 +44,10 @@
     }
 
 .comment-profile {
-    position: relative;
-    text-align: center;
-    padding: 0px;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
 }
 
 .comment-picture {
@@ -62,10 +60,12 @@
     line-height: 1;
     letter-spacing: 0.025em;
     color: #6046b6;
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 600;
 }
-
+.comment-rating {
+    color: #ffe745;
+}
 .container-login {
     background: rgba(0, 0, 0, 0.9);
     margin: 100px auto;
@@ -281,3 +281,73 @@ div.timepicker .gj-timepicker span button {
         background-color: #6046b6 !Important;
         border: solid 1px #5A4181;
     }
+/*Rating CSS*/
+.rating {
+    display: inline-block;
+    position: relative;
+    height: 25px;
+    line-height: 25px;
+    font-size: 25px;
+}
+
+    .rating label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        cursor: pointer;
+    }
+
+        .rating label:last-child {
+            position: static;
+        }
+
+        .rating label:nth-child(1) {
+            z-index: 5;
+        }
+
+        .rating label:nth-child(2) {
+            z-index: 4;
+        }
+
+        .rating label:nth-child(3) {
+            z-index: 3;
+        }
+
+        .rating label:nth-child(4) {
+            z-index: 2;
+        }
+
+        .rating label:nth-child(5) {
+            z-index: 1;
+        }
+
+        .rating label input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
+
+        .rating label .star {
+            float: left;
+            color: transparent;
+        }
+
+        .rating label:last-child .star {
+            color: #cccccc;
+        }
+
+    .rating:not(:hover) label input:checked ~ .star,
+    .rating:hover label:hover input ~ .star {
+        color: #ffe745;
+    }
+
+    .rating label input:focus:not(:checked) ~ .star:last-child {
+        color: #cccccc;
+        text-shadow: 0 0 5px #ffe745;
+    }
+/**/
+.product-rating{
+    color:#ffe745;
+}

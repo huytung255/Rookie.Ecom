@@ -16,7 +16,9 @@ namespace Rookie.Ecom.Contracts.Dtos
         public bool IsFeatured { get; set; }
         public bool IsAvailable { get; set; }
         public List<ProductImageDto> ProductImages { get; set; }
+        public List<RatingDto> Ratings { get; set; }
         public ProductImageDto DefaultImage { get; set; }
+        public decimal CalculatedRating { get; set; }
 
     }
     public class CreateProductDto
